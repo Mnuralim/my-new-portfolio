@@ -27,7 +27,7 @@ export default function Navbar() {
     <>
       <nav
         className={`
-          flex justify-between items-center px-10 border-b-2 border-border
+          flex justify-between items-center px-3 border-b-2 border-border
           sticky top-0 bg-bg z-50 transition-all duration-200
           ${scrolled ? "py-4" : "py-5"}
         `}

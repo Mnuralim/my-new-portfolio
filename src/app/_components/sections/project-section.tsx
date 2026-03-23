@@ -17,7 +17,7 @@ export default function ProjectsSection() {
 
   return (
     <>
-      <section id="projects" className="px-10 pb-20">
+      <section id="projects" className="px-3 pb-20">
         <div className="flex justify-between items-center flex-wrap gap-4">
           <div className="section-label flex-1">03 / PROJECTS</div>
           <button

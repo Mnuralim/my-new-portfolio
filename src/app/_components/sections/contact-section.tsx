@@ -2,7 +2,7 @@ import { contactLinks } from "@/lib/data";
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="px-10 pb-20">
+    <section id="contact" className="px-3 pb-20">
       <div className="section-label">05 / CONTACT</div>
       <div className="grid grid-cols-1 md:grid-cols-2 border-2 border-border">
         <div className="p-12 md:border-r-2 border-b-2 md:border-b-0 border-border">

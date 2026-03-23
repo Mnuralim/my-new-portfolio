@@ -12,7 +12,7 @@ export default function BlogSection() {
   const rest = latestPosts.filter((p) => !p.featured);
 
   return (
-    <section id="blog" className="px-10 pb-20">
+    <section id="blog" className="px-3 pb-20">
       <div className="section-label">06 / BLOG & TUTORIALS</div>
 
       <div className="flex justify-between items-end mb-10 flex-wrap gap-4">

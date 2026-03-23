@@ -2,7 +2,7 @@ import { services } from "@/lib/data";
 
 export default function ServicesSection() {
   return (
-    <section id="services" className="px-10 pb-20">
+    <section id="services" className="px-3 pb-20">
       <div className="section-label">04 / SERVICES</div>
 
       <div className="grid grid-cols-1 md:grid-cols-2">

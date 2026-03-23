@@ -9,7 +9,7 @@ export default function HeroSection() {
 
   return (
     <>
-      <section className="min-h-[85vh] flex flex-col justify-center px-10 py-20 border-b-2 border-border relative overflow-hidden">
+      <section className="min-h-[85vh] flex flex-col justify-center px-3 py-20 border-b-2 border-border relative overflow-hidden">
         <div
           className="absolute right-0 top-0 bottom-0 w-2/5 opacity-30 pointer-events-none"
           style={{

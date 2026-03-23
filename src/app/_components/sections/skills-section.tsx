@@ -2,7 +2,7 @@ import { skills } from "@/lib/data";
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="px-10 py-20">
+    <section id="skills" className="px-3 py-20">
       <div className="section-label">01 / SKILLS</div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">

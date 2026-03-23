@@ -2,7 +2,7 @@ import { experiences } from "@/lib/data";
 
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="px-10 pb-20">
+    <section id="experience" className="px-3 pb-20">
       <div className="section-label">02 / EXPERIENCE</div>
 
       <div className="flex flex-col">
