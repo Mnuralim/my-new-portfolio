@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "./_components/ui/navbar";
-import Cursor from "./_components/ui/cursor";
 
 export const metadata: Metadata = {
   title: "Izzy — Full Stack Developer & IT Support",
@@ -28,6 +26,18 @@ export const metadata: Metadata = {
   },
 };
 
+const themeInitScript = `
+(function () {
+  try {
+    var stored = localStorage.getItem("theme");
+    var theme = stored === "light" || stored === "dark"
+      ? stored
+      : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,11 +45,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className="max-w-7xl mx-auto">
-        <Navbar />
-        <Cursor />
-        {children}
-      </body>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

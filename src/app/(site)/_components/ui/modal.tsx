@@ -69,15 +69,15 @@ export default function Modal({
         ref={modalRef}
         tabIndex={-1}
         className={`
-          w-full ${sizeMap[size]} bg-surface border-2 border-border
+          w-full ${sizeMap[size]} bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#1a1a1a] dark:border-[#2a2a2a]
           flex flex-col max-h-[90vh] outline-none
           animate-fadeUp
         `}
       >
-        <div className="flex justify-between items-center px-6 py-4 border-b-2 border-border flex-shrink-0">
+        <div className="flex justify-between items-center px-6 py-4 border-b-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex-shrink-0">
           <div className="flex flex-col gap-0.5">
             {eyebrow && (
-              <span className="text-[0.55rem] tracking-[3px] text-accent">
+              <span className="text-meta-2xs tracking-[3px] text-[#1a1a1a] dark:text-[#e8ff47]">
                 {eyebrow}
               </span>
             )}
@@ -89,12 +89,12 @@ export default function Modal({
             onClick={onClose}
             aria-label="Tutup modal"
             className="
-              w-9 h-9 border-2 border-border flex-shrink-0
+              w-11 h-11 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex-shrink-0
               flex items-center justify-center
-              text-muted text-sm font-mono
+              text-[#6b6b66] dark:text-[#999999] text-sm font-mono
               bg-transparent cursor-pointer
               transition-all duration-200
-              hover:border-accent hover:text-accent
+              hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]
             "
           >
             ✕
@@ -102,7 +102,7 @@ export default function Modal({
         </div>
 
         {subheader && (
-          <div className="border-b-2 border-border flex-shrink-0">
+          <div className="border-b-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex-shrink-0">
             {subheader}
           </div>
         )}
@@ -110,7 +110,7 @@ export default function Modal({
         <div className="overflow-y-auto flex-1">{children}</div>
 
         {footer && (
-          <div className="border-t-2 border-border px-6 py-3.5 flex-shrink-0">
+          <div className="border-t-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-6 py-3.5 flex-shrink-0">
             {footer}
           </div>
         )}

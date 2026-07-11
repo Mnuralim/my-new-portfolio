@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme {
   --font-family-mono: "Space Mono", monospace;
   --font-family-display: "Syne", sans-serif;
 
-  --color-bg: #0a0a0a;
-  --color-surface: #111111;
-  --color-card: #161616;
-  --color-border: #2a2a2a;
   --color-accent: #e8ff47;
   --color-accent2: #ff4757;
-  --color-accent3: #00d4ff;
-  --color-muted: #999999;
+
+  --text-meta-2xs: 0.6rem;
+  --text-meta-xs: 0.65rem;
+  --text-meta-sm: 0.7rem;
+  --text-meta-md: 0.75rem;
+  --text-meta-lg: 0.85rem;
 
   --animate-blink: blink 2s infinite;
   --animate-fade-up: fadeUp 0.6s ease forwards;
@@ -46,6 +48,27 @@
   }
 }
 
+:root,
+[data-theme="dark"] {
+  --fg-color: #f0f0f0;
+  --stroke-color: #2a2a2a;
+  --overlay-backdrop: rgba(10, 10, 10, 0.7);
+  --overlay-card-bg: #161616;
+  --overlay-card-border: rgba(232, 255, 71, 0.15);
+  --overlay-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+    0 1.5px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+  --fg-color: #111111;
+  --stroke-color: #d8d8d2;
+  --overlay-backdrop: rgba(250, 250, 248, 0.7);
+  --overlay-card-bg: #ffffff;
+  --overlay-card-border: rgba(122, 107, 0, 0.15);
+  --overlay-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
+    0 1.5px 4px rgba(0, 0, 0, 0.08);
+}
+
 @layer base {
   * {
     box-sizing: border-box;
@@ -56,10 +79,11 @@
     scroll-behavior: smooth;
   }
   body {
-    background-color: #0a0a0a;
-    color: #f0f0f0;
+    @apply bg-[#fafaf8] dark:bg-[#0a0a0a] text-[#111111] dark:text-[#f0f0f0];
     font-family: "Space Mono", monospace;
     overflow-x: hidden;
+  }
+  .site-cursor-none {
     cursor: none;
   }
   .cursor {
@@ -78,26 +102,30 @@
     transform: scale(3);
   }
   .text-outline {
-    -webkit-text-stroke: 2px #f0f0f0;
+    -webkit-text-stroke: 2px var(--fg-color);
     color: transparent;
   }
   .text-outline-sm {
-    -webkit-text-stroke: 1.5px #f0f0f0;
+    -webkit-text-stroke: 1.5px var(--fg-color);
     color: transparent;
   }
   .text-outline-border {
-    -webkit-text-stroke: 1px #2a2a2a;
+    -webkit-text-stroke: 1px var(--stroke-color);
+    color: transparent;
+  }
+  .text-outline-faint {
+    -webkit-text-stroke: 1px var(--stroke-color);
     color: transparent;
   }
 }
 
 @layer components {
   .section-label {
-    @apply text-[0.65rem] tracking-[4px] text-accent uppercase flex items-center gap-3 mb-12;
+    @apply text-meta-xs tracking-[4px] text-[#1a1a1a] dark:text-[#e8ff47] uppercase flex items-center gap-3 mb-12;
   }
   .section-label::after {
     content: "";
-    @apply flex-1 h-px bg-border;
+    @apply flex-1 h-px bg-[#d8d8d2] dark:bg-[#2a2a2a];
   }
 
   .tag,
@@ -105,14 +133,14 @@
   .tag-it,
   .tag-net,
   .tag-purple {
-    @apply inline-block border text-[0.6rem] px-2 py-0.5 tracking-widest;
+    @apply inline-block border text-meta-2xs px-2 py-0.5 tracking-widest;
   }
 
   .tag-accent {
-    @apply border-accent text-accent;
+    @apply border-accent text-[#1a1a1a] dark:text-[#e8ff47];
   }
   .tag-it {
-    @apply border-accent3 text-accent3;
+    @apply border-[#0089a3] dark:border-[#00d4ff] text-[#0089a3] dark:text-[#00d4ff];
   }
   .tag-net {
     @apply border-accent2 text-accent2;
@@ -122,16 +150,74 @@
   }
 
   .btn-primary {
-    @apply bg-accent text-black font-mono text-[0.75rem] font-bold px-7 py-3.5 
+    @apply bg-accent text-black font-mono text-meta-md font-bold px-7 py-3.5
            tracking-widest border-2 border-accent cursor-pointer uppercase
-           transition-all duration-200 hover:bg-transparent hover:text-accent;
+           transition-all duration-200 hover:bg-transparent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47];
   }
   .btn-ghost {
-    @apply bg-transparent text-white font-mono text-[0.75rem] font-bold px-7 py-3.5
-           tracking-widest border-2 border-border cursor-pointer uppercase
-           transition-all duration-200 hover:border-accent hover:text-accent;
+    @apply bg-transparent text-[#111111] dark:text-[#f0f0f0] font-mono text-meta-md font-bold px-7 py-3.5
+           tracking-widest border-2 border-[#d8d8d2] dark:border-[#2a2a2a] cursor-pointer uppercase
+           transition-all duration-200 hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47];
   }
   .stack-pill {
-    @apply text-[0.6rem] px-2 py-0.5 bg-card border border-border tracking-[1px] text-muted;
+    @apply text-meta-2xs px-2 py-0.5 bg-white dark:bg-[#161616] border border-[#d8d8d2] dark:border-[#2a2a2a] tracking-[1px] text-[#6b6b66] dark:text-[#999999];
+  }
+
+  .prose-blog h1,
+  .prose-blog h2,
+  .prose-blog h3 {
+    font-family: var(--font-family-display);
+    @apply font-extrabold text-[#111111] dark:text-[#f0f0f0] tracking-tight mt-10 mb-4;
+  }
+  .prose-blog h1 {
+    @apply text-[1.6rem];
+  }
+  .prose-blog h2 {
+    @apply text-[1.3rem];
+  }
+  .prose-blog h3 {
+    @apply text-[1.1rem];
+  }
+  .prose-blog p {
+    @apply mb-5;
+  }
+  .prose-blog a {
+    @apply text-[#1a1a1a] dark:text-[#e8ff47] underline underline-offset-2;
+  }
+  .prose-blog ul,
+  .prose-blog ol {
+    @apply mb-5 pl-6;
+  }
+  .prose-blog li {
+    @apply mb-1.5;
+  }
+  .prose-blog img {
+    @apply border-2 border-[#d8d8d2] dark:border-[#2a2a2a] my-8 w-full;
+  }
+  .prose-blog code {
+    @apply bg-white dark:bg-[#161616] border border-[#d8d8d2] dark:border-[#2a2a2a] px-1.5 py-0.5 text-[0.8em] text-[#0089a3] dark:text-[#00d4ff];
+  }
+  .prose-blog pre {
+    @apply bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#d8d8d2] dark:border-[#2a2a2a] p-4 overflow-x-auto mb-6;
+  }
+  .prose-blog pre code {
+    @apply bg-transparent border-none p-0 text-[#111111] dark:text-[#f0f0f0];
+  }
+  .prose-blog blockquote {
+    @apply border-l-2 border-accent pl-4 italic text-[#111111] dark:text-[#f0f0f0] my-6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor {
+    display: none;
   }
 }

@@ -17,7 +17,7 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
     <ModalFooter
       info={
         <>
-          Last updated: <span className="text-accent">{CV_UPDATED}</span>
+          Last updated: <span className="text-[#1a1a1a] dark:text-[#e8ff47]">{CV_UPDATED}</span>
         </>
       }
     >
@@ -41,7 +41,7 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
     >
       {/* PDF embed via iframe */}
       <div
-        className="w-full bg-[#1a1a1a] border-b-2 border-border"
+        className="w-full bg-[#ececE6] dark:bg-[#0d0d0d] border-b-2 border-[#1a1a1a] dark:border-[#2a2a2a]"
         style={{ height: "70vh" }}
       >
         <iframe

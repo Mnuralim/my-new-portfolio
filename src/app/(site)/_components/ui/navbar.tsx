@@ -3,11 +3,12 @@
 import { useState, useEffect } from "react";
 import CvModal from "./cv-modal";
 import Image from "next/image";
+import ThemeToggle from "@/app/_components/theme-toggle";
 
 const navLinks = [
+  { label: "PROJECTS", href: "#projects" },
   { label: "SKILLS", href: "#skills" },
   { label: "EXPERIENCE", href: "#experience" },
-  { label: "PROJECTS", href: "#projects" },
   { label: "SERVICES", href: "#services" },
   { label: "BLOG", href: "#blog" },
   { label: "CONTACT", href: "#contact" },
@@ -27,8 +28,8 @@ export default function Navbar() {
     <>
       <nav
         className={`
-          flex justify-between items-center px-3 border-b-2 border-border
-          sticky top-0 bg-bg z-50 transition-all duration-200
+          flex justify-between items-center px-3 border-b-2 border-[#1a1a1a] dark:border-[#2a2a2a]
+          sticky top-0 bg-[#fafaf8] dark:bg-[#0a0a0a] z-50 transition-all duration-200
           ${scrolled ? "py-4" : "py-5"}
         `}
       >
@@ -42,7 +43,7 @@ export default function Navbar() {
             />
           </div>
           <div className="font-display font-extrabold text-lg tracking-tight">
-            IZZY<span className="text-accent">.</span>DEV
+            IZZY<span className="text-[#1a1a1a] dark:text-[#e8ff47]">.</span>DEV
           </div>
         </div>
 
@@ -51,7 +52,7 @@ export default function Navbar() {
             <li key={link.label}>
               <a
                 href={link.href}
-                className="text-muted text-[0.72rem] tracking-widest transition-colors hover:text-accent no-underline"
+                className="text-[#6b6b66] dark:text-[#999999] text-meta-sm tracking-widest transition-colors hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] no-underline"
               >
                 {link.label}
               </a>
@@ -59,23 +60,26 @@ export default function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center" style={{ gap: 0 }}>
-          <button
-            onClick={() => setCvOpen(true)}
-            className="
-              hidden sm:block
-              bg-transparent text-white font-mono text-[0.6rem]
-              tracking-widest px-4 py-2
-              border-2 border-border -mr-px
-              cursor-pointer transition-all duration-200
-              hover:border-white hover:text-white
-            "
-          >
-            VIEW CV
-          </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <div className="flex items-center" style={{ gap: 0 }}>
+            <button
+              onClick={() => setCvOpen(true)}
+              className="
+                hidden sm:block
+                bg-transparent text-[#111111] dark:text-[#f0f0f0] font-mono text-meta-2xs
+                tracking-widest px-4 py-2
+                border-2 border-[#1a1a1a] dark:border-[#2a2a2a] -mr-px
+                cursor-pointer transition-all duration-200
+                hover:border-white hover:text-[#111111] dark:hover:text-[#f0f0f0]
+              "
+            >
+              VIEW CV
+            </button>
 
-          <div className="hidden sm:block border-2 border-accent text-accent text-[0.6rem] px-3 py-2 tracking-widest">
-            OPEN TO WORK
+            <div className="hidden sm:block border-2 border-accent text-[#1a1a1a] dark:text-[#e8ff47] text-meta-2xs px-3 py-2 tracking-widest">
+              OPEN TO WORK
+            </div>
           </div>
         </div>
       </nav>
