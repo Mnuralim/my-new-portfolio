@@ -28,22 +28,28 @@ export default function Navbar() {
     <>
       <nav
         className={`
-          flex justify-between items-center px-3 border-b-2 border-[#1a1a1a] dark:border-[#2a2a2a]
-          sticky top-0 bg-[#fafaf8] dark:bg-[#0a0a0a] z-50 transition-all duration-200
+          flex justify-between items-center px-3 border-b-2 border-black dark:border-[#2a2a2a]
+          sticky top-0 bg-[#ffff00] dark:bg-[#0a0a0a] z-50 transition-all duration-200
           ${scrolled ? "py-4" : "py-5"}
         `}
       >
         <div className="flex items-center gap-2">
           <div className="relative w-[30px] h-[30px]">
             <Image
-              src="/izzy-dev-nobg2.png"
+              src="/mylogo-black.png"
               alt="Izzy Dev Logo"
               fill
-              className="object-contain"
+              className="object-contain block dark:hidden"
+            />
+            <Image
+              src="/mylogo.png"
+              alt="Izzy Dev Logo"
+              fill
+              className="object-contain hidden dark:block"
             />
           </div>
           <div className="font-display font-extrabold text-lg tracking-tight">
-            IZZY<span className="text-[#1a1a1a] dark:text-[#e8ff47]">.</span>DEV
+            IZZY<span className="text-black dark:text-[#ffff00]">.</span>DEV
           </div>
         </div>
 
@@ -52,7 +58,7 @@ export default function Navbar() {
             <li key={link.label}>
               <a
                 href={link.href}
-                className="text-[#6b6b66] dark:text-[#999999] text-meta-sm tracking-widest transition-colors hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] no-underline"
+                className="text-black/70 dark:text-[#999999] text-meta-sm tracking-widest transition-colors hover:text-black dark:hover:text-[#ffff00] no-underline"
               >
                 {link.label}
               </a>
@@ -67,17 +73,17 @@ export default function Navbar() {
               onClick={() => setCvOpen(true)}
               className="
                 hidden sm:block
-                bg-transparent text-[#111111] dark:text-[#f0f0f0] font-mono text-meta-2xs
+                bg-transparent text-black dark:text-[#f0f0f0] font-mono text-meta-2xs
                 tracking-widest px-4 py-2
-                border-2 border-[#1a1a1a] dark:border-[#2a2a2a] -mr-px
+                border-2 border-black dark:border-[#2a2a2a] -mr-px
                 cursor-pointer transition-all duration-200
-                hover:border-white hover:text-[#111111] dark:hover:text-[#f0f0f0]
+                hover:bg-black hover:text-[#ffff00] dark:hover:bg-transparent dark:hover:text-[#ffff00]
               "
             >
               VIEW CV
             </button>
 
-            <div className="hidden sm:block border-2 border-accent text-[#1a1a1a] dark:text-[#e8ff47] text-meta-2xs px-3 py-2 tracking-widest">
+            <div className="hidden sm:block bg-black border-2 border-black text-[#ffff00] dark:bg-transparent dark:border-accent dark:text-[#ffff00] text-meta-2xs px-3 py-2 tracking-widest">
               OPEN TO WORK
             </div>
           </div>

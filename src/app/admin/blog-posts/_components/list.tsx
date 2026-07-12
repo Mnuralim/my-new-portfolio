@@ -150,7 +150,7 @@ export function BlogPostList({
         <div className="flex items-center justify-center gap-1.5">
           <button
             onClick={() => startEdit(p)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#6b6b66] dark:text-[#999999] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
           >
             <Pencil size={13} />
           </button>
@@ -220,15 +220,15 @@ export function BlogPostList({
         </div>
       </div>
 
-      <div className="bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] p-6 h-fit">
+      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#1a1a1a] dark:text-[#e8ff47]">
+          <span className="text-meta-xs tracking-widest text-[#ffff00]">
             {editing ? "EDIT POST" : "TAMBAH POST"}
           </span>
           {editing && (
             <button
               onClick={startNew}
-              className="text-meta-xs text-[#6b6b66] dark:text-[#999999] hover:text-[#111111] dark:hover:text-[#f0f0f0]"
+              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
             >
               BATAL
             </button>
@@ -247,13 +247,13 @@ export function BlogPostList({
           <Field label="TAG" name="tag" defaultValue={editing?.tag} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
               TAG COLOR
             </label>
             <select
               name="tagColor"
               defaultValue={editing?.tagColor ?? "accent"}
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
             >
               {TAG_COLORS.map((c) => (
                 <option key={c} value={c}>
@@ -266,7 +266,7 @@ export function BlogPostList({
           <Field label="TITLE" name="title" defaultValue={editing?.title} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
               DESCRIPTION (excerpt)
             </label>
             <textarea
@@ -274,7 +274,7 @@ export function BlogPostList({
               defaultValue={editing?.description}
               required
               rows={2}
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent resize-none"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-none"
             />
           </div>
 
@@ -287,10 +287,10 @@ export function BlogPostList({
 
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999]">
+              <label className="block text-meta-2xs tracking-widest text-[#999999]">
                 CONTENT (markdown)
               </label>
-              <label className="text-meta-2xs tracking-widest text-[#1a1a1a] dark:text-[#e8ff47] cursor-pointer hover:opacity-70">
+              <label className="text-meta-2xs tracking-widest text-[#ffff00] cursor-pointer hover:opacity-70">
                 {insertingImage ? "UPLOADING..." : "+ SISIP GAMBAR"}
                 <input
                   type="file"
@@ -308,7 +308,7 @@ export function BlogPostList({
               onChange={(e) => setContent(e.target.value)}
               required
               rows={12}
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent resize-y"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-y"
             />
           </div>
 
@@ -320,7 +320,7 @@ export function BlogPostList({
           />
           <Field label="VIEWS" name="views" defaultValue={editing?.views} />
 
-          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#6b6b66] dark:text-[#999999]">
+          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#999999]">
             <input
               type="checkbox"
               name="featured"
@@ -381,7 +381,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+      <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
         {label}
       </label>
       <input
@@ -389,7 +389,7 @@ function Field({
         type={type}
         defaultValue={defaultValue}
         required
-        className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+        className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
       />
     </div>
   );

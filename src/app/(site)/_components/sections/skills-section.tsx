@@ -13,7 +13,7 @@ export default async function SkillsSection() {
             key={skill.name}
             data-cursor-hover
             className="
-              border-2 border-[#1a1a1a] dark:border-[#2a2a2a] -mt-px -ml-px p-6
+              bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
               relative overflow-hidden
               group transition-all duration-200 hover:border-accent
               cursor-pointer
@@ -28,10 +28,10 @@ export default async function SkillsSection() {
             />
 
             <div className="relative z-10">
-              <p className="text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-2 group-hover:text-black transition-colors duration-200">
+              <p className="text-meta-2xs tracking-widest text-[#999999] mb-2 group-hover:text-black transition-colors duration-200">
                 {skill.category}
               </p>
-              <p className="font-display font-bold text-base group-hover:text-black transition-colors duration-200">
+              <p className="font-display font-bold text-base text-[#ffff00] group-hover:text-black transition-colors duration-200">
                 {skill.name}
               </p>
             </div>

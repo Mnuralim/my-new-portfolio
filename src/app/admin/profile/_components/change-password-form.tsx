@@ -7,26 +7,26 @@ export function ChangePasswordForm() {
   const [state, dispatch, pending] = useActionWithToast(changePassword);
 
   return (
-    <div className="bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] p-6">
-      <span className="text-meta-xs tracking-widest text-[#1a1a1a] dark:text-[#e8ff47] block mb-6">
+    <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6">
+      <span className="text-meta-xs tracking-widest text-[#ffff00] block mb-6">
         GANTI PASSWORD
       </span>
 
       <form action={dispatch} className="flex flex-col gap-4" key={state.success ? "reset" : "form"}>
         <div>
-          <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+          <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
             PASSWORD SAAT INI
           </label>
           <input
             name="currentPassword"
             type="password"
             required
-            className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+            className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
           />
         </div>
 
         <div>
-          <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+          <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
             PASSWORD BARU
           </label>
           <input
@@ -34,12 +34,12 @@ export function ChangePasswordForm() {
             type="password"
             required
             minLength={6}
-            className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+            className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
           />
         </div>
 
         <div>
-          <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+          <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
             KONFIRMASI PASSWORD BARU
           </label>
           <input
@@ -47,7 +47,7 @@ export function ChangePasswordForm() {
             type="password"
             required
             minLength={6}
-            className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+            className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
           />
         </div>
 

@@ -49,11 +49,11 @@ export const Modal = ({ isOpen, onClose, children }: Props) => {
     <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-black/70 backdrop-blur-sm">
       <div
         ref={modalContentRef}
-        className="w-full max-w-md border-2 border-[#1a1a1a] dark:border-[#2a2a2a] bg-white dark:bg-[#161616] mx-3 p-6 relative max-h-[90vh] overflow-y-auto font-mono"
+        className="w-full max-w-md border-2 border-[#2a2a2a] bg-[#161616] mx-3 p-6 relative max-h-[90vh] overflow-y-auto font-mono"
       >
         <button
           onClick={handleClose}
-          className="absolute right-4 top-4 p-1.5 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] text-[#6b6b66] dark:text-[#999999] hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] transition-colors"
+          className="absolute right-4 top-4 p-1.5 border-2 border-[#2a2a2a] text-[#999999] hover:border-accent hover:text-[#ffff00] transition-colors"
         >
           <X className="w-4 h-4" />
         </button>

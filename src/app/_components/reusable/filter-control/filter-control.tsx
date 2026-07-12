@@ -150,7 +150,7 @@ export const FilterControl = ({
               <div className={cn("w-px h-3.5 mx-1", t.filterSortDivider)} />
               <button
                 onClick={handleSortOrder}
-                className="h-full px-2 flex items-center transition-colors text-[#6b6b66] dark:text-[#999999] hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]"
+                className="h-full px-2 flex items-center transition-colors text-[#999999] hover:text-[#ffff00]"
                 title={
                   currentSortOrder === "asc" ? "Urutan naik" : "Urutan turun"
                 }

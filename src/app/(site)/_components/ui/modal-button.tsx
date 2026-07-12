@@ -9,9 +9,9 @@ interface ModalButtonProps {
 
 const variantClass: Record<ModalButtonVariant, string> = {
   default:
-    "bg-transparent text-[#6b6b66] dark:text-[#999999] border-[#d8d8d2] dark:border-[#2a2a2a] hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]",
+    "bg-transparent text-[#999999] border-[#2a2a2a] hover:border-accent hover:text-[#ffff00]",
   primary:
-    "bg-accent text-black border-accent hover:bg-transparent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]",
+    "bg-accent text-black border-accent hover:bg-transparent hover:text-[#ffff00]",
   danger:
     "bg-accent2 text-black border-accent2 hover:bg-transparent hover:text-accent2",
 };

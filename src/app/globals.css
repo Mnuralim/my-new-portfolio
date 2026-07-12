@@ -6,7 +6,7 @@
   --font-family-mono: "Space Mono", monospace;
   --font-family-display: "Syne", sans-serif;
 
-  --color-accent: #e8ff47;
+  --color-accent: #ffff00;
   --color-accent2: #ff4757;
 
   --text-meta-2xs: 0.6rem;
@@ -60,13 +60,13 @@
 }
 
 [data-theme="light"] {
-  --fg-color: #111111;
-  --stroke-color: #d8d8d2;
-  --overlay-backdrop: rgba(250, 250, 248, 0.7);
-  --overlay-card-bg: #ffffff;
-  --overlay-card-border: rgba(122, 107, 0, 0.15);
-  --overlay-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.12),
-    0 1.5px 4px rgba(0, 0, 0, 0.08);
+  --fg-color: #000000;
+  --stroke-color: #000000;
+  --overlay-backdrop: rgba(232, 255, 71, 0.85);
+  --overlay-card-bg: #000000;
+  --overlay-card-border: rgba(232, 255, 71, 0.4);
+  --overlay-card-shadow: 0 8px 32px rgba(0, 0, 0, 0.35),
+    0 1.5px 4px rgba(0, 0, 0, 0.25);
 }
 
 @layer base {
@@ -79,7 +79,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-[#fafaf8] dark:bg-[#0a0a0a] text-[#111111] dark:text-[#f0f0f0];
+    @apply bg-[#ffff00] dark:bg-[#0a0a0a] text-black dark:text-[#f0f0f0];
     font-family: "Space Mono", monospace;
     overflow-x: hidden;
   }
@@ -89,14 +89,16 @@
   .cursor {
     width: 12px;
     height: 12px;
-    background: #e8ff47;
+    background: #000000;
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: difference;
     transition: transform 0.1s;
+  }
+  [data-theme="dark"] .cursor {
+    background: #ffff00;
   }
   .cursor.hover {
     transform: scale(3);
@@ -121,11 +123,11 @@
 
 @layer components {
   .section-label {
-    @apply text-meta-xs tracking-[4px] text-[#1a1a1a] dark:text-[#e8ff47] uppercase flex items-center gap-3 mb-12;
+    @apply text-meta-xs tracking-[4px] text-black dark:text-[#ffff00] uppercase flex items-center gap-3 mb-12;
   }
   .section-label::after {
     content: "";
-    @apply flex-1 h-px bg-[#d8d8d2] dark:bg-[#2a2a2a];
+    @apply flex-1 h-px bg-black dark:bg-[#2a2a2a];
   }
 
   .tag,
@@ -137,37 +139,40 @@
   }
 
   .tag-accent {
-    @apply border-accent text-[#1a1a1a] dark:text-[#e8ff47];
+    @apply bg-black text-[#ffff00] border-black dark:bg-transparent dark:border-accent dark:text-[#ffff00];
   }
   .tag-it {
-    @apply border-[#0089a3] dark:border-[#00d4ff] text-[#0089a3] dark:text-[#00d4ff];
+    @apply bg-black text-[#00d4ff] border-black dark:bg-transparent dark:border-[#00d4ff] dark:text-[#00d4ff];
   }
   .tag-net {
-    @apply border-accent2 text-accent2;
+    @apply bg-black text-accent2 border-black dark:bg-transparent dark:border-accent2 dark:text-accent2;
   }
   .tag-purple {
-    @apply border-purple-400 text-purple-400;
+    @apply bg-black text-purple-400 border-black dark:bg-transparent dark:border-purple-400 dark:text-purple-400;
   }
 
   .btn-primary {
-    @apply bg-accent text-black font-mono text-meta-md font-bold px-7 py-3.5
-           tracking-widest border-2 border-accent cursor-pointer uppercase
-           transition-all duration-200 hover:bg-transparent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47];
+    @apply bg-black text-[#ffff00] font-mono text-meta-md font-bold px-7 py-3.5
+           tracking-widest border-2 border-black cursor-pointer uppercase
+           transition-all duration-200 hover:bg-transparent hover:text-black
+           dark:bg-accent dark:text-black dark:border-accent dark:hover:bg-transparent dark:hover:text-[#ffff00];
   }
   .btn-ghost {
-    @apply bg-transparent text-[#111111] dark:text-[#f0f0f0] font-mono text-meta-md font-bold px-7 py-3.5
-           tracking-widest border-2 border-[#d8d8d2] dark:border-[#2a2a2a] cursor-pointer uppercase
-           transition-all duration-200 hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47];
+    @apply bg-transparent text-black font-mono text-meta-md font-bold px-7 py-3.5
+           tracking-widest border-2 border-black cursor-pointer uppercase
+           transition-all duration-200 hover:bg-black hover:text-[#ffff00]
+           dark:text-[#f0f0f0] dark:border-[#2a2a2a] dark:hover:bg-transparent dark:hover:border-accent dark:hover:text-[#ffff00];
   }
   .stack-pill {
-    @apply text-meta-2xs px-2 py-0.5 bg-white dark:bg-[#161616] border border-[#d8d8d2] dark:border-[#2a2a2a] tracking-[1px] text-[#6b6b66] dark:text-[#999999];
+    @apply text-meta-2xs px-2 py-0.5 bg-black border border-black tracking-[1px] text-[#ffff00]
+           dark:bg-[#161616] dark:border-[#2a2a2a] dark:text-[#999999];
   }
 
   .prose-blog h1,
   .prose-blog h2,
   .prose-blog h3 {
     font-family: var(--font-family-display);
-    @apply font-extrabold text-[#111111] dark:text-[#f0f0f0] tracking-tight mt-10 mb-4;
+    @apply font-extrabold text-black dark:text-[#f0f0f0] tracking-tight mt-10 mb-4;
   }
   .prose-blog h1 {
     @apply text-[1.6rem];
@@ -182,7 +187,7 @@
     @apply mb-5;
   }
   .prose-blog a {
-    @apply text-[#1a1a1a] dark:text-[#e8ff47] underline underline-offset-2;
+    @apply text-black dark:text-[#ffff00] underline underline-offset-2;
   }
   .prose-blog ul,
   .prose-blog ol {
@@ -192,19 +197,21 @@
     @apply mb-1.5;
   }
   .prose-blog img {
-    @apply border-2 border-[#d8d8d2] dark:border-[#2a2a2a] my-8 w-full;
+    @apply border-2 border-black dark:border-[#2a2a2a] my-8 w-full;
   }
   .prose-blog code {
-    @apply bg-white dark:bg-[#161616] border border-[#d8d8d2] dark:border-[#2a2a2a] px-1.5 py-0.5 text-[0.8em] text-[#0089a3] dark:text-[#00d4ff];
+    @apply bg-black border border-black px-1.5 py-0.5 text-[0.8em] text-[#00d4ff]
+           dark:bg-[#161616] dark:border-[#2a2a2a] dark:text-[#00d4ff];
   }
   .prose-blog pre {
-    @apply bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#d8d8d2] dark:border-[#2a2a2a] p-4 overflow-x-auto mb-6;
+    @apply bg-black border-2 border-black p-4 overflow-x-auto mb-6
+           dark:bg-[#111111] dark:border-[#2a2a2a];
   }
   .prose-blog pre code {
-    @apply bg-transparent border-none p-0 text-[#111111] dark:text-[#f0f0f0];
+    @apply bg-transparent border-none p-0 text-[#f0f0f0];
   }
   .prose-blog blockquote {
-    @apply border-l-2 border-accent pl-4 italic text-[#111111] dark:text-[#f0f0f0] my-6;
+    @apply border-l-2 border-black pl-4 italic text-black dark:border-accent dark:text-[#f0f0f0] my-6;
   }
 }
 

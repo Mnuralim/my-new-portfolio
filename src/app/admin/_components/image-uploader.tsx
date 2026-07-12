@@ -59,12 +59,12 @@ export function ImageUploader({
 
   return (
     <div>
-      <label className="block text-meta-xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-2">
+      <label className="block text-meta-xs tracking-widest text-[#999999] mb-2">
         {label}
       </label>
 
       {value && (
-        <div className="mb-3 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] relative w-full max-w-xs aspect-video overflow-hidden">
+        <div className="mb-3 border-2 border-[#2a2a2a] relative w-full max-w-xs aspect-video overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={value}
@@ -79,11 +79,11 @@ export function ImageUploader({
         accept="image/*"
         onChange={handleFileChange}
         disabled={uploading}
-        className="text-meta-sm font-mono text-[#6b6b66] dark:text-[#999999] file:mr-3 file:py-2 file:px-4 file:border-2 file:border-[#d8d8d2] dark:border-[#2a2a2a] file:bg-[#fafaf8] dark:bg-[#0a0a0a] file:text-[#111111] dark:text-[#f0f0f0] file:text-meta-xs file:tracking-widest file:cursor-pointer file:hover:border-accent file:transition-colors disabled:opacity-50"
+        className="text-meta-sm font-mono text-[#999999] file:mr-3 file:py-2 file:px-4 file:border-2 file:border-[#2a2a2a] file:bg-[#0a0a0a] file:text-[#ffff00] file:text-meta-xs file:tracking-widest file:cursor-pointer file:hover:border-accent file:transition-colors disabled:opacity-50"
       />
 
       {uploading && (
-        <p className="text-meta-xs text-[#1a1a1a] dark:text-[#e8ff47] mt-2">Uploading...</p>
+        <p className="text-meta-xs text-[#ffff00] mt-2">Uploading...</p>
       )}
       {error && <p className="text-meta-xs text-accent2 mt-2">{error}</p>}
     </div>

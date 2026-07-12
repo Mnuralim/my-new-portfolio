@@ -33,7 +33,7 @@ export default function ThemeToggle() {
   if (!theme) {
     return (
       <div
-        className="w-9 h-9 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex-shrink-0"
+        className="w-9 h-9 border-2 border-black dark:border-[#2a2a2a] flex-shrink-0"
         aria-hidden
       />
     );
@@ -46,10 +46,10 @@ export default function ThemeToggle() {
       aria-label={theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"}
       className="
         w-9 h-9 flex-shrink-0 flex items-center justify-center
-        bg-transparent text-[#111111] dark:text-[#f0f0f0]
-        border-2 border-[#1a1a1a] dark:border-[#2a2a2a]
+        bg-transparent text-black dark:text-[#f0f0f0]
+        border-2 border-black dark:border-[#2a2a2a]
         cursor-pointer transition-all duration-200
-        hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]
+        hover:border-accent hover:bg-black hover:text-[#ffff00] dark:hover:bg-transparent dark:hover:text-[#ffff00]
       "
     >
       {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}

@@ -11,7 +11,7 @@ export default function AdminLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <aside className="md:w-56 border-b-2 md:border-b-0 md:border-r-2 border-[#1a1a1a] dark:border-[#2a2a2a] p-6 flex flex-col justify-between">
+      <aside className="md:w-56 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-[#2a2a2a] p-6 flex flex-col justify-between bg-black text-[#ffff00] dark:bg-transparent dark:text-inherit">
         <div>
           <div className="font-display font-extrabold text-[1rem] tracking-tight mb-8">
             ADMIN
@@ -22,7 +22,14 @@ export default function AdminLayout({
         <div className="mt-8 flex items-center gap-2">
           <ThemeToggle />
           <form action={logOut} className="flex-1">
-            <button type="submit" className="btn-ghost w-full text-meta-xs">
+            <button
+              type="submit"
+              className="
+                w-full bg-transparent text-[#ffff00] font-mono text-meta-xs font-bold px-4 py-3
+                tracking-widest border-2 border-[#2a2a2a] cursor-pointer uppercase
+                transition-all duration-200 hover:border-accent hover:text-[#ffff00]
+              "
+            >
               LOGOUT
             </button>
           </form>

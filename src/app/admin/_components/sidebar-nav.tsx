@@ -26,8 +26,8 @@ export function SidebarNav() {
             key={item.href}
             href={item.href}
             className={cn(
-              "text-meta-sm tracking-widest py-2.5 border-b border-[#d8d8d2] dark:border-[#2a2a2a] transition-colors",
-              isActive ? "text-[#1a1a1a] dark:text-[#e8ff47]" : "text-[#6b6b66] dark:text-[#999999] hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]"
+              "text-meta-sm tracking-widest py-2.5 border-b border-[#2a2a2a] transition-colors",
+              isActive ? "text-[#ffff00]" : "text-[#999999] hover:text-[#ffff00]"
             )}
           >
             {item.label}

@@ -79,7 +79,7 @@ export function ProjectList({
         <div className="flex items-center justify-center gap-1.5">
           <button
             onClick={() => setEditing(p)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#6b6b66] dark:text-[#999999] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
           >
             <Pencil size={13} />
           </button>
@@ -145,15 +145,15 @@ export function ProjectList({
         </div>
       </div>
 
-      <div className="bg-[#f2f2ee] dark:bg-[#111111] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] p-6 h-fit">
+      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#1a1a1a] dark:text-[#e8ff47]">
+          <span className="text-meta-xs tracking-widest text-[#ffff00]">
             {editing ? "EDIT PROJECT" : "TAMBAH PROJECT"}
           </span>
           {editing && (
             <button
               onClick={() => setEditing(null)}
-              className="text-meta-xs text-[#6b6b66] dark:text-[#999999] hover:text-[#111111] dark:hover:text-[#f0f0f0]"
+              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
             >
               BATAL
             </button>
@@ -171,13 +171,13 @@ export function ProjectList({
           <Field label="TAG" name="tag" defaultValue={editing?.tag} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
               TAG COLOR
             </label>
             <select
               name="tagColor"
               defaultValue={editing?.tagColor ?? "accent"}
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
             >
               {TAG_COLORS.map((c) => (
                 <option key={c} value={c}>
@@ -190,7 +190,7 @@ export function ProjectList({
           <Field label="TITLE" name="title" defaultValue={editing?.title} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
               DESCRIPTION
             </label>
             <textarea
@@ -198,12 +198,12 @@ export function ProjectList({
               defaultValue={editing?.description}
               required
               rows={4}
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent resize-none"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
               STACK (pisah koma)
             </label>
             <input
@@ -211,7 +211,7 @@ export function ProjectList({
               defaultValue={
                 editing ? (editing.stack as string[]).join(", ") : ""
               }
-              className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
             />
           </div>
 
@@ -223,7 +223,7 @@ export function ProjectList({
             required={false}
           />
 
-          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#6b6b66] dark:text-[#999999]">
+          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#999999]">
             <input
               type="checkbox"
               name="featured"
@@ -286,7 +286,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-meta-2xs tracking-widest text-[#6b6b66] dark:text-[#999999] mb-1.5">
+      <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
         {label}
       </label>
       <input
@@ -294,7 +294,7 @@ function Field({
         type={type}
         defaultValue={defaultValue}
         required={required}
-        className="w-full bg-[#fafaf8] dark:bg-[#0a0a0a] border-2 border-[#1a1a1a] dark:border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#111111] dark:text-[#f0f0f0] outline-none focus:border-accent"
+        className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
       />
     </div>
   );

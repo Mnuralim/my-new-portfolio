@@ -27,10 +27,10 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
           <button
             onClick={() => setModalOpen(true)}
             className="
-              text-meta-xs tracking-widest text-[#6b6b66] dark:text-[#999999]
-              border-b border-[#d8d8d2] dark:border-[#2a2a2a] pb-0.5 mb-12 ml-4
+              text-meta-xs tracking-widest text-black/70 dark:text-[#999999]
+              border-b border-black dark:border-[#2a2a2a] pb-0.5 mb-12 ml-4
               bg-transparent font-mono cursor-pointer
-              transition-colors hover:text-[#1a1a1a] dark:hover:text-[#e8ff47] hover:border-accent
+              transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent
             "
           >
             VIEW ALL PROJECTS →
@@ -41,9 +41,9 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
           {featured && (
             <div
               data-cursor-hover
-              className="md:col-span-2 border-2 border-accent bg-white dark:bg-[#161616] p-8 relative overflow-hidden -mb-px"
+              className="md:col-span-2 border-2 border-accent bg-black p-8 relative overflow-hidden -mb-px"
             >
-              <div className="font-display font-extrabold text-[4rem] leading-none mb-4 text-[#1a1a1a] dark:text-[#e8ff47] opacity-15">
+              <div className="font-display font-extrabold text-[4rem] leading-none mb-4 text-[#ffff00] opacity-15">
                 {featured.num}
               </div>
               <span
@@ -51,10 +51,10 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
               >
                 {featured.tag}
               </span>
-              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3">
+              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3 text-[#ffff00]">
                 {featured.title}
               </h3>
-              <p className="text-meta-md text-[#6b6b66] dark:text-[#999999] leading-[1.8] mb-6">
+              <p className="text-meta-md text-[#999999] leading-[1.8] mb-6">
                 {featured.description}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -66,7 +66,7 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
               </div>
               <a
                 href={featured.href}
-                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex items-center justify-center text-[#6b6b66] dark:text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]"
+                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#333] dark:border-[#2a2a2a] flex items-center justify-center text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#ffff00]"
                 aria-label={`View ${featured.title}`}
               >
                 ↗
@@ -78,12 +78,12 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
             <div
               key={project.num}
               data-cursor-hover
-              className="border-2 border-[#1a1a1a] dark:border-[#2a2a2a] -mt-px -ml-px p-8 relative overflow-hidden group transition-colors duration-200 hover:border-accent"
+              className="bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8 relative overflow-hidden group transition-colors duration-200 hover:border-accent"
             >
               <div
                 className="font-display font-extrabold text-[4rem] leading-none mb-4"
                 style={{
-                  WebkitTextStroke: "1px var(--stroke-color)",
+                  WebkitTextStroke: "1px #333",
                   color: "transparent",
                 }}
               >
@@ -94,10 +94,10 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
               >
                 {project.tag}
               </span>
-              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3">
+              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3 text-[#ffff00]">
                 {project.title}
               </h3>
-              <p className="text-meta-md text-[#6b6b66] dark:text-[#999999] leading-[1.8] mb-6">
+              <p className="text-meta-md text-[#999999] leading-[1.8] mb-6">
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-1.5">
@@ -109,7 +109,7 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
               </div>
               <a
                 href={project.href}
-                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#1a1a1a] dark:border-[#2a2a2a] flex items-center justify-center text-[#6b6b66] dark:text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#1a1a1a] dark:hover:text-[#e8ff47]"
+                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#333] dark:border-[#2a2a2a] flex items-center justify-center text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#ffff00]"
                 aria-label={`View ${project.title}`}
               >
                 ↗

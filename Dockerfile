@@ -1,0 +1,68 @@
+# Stage 1: Dependencies
+FROM oven/bun:1 AS deps
+WORKDIR /app
+
+COPY package.json bun.lock* ./
+COPY prisma ./prisma/
+RUN bun install --frozen-lockfile
+
+# Stage 2: Builder
+FROM oven/bun:1 AS builder
+WORKDIR /app
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+ARG DATABASE_URL
+ARG DATABASE_USER
+ARG DATABASE_PASSWORD
+ARG DATABASE_NAME
+ARG DATABASE_HOST
+ARG DATABASE_PORT
+ARG SECRET_KEY
+ARG NODE_ENV
+ARG NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY
+ARG IMAGEKIT_PRIVATE_KEY
+ARG NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+ARG SEED_ADMIN_EMAIL
+ARG SEED_ADMIN_PASSWORD
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV DATABASE_USER=$DATABASE_USER
+ENV DATABASE_PASSWORD=$DATABASE_PASSWORD
+ENV DATABASE_NAME=$DATABASE_NAME
+ENV DATABASE_HOST=$DATABASE_HOST
+ENV DATABASE_PORT=$DATABASE_PORT
+ENV SECRET_KEY=$SECRET_KEY
+ENV NODE_ENV=$NODE_ENV
+ENV NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY=$NEXT_PUBLIC_IMAGEKIT_PUBLIC_KEY
+ENV IMAGEKIT_PRIVATE_KEY=$IMAGEKIT_PRIVATE_KEY
+ENV NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT=$NEXT_PUBLIC_IMAGEKIT_URL_ENDPOINT
+ENV SEED_ADMIN_EMAIL=$SEED_ADMIN_EMAIL
+ENV SEED_ADMIN_PASSWORD=$SEED_ADMIN_PASSWORD
+
+RUN bun run build
+
+# Stage 3: Runner
+FROM oven/bun:1-slim AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+RUN groupadd --system --gid 1001 nodejs && \
+  useradd --system --uid 1001 --gid nodejs nextjs
+
+COPY --from=builder /app/public ./public
+
+# Standalone output (next.config.ts sudah punya output: 'standalone')
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 5009
+
+ENV PORT=5009
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["bun", "server.js"]
