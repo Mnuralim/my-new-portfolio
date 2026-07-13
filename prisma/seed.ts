@@ -243,6 +243,93 @@ async function createContactLinks() {
   console.log("Contact links seeded.");
 }
 
+async function createMikrotikPlaylist() {
+  console.log("Seeding mikrotik playlist...");
+
+  const playlist = await prisma.playlist.findUnique({
+    where: { slug: "belajar-mikrotik" },
+  });
+  if (!playlist) {
+    console.log("Mikrotik playlist not found. Skipping post seed.");
+    return;
+  }
+
+  const posts = [
+    {
+      slug: "pengenalan-dasar-mikrotik-routeros",
+      num: "01",
+      tag: "NETWORKING",
+      tagColor: "net",
+      title: "Pengenalan Dasar Mikrotik & RouterOS",
+      description:
+        "Kenalan sama Mikrotik RouterOS — apa itu, kenapa banyak dipakai buat networking, dan cara akses pertama kali lewat Winbox.",
+      content:
+        "# Pengenalan Dasar Mikrotik & RouterOS\n\nMikrotik adalah perangkat jaringan yang menjalankan sistem operasi RouterOS, dipakai luas buat routing, firewall, dan manajemen bandwidth.\n\n## Kenapa Mikrotik?\n\n- Harga terjangkau\n- Fitur lengkap (routing, firewall, VPN, hotspot)\n- Konfigurasi fleksibel lewat Winbox, WebFig, atau CLI\n\n## Akses Pertama Kali\n\n1. Colok kabel LAN ke port Mikrotik\n2. Buka Winbox, cari device via MAC address\n3. Login default `admin` tanpa password\n4. Reset konfigurasi ke default kalau perlu\n\nDi tutorial berikutnya kita bahas konfigurasi dasar routing.",
+      date: "2026-01-10",
+      readTime: "5 min",
+      views: "0",
+      featured: false,
+      order: 100,
+    },
+    {
+      slug: "konfigurasi-dasar-routing-mikrotik",
+      num: "02",
+      tag: "NETWORKING",
+      tagColor: "net",
+      title: "Konfigurasi Dasar Routing di Mikrotik",
+      description:
+        "Setup IP address, DHCP client/server, dan NAT masquerade biar router Mikrotik bisa langsung dipakai internetan.",
+      content:
+        "# Konfigurasi Dasar Routing di Mikrotik\n\nSetelah kenal RouterOS, saatnya setup routing dasar biar jaringan bisa connect ke internet.\n\n## Set IP Address\n\n```\n/ip address add address=192.168.88.1/24 interface=ether2\n```\n\n## DHCP Client di WAN\n\n```\n/ip dhcp-client add interface=ether1 disabled=no\n```\n\n## DHCP Server di LAN\n\nGunakan DHCP Setup Wizard buat auto-assign IP ke client.\n\n## NAT Masquerade\n\n```\n/ip firewall nat add chain=srcnat out-interface=ether1 action=masquerade\n```\n\nDengan ini, semua device di LAN udah bisa akses internet lewat router Mikrotik.",
+      date: "2026-01-17",
+      readTime: "7 min",
+      views: "0",
+      featured: false,
+      order: 101,
+    },
+    {
+      slug: "firewall-dan-bandwidth-management-mikrotik",
+      num: "03",
+      tag: "NETWORKING",
+      tagColor: "net",
+      title: "Firewall & Bandwidth Management di Mikrotik",
+      description:
+        "Amankan jaringan pakai firewall filter rules dan atur pembagian bandwidth per user pakai simple queue.",
+      content:
+        "# Firewall & Bandwidth Management di Mikrotik\n\nRouter yang aman dan bandwidth yang rapi adalah kunci jaringan yang stabil.\n\n## Firewall Filter Dasar\n\n```\n/ip firewall filter add chain=input action=drop connection-state=invalid\n/ip firewall filter add chain=input action=accept connection-state=established,related\n```\n\n## Blokir Akses dari WAN\n\n```\n/ip firewall filter add chain=input in-interface=ether1 action=drop\n```\n\n## Bandwidth Management dengan Simple Queue\n\n```\n/queue simple add name=user1 target=192.168.88.10/32 max-limit=5M/5M\n```\n\nDengan kombinasi firewall dan queue, jaringan jadi lebih aman dan bandwidth terbagi rata ke semua user.",
+      date: "2026-01-24",
+      readTime: "8 min",
+      views: "0",
+      featured: false,
+      order: 102,
+    },
+  ];
+
+  for (const post of posts) {
+    const existingPost = await prisma.blogPost.findUnique({
+      where: { slug: post.slug },
+    });
+    const blogPost =
+      existingPost ?? (await prisma.blogPost.create({ data: post }));
+
+    const existingLink = await prisma.blogPostPlaylist.findUnique({
+      where: {
+        blogPostId_playlistId: {
+          blogPostId: blogPost.id,
+          playlistId: playlist.id,
+        },
+      },
+    });
+    if (!existingLink) {
+      await prisma.blogPostPlaylist.create({
+        data: { blogPostId: blogPost.id, playlistId: playlist.id },
+      });
+    }
+  }
+
+  console.log("Mikrotik posts seeded and linked to playlist.");
+}
+
 async function main() {
   await createAdmin();
   await createSkills();
@@ -250,6 +337,7 @@ async function main() {
   await createProjects();
   await createServices();
   await createContactLinks();
+  await createMikrotikPlaylist();
 }
 
 main()

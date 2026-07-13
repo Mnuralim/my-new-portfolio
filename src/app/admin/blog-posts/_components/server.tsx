@@ -1,4 +1,5 @@
 import { getAllBlogPosts } from "@/actions/blog-post";
+import { getAllPlaylistsRaw } from "@/actions/playlist";
 import { BlogPostList } from "./list";
 
 interface Props {
@@ -7,7 +8,10 @@ interface Props {
 
 export async function BlogPostServer({ searchParams }: Props) {
   const params = await searchParams;
-  const data = await getAllBlogPosts(params);
+  const [data, allPlaylists] = await Promise.all([
+    getAllBlogPosts(params),
+    getAllPlaylistsRaw(),
+  ]);
 
   return (
     <BlogPostList
@@ -16,6 +20,7 @@ export async function BlogPostServer({ searchParams }: Props) {
       currentPage={data.currentPage}
       totalPages={data.totalPages}
       itemsPerPage={data.itemsPerPage}
+      allPlaylists={allPlaylists}
     />
   );
 }

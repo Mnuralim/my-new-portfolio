@@ -3,13 +3,21 @@
 import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Pencil, Trash2 } from "lucide-react";
-import type { BlogPost } from "@/generated/prisma/client";
+import type {
+  BlogPost,
+  BlogPostPlaylist,
+  Playlist,
+} from "@/generated/prisma/client";
 import {
   createBlogPost,
   updateBlogPost,
   deleteBlogPost,
 } from "@/actions/blog-post";
 import { ImageUploader } from "../../_components/image-uploader";
+import {
+  MarkdownEditor,
+  type MarkdownEditorHandle,
+} from "../../_components/markdown-editor";
 import { FilterControl } from "@/app/_components/reusable/filter-control/filter-control";
 import { DataTable } from "@/app/_components/reusable/table/table";
 import type { Column } from "@/app/_components/reusable/table/types";
@@ -19,12 +27,17 @@ import { PendingOverlay } from "@/app/admin/_components/pending-overlay";
 import { useActionWithToast } from "@/app/admin/_components/use-action-toast";
 import axios from "axios";
 
+type BlogPostWithPlaylists = BlogPost & {
+  playlists: (BlogPostPlaylist & { playlist: Playlist })[];
+};
+
 interface Props {
-  blogPosts: BlogPost[];
+  blogPosts: BlogPostWithPlaylists[];
   totalCount: number;
   currentPage: number;
   totalPages: number;
   itemsPerPage: number;
+  allPlaylists: Playlist[];
 }
 
 const TAG_COLORS = ["accent", "it", "net"];
@@ -35,17 +48,18 @@ export function BlogPostList({
   currentPage,
   totalPages,
   itemsPerPage,
+  allPlaylists,
 }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [editing, setEditing] = useState<BlogPost | null>(null);
+  const [editing, setEditing] = useState<BlogPostWithPlaylists | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const confirmingPost = blogPosts.find((p) => p.id === confirmId);
   const [coverImage, setCoverImage] = useState("");
   const [content, setContent] = useState("");
   const [insertingImage, setInsertingImage] = useState(false);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const editorRef = useRef<MarkdownEditorHandle>(null);
 
   const [createState, createDispatch, createPending] = useActionWithToast(
     createBlogPost,
@@ -64,7 +78,7 @@ export function BlogPostList({
   const dispatch = editing ? updateDispatch : createDispatch;
   const pending = editing ? updatePending : createPending;
 
-  function startEdit(post: BlogPost) {
+  function startEdit(post: BlogPostWithPlaylists) {
     setEditing(post);
     setCoverImage(post.coverImage ?? "");
     setContent(post.content);
@@ -100,14 +114,10 @@ export function BlogPostList({
       );
 
       const url = response.data.url as string;
-      const textarea = contentRef.current;
       const markdownImg = `![](${url})`;
 
-      if (textarea) {
-        const start = textarea.selectionStart;
-        const end = textarea.selectionEnd;
-        const next = content.slice(0, start) + markdownImg + content.slice(end);
-        setContent(next);
+      if (editorRef.current) {
+        editorRef.current.insertAtCursor(markdownImg);
       } else {
         setContent((prev) => prev + markdownImg);
       }
@@ -119,7 +129,7 @@ export function BlogPostList({
     }
   }
 
-  const columns: Column<BlogPost>[] = [
+  const columns: Column<BlogPostWithPlaylists>[] = [
     {
       key: "title",
       header: "Title",
@@ -301,15 +311,18 @@ export function BlogPostList({
                 />
               </label>
             </div>
-            <textarea
-              ref={contentRef}
-              name="content"
+            <input type="hidden" name="content" value={content} />
+            <MarkdownEditor
+              ref={editorRef}
               value={content}
-              onChange={(e) => setContent(e.target.value)}
-              required
+              onChange={setContent}
               rows={12}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-y"
             />
+            {!content && (
+              <p className="text-meta-2xs text-accent2 mt-1.5">
+                Content wajib diisi.
+              </p>
+            )}
           </div>
 
           <Field label="DATE" name="date" defaultValue={editing?.date} />
@@ -319,6 +332,24 @@ export function BlogPostList({
             defaultValue={editing?.readTime}
           />
           <Field label="VIEWS" name="views" defaultValue={editing?.views} />
+
+          <div>
+            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+              PLAYLISTS
+            </label>
+            <select
+              multiple
+              name="playlistIds"
+              defaultValue={editing?.playlists.map((p) => p.playlistId) ?? []}
+              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent min-h-[120px]"
+            >
+              {allPlaylists.map((pl) => (
+                <option key={pl.id} value={pl.id}>
+                  {pl.name}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#999999]">
             <input

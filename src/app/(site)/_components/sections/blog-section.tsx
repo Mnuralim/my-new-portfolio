@@ -23,12 +23,20 @@ export default async function BlogSection() {
           <br />
           <span className="text-outline-sm">WRITES.</span>
         </h3>
-        <Link
-          href="/blog"
-          className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] border-b border-black dark:border-[#2a2a2a] pb-0.5 no-underline transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent"
-        >
-          VIEW ALL POSTS →
-        </Link>
+        <div className="flex gap-6 flex-wrap">
+          <Link
+            href="/blog"
+            className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] border-b border-black dark:border-[#2a2a2a] pb-0.5 no-underline transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent"
+          >
+            VIEW ALL POSTS →
+          </Link>
+          <Link
+            href="/playlist"
+            className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] border-b border-black dark:border-[#2a2a2a] pb-0.5 no-underline transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent"
+          >
+            VIEW ALL PLAYLISTS →
+          </Link>
+        </div>
       </div>
 
       {featured && (

@@ -102,5 +102,32 @@ model BlogPost {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  playlists BlogPostPlaylist[]
+
   @@map("tb_blog_post")
+}
+
+model Playlist {
+  id          String   @id @default(uuid())
+  slug        String   @unique @db.VarChar(200)
+  name        String   @db.VarChar(150)
+  description String?  @db.Text
+  coverImage  String?  @db.VarChar(500)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  posts BlogPostPlaylist[]
+
+  @@map("tb_playlist")
+}
+
+model BlogPostPlaylist {
+  blogPostId String
+  playlistId String
+  blogPost   BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  playlist   Playlist @relation(fields: [playlistId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, playlistId])
+  @@map("tb_blog_post_playlist")
 }

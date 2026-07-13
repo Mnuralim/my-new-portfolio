@@ -41,3 +41,7 @@ interface ContactLinkParams extends PaginationParams {
 interface BlogPostParams extends PaginationParams {
   search?: string;
 }
+
+interface PlaylistParams extends PaginationParams {
+  search?: string;
+}

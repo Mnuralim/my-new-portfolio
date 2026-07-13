@@ -4,6 +4,7 @@ import { getAllProjectsRaw } from "@/actions/project";
 import { getAllServicesRaw } from "@/actions/service";
 import { getAllContactLinksRaw } from "@/actions/contact-link";
 import { getAllBlogPostsRaw } from "@/actions/blog-post";
+import { getAllPlaylistsRaw } from "@/actions/playlist";
 import type {
   Skill,
   Experience,
@@ -11,6 +12,7 @@ import type {
   Service,
   ContactLink,
   BlogPost,
+  Playlist,
 } from "../../types";
 
 export async function getSkills(): Promise<Skill[]> {
@@ -89,6 +91,18 @@ export async function getLatestPosts(): Promise<BlogPost[]> {
     views: p.views,
     href: `/blog/${p.slug}`,
     featured: p.featured,
+  }));
+}
+
+export async function getPlaylists(): Promise<Playlist[]> {
+  const playlists = await getAllPlaylistsRaw();
+  return playlists.map((p) => ({
+    name: p.name,
+    slug: p.slug,
+    description: p.description,
+    coverImage: p.coverImage,
+    href: `/playlist/${p.slug}`,
+    postCount: p._count.posts,
   }));
 }
 

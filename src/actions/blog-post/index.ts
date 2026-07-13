@@ -11,7 +11,10 @@ export async function getAllBlogPostsRaw() {
   cacheTag("blog-posts");
   cacheLife("weeks");
 
-  return prisma.blogPost.findMany({ orderBy: { order: "asc" } });
+  return prisma.blogPost.findMany({
+    orderBy: { order: "asc" },
+    include: { playlists: { include: { playlist: true } } },
+  });
 }
 
 export async function getAllBlogPosts(params: BlogPostParams) {
@@ -40,6 +43,7 @@ export async function getAllBlogPosts(params: BlogPostParams) {
       },
       take,
       skip,
+      include: { playlists: { include: { playlist: true } } },
     }),
     prisma.blogPost.count({ where }),
   ]);
@@ -58,7 +62,10 @@ export async function getBlogPostBySlug(slug: string) {
   cacheTag("blog-posts");
   cacheLife("weeks");
 
-  return prisma.blogPost.findUnique({ where: { slug } });
+  return prisma.blogPost.findUnique({
+    where: { slug },
+    include: { playlists: { include: { playlist: true } } },
+  });
 }
 
 function slugify(title: string): string {
@@ -87,6 +94,7 @@ export async function createBlogPost(
     const views = formData.get("views") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
+    const playlistIds = formData.getAll("playlistIds") as string[];
 
     const session = await getSession();
     if (!session) {
@@ -119,10 +127,14 @@ export async function createBlogPost(
         views: views.trim(),
         featured,
         order: order ? parseInt(order, 10) : 0,
+        playlists: {
+          create: playlistIds.map((playlistId) => ({ playlistId })),
+        },
       },
     });
 
     updateTag("blog-posts");
+    updateTag("playlists");
 
     return { success: "Post berhasil dibuat.", error: null, formData };
   } catch (err) {
@@ -149,6 +161,7 @@ export async function updateBlogPost(
     const views = formData.get("views") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
+    const playlistIds = formData.getAll("playlistIds") as string[];
 
     const session = await getSession();
     if (!session) {
@@ -183,10 +196,15 @@ export async function updateBlogPost(
         views: views.trim(),
         featured,
         order: order ? parseInt(order, 10) : 0,
+        playlists: {
+          deleteMany: {},
+          create: playlistIds.map((playlistId) => ({ playlistId })),
+        },
       },
     });
 
     updateTag("blog-posts");
+    updateTag("playlists");
 
     return { success: "Post berhasil diperbarui.", error: null, formData };
   } catch (err) {
@@ -223,6 +241,7 @@ export async function deleteBlogPost(
     await prisma.blogPost.delete({ where: { id } });
 
     updateTag("blog-posts");
+    updateTag("playlists");
 
     return { success: "Post berhasil dihapus.", error: null, formData };
   } catch (err) {

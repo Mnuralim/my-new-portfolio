@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { PostContent } from "./_components/post-content";
+import { PlaylistContent } from "./_components/playlist-content";
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export default function BlogPostPage({ params }: Props) {
+export default function PlaylistDetailPage({ params }: Props) {
   return (
     <article className="px-3 py-20 mx-auto">
       <Link
-        href="/#blog"
+        href="/playlist"
         className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] no-underline hover:text-black dark:hover:text-[#ffff00] transition-colors"
       >
-        ← BACK TO BLOG
+        ← BACK TO PLAYLISTS
       </Link>
 
       <Suspense
@@ -23,7 +23,7 @@ export default function BlogPostPage({ params }: Props) {
           </div>
         }
       >
-        <PostContent params={params} />
+        <PlaylistContent params={params} />
       </Suspense>
     </article>
   );

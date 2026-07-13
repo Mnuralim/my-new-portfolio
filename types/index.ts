@@ -47,3 +47,12 @@ export interface BlogPost {
   href: string;
   featured?: boolean;
 }
+
+export interface Playlist {
+  name: string;
+  slug: string;
+  description?: string | null;
+  coverImage?: string | null;
+  href: string;
+  postCount: number;
+}
