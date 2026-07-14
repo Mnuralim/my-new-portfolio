@@ -11,7 +11,7 @@ export default function HeroSection() {
     <>
       <section className="min-h-[85vh] flex flex-col justify-center px-3 py-20 border-b-2 border-black dark:border-[#2a2a2a] relative overflow-hidden">
         <div
-          className="absolute right-0 top-0 bottom-0 w-2/5 opacity-30 pointer-events-none"
+          className="absolute inset-0 opacity-[0.08] lg:opacity-15 dark:opacity-30 dark:lg:opacity-40 pointer-events-none"
           style={{
             backgroundImage: `
               repeating-linear-gradient(0deg, var(--stroke-color) 0, var(--stroke-color) 1px, transparent 1px, transparent 60px),
@@ -70,7 +70,7 @@ export default function HeroSection() {
             <div className="flex items-center gap-1.5 px-4 py-2.5 border-b-2 border-[#333] dark:border-[#2a2a2a]">
               <span className="w-2.5 h-2.5 rounded-full bg-accent2" />
               <span className="w-2.5 h-2.5 rounded-full bg-accent" />
-              <span className="w-2.5 h-2.5 rounded-full bg-accent3" />
+              <span className="w-2.5 h-2.5 rounded-full bg-green-500" />
               <span className="ml-2 text-meta-2xs tracking-widest text-[#999999]">
                 izzy@dev — zsh
               </span>
@@ -96,7 +96,7 @@ export default function HeroSection() {
                 <span className="text-[#ffff00]">→ </span>
                 <span className="text-[#ffff00]">status</span>
               </div>
-              <div className="text-accent3">● ONLINE &amp; READY TO BUILD</div>
+              <div className="text-green-500">● ONLINE &amp; READY TO BUILD</div>
               <div className="mt-1 flex items-center gap-2">
                 <span className="text-[#ffff00]">→</span>
                 <span className="inline-block w-2 h-4 bg-accent animate-blink" />

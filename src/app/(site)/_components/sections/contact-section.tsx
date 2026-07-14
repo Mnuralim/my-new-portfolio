@@ -59,7 +59,7 @@ export default async function ContactSection() {
 
             <a
               href="mailto:hello@namalo.dev"
-              className="btn-primary w-full block text-center"
+              className="bg-accent text-black font-mono text-meta-md font-bold px-7 py-3.5 tracking-widest border-2 border-accent cursor-pointer uppercase transition-all duration-200 hover:bg-[#00FFFF] hover:border-[#00FFFF] hover:text-black w-full block text-center"
             >
               KIRIM PESAN
             </a>
@@ -75,7 +75,7 @@ export default async function ContactSection() {
               <span className="text-[#ffff00]">→ </span>
               <span className="text-[#ffff00]">status</span>
             </div>
-            <div className="text-accent3">● ONLINE &amp; READY TO BUILD</div>
+            <div className="text-green-500">● ONLINE &amp; READY TO BUILD</div>
           </div>
         </div>
       </div>

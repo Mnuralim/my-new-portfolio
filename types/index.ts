@@ -36,6 +36,8 @@ export interface ContactLink {
 }
 
 export interface BlogPost {
+  slug: string;
+  coverImage?: string | null;
   num: string;
   tag: string;
   tagColor?: "accent" | "it" | "net";

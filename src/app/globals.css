@@ -89,16 +89,14 @@
   .cursor {
     width: 12px;
     height: 12px;
-    background: #000000;
+    background: #ffffff;
+    mix-blend-mode: difference;
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: 9999;
     transition: transform 0.1s;
-  }
-  [data-theme="dark"] .cursor {
-    background: #ffff00;
   }
   .cursor.hover {
     transform: scale(3);
@@ -154,13 +152,13 @@
   .btn-primary {
     @apply bg-black text-[#ffff00] font-mono text-meta-md font-bold px-7 py-3.5
            tracking-widest border-2 border-black cursor-pointer uppercase
-           transition-all duration-200 hover:bg-transparent hover:text-black
+           transition-all duration-200 hover:bg-[#00FFFF] hover:text-black hover:border-[#00FFFF]
            dark:bg-accent dark:text-black dark:border-accent dark:hover:bg-transparent dark:hover:text-[#ffff00];
   }
   .btn-ghost {
     @apply bg-transparent text-black font-mono text-meta-md font-bold px-7 py-3.5
            tracking-widest border-2 border-black cursor-pointer uppercase
-           transition-all duration-200 hover:bg-black hover:text-[#ffff00]
+           transition-all duration-200 hover:bg-[#00FFFF] hover:text-black hover:border-[#00FFFF]
            dark:text-[#f0f0f0] dark:border-[#2a2a2a] dark:hover:bg-transparent dark:hover:border-accent dark:hover:text-[#ffff00];
   }
   .stack-pill {

@@ -81,6 +81,8 @@ export async function getContactLinks(): Promise<ContactLink[]> {
 export async function getLatestPosts(): Promise<BlogPost[]> {
   const posts = await getAllBlogPostsRaw();
   return posts.map((p) => ({
+    slug: p.slug,
+    coverImage: p.coverImage,
     num: p.num,
     tag: p.tag,
     tagColor: p.tagColor as BlogPost["tagColor"],

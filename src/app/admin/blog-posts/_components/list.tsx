@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Plus, X } from "lucide-react";
 import type {
   BlogPost,
   BlogPostPlaylist,
@@ -54,6 +54,7 @@ export function BlogPostList({
   const searchParams = useSearchParams();
 
   const [editing, setEditing] = useState<BlogPostWithPlaylists | null>(null);
+  const [showForm, setShowForm] = useState(false);
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const confirmingPost = blogPosts.find((p) => p.id === confirmId);
   const [coverImage, setCoverImage] = useState("");
@@ -63,11 +64,11 @@ export function BlogPostList({
 
   const [createState, createDispatch, createPending] = useActionWithToast(
     createBlogPost,
-    { onSuccess: () => startNew() }
+    { onSuccess: () => closeForm() }
   );
   const [updateState, updateDispatch, updatePending] = useActionWithToast(
     updateBlogPost,
-    { onSuccess: () => startNew() }
+    { onSuccess: () => closeForm() }
   );
   const [, deleteDispatch, deletePending] = useActionWithToast(
     deleteBlogPost,
@@ -82,12 +83,21 @@ export function BlogPostList({
     setEditing(post);
     setCoverImage(post.coverImage ?? "");
     setContent(post.content);
+    setShowForm(true);
   }
 
   function startNew() {
     setEditing(null);
     setCoverImage("");
     setContent("");
+    setShowForm(true);
+  }
+
+  function closeForm() {
+    setEditing(null);
+    setCoverImage("");
+    setContent("");
+    setShowForm(false);
   }
 
   async function insertInlineImage(e: React.ChangeEvent<HTMLInputElement>) {
@@ -193,8 +203,8 @@ export function BlogPostList({
     });
   };
 
-  return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-8">
+  if (!showForm) {
+    return (
       <div>
         <FilterControl
           basePath="/admin/blog-posts"
@@ -209,6 +219,11 @@ export function BlogPostList({
             (searchParams.get("sortOrder") as "asc" | "desc") ?? "asc"
           }
           defaultSortBy="order"
+          addButton={{
+            label: "TAMBAH POST",
+            onClick: startNew,
+            icon: <Plus className="w-3.5 h-3.5" />,
+          }}
         />
 
         <DataTable
@@ -228,21 +243,38 @@ export function BlogPostList({
             onItemsPerPageChange={handleItemsPerPageChange}
           />
         </div>
-      </div>
 
-      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
+        <PendingOverlay isVisible={deletePending} message="Menghapus post..." />
+
+        <ConfirmDeleteAlert
+          isOpen={!!confirmId}
+          onClose={() => setConfirmId(null)}
+          formAction={deleteDispatch}
+          hiddenFields={[{ name: "id", value: confirmId ?? "" }]}
+          title="Hapus Post?"
+          description={`Post "${
+            confirmingPost?.title ?? ""
+          }" akan dihapus permanen dan tidak bisa dikembalikan.`}
+          isPending={deletePending}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <span className="text-meta-xs tracking-widest text-[#ffff00]">
             {editing ? "EDIT POST" : "TAMBAH POST"}
           </span>
-          {editing && (
-            <button
-              onClick={startNew}
-              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
-            >
-              BATAL
-            </button>
-          )}
+          <button
+            onClick={closeForm}
+            className="flex items-center gap-1.5 text-meta-xs text-[#999999] hover:text-[#ffff00]"
+          >
+            <X className="w-3.5 h-3.5" />
+            BATAL
+          </button>
         </div>
 
         <form
@@ -325,7 +357,12 @@ export function BlogPostList({
             )}
           </div>
 
-          <Field label="DATE" name="date" defaultValue={editing?.date} />
+          <Field
+            label="DATE"
+            name="date"
+            type="date"
+            defaultValue={editing?.date}
+          />
           <Field
             label="READ TIME"
             name="readTime"
@@ -381,20 +418,6 @@ export function BlogPostList({
           </button>
         </form>
       </div>
-
-      <PendingOverlay isVisible={deletePending} message="Menghapus post..." />
-
-      <ConfirmDeleteAlert
-        isOpen={!!confirmId}
-        onClose={() => setConfirmId(null)}
-        formAction={deleteDispatch}
-        hiddenFields={[{ name: "id", value: confirmId ?? "" }]}
-        title="Hapus Post?"
-        description={`Post "${
-          confirmingPost?.title ?? ""
-        }" akan dihapus permanen dan tidak bisa dikembalikan.`}
-        isPending={deletePending}
-      />
     </div>
   );
 }
@@ -420,6 +443,7 @@ function Field({
         type={type}
         defaultValue={defaultValue}
         required
+        style={type === "date" ? { colorScheme: "dark" } : undefined}
         className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
       />
     </div>

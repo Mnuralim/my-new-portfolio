@@ -72,7 +72,7 @@ export const FilterControl = ({
           btn.variant === "danger"
             ? "bg-accent2 border-accent2 text-black"
             : btn.variant === "success"
-            ? "bg-accent3 border-accent3 text-black"
+            ? "bg-green-500 border-green-500 text-black"
             : btn.variant === "outline"
             ? cn(
                 "bg-transparent",

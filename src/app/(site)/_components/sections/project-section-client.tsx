@@ -21,7 +21,7 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
 
   return (
     <>
-      <section id="projects" className="px-3 pb-20">
+      <section id="projects" className="px-3 pt-12 pb-20">
         <div className="flex justify-between items-center flex-wrap gap-4">
           <h2 className="section-label flex-1">01 / PROJECTS</h2>
           <button
@@ -41,7 +41,7 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
           {featured && (
             <div
               data-cursor-hover
-              className="md:col-span-2 border-2 border-accent bg-black p-8 relative overflow-hidden -mb-px"
+              className="md:col-span-2 border-2 border-black dark:border-accent bg-black p-8 relative overflow-hidden -mb-px"
             >
               <div className="font-display font-extrabold text-[4rem] leading-none mb-4 text-[#ffff00] opacity-15">
                 {featured.num}
@@ -78,7 +78,7 @@ export function ProjectsSectionClient({ projects, allProjects }: Props) {
             <div
               key={project.num}
               data-cursor-hover
-              className="bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8 relative overflow-hidden group transition-colors duration-200 hover:border-accent"
+              className="bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8 relative overflow-hidden group transition-colors duration-200 hover:border-accent"
             >
               <div
                 className="font-display font-extrabold text-[4rem] leading-none mb-4"

@@ -7,10 +7,10 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="max-w-7xl mx-auto site-cursor-none">
+    <div className="site-cursor-none">
       <Navbar />
       <Cursor />
-      {children}
+      <div className="max-w-7xl mx-auto">{children}</div>
     </div>
   );
 }

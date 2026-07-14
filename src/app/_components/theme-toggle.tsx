@@ -20,7 +20,11 @@ function getServerSnapshot(): "light" | "dark" | null {
   return null;
 }
 
-export default function ThemeToggle() {
+interface Props {
+  scrolled?: boolean;
+}
+
+export default function ThemeToggle({ scrolled = false }: Props) {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   function toggle() {
@@ -44,13 +48,17 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"}
-      className="
+      className={`
         w-9 h-9 flex-shrink-0 flex items-center justify-center
-        bg-transparent text-black dark:text-[#f0f0f0]
-        border-2 border-black dark:border-[#2a2a2a]
+        bg-transparent
         cursor-pointer transition-all duration-200
-        hover:border-accent hover:bg-black hover:text-[#ffff00] dark:hover:bg-transparent dark:hover:text-[#ffff00]
-      "
+        ${
+          scrolled
+            ? "text-[#f0f0f0] border-2 border-[#2a2a2a] hover:border-accent hover:bg-transparent hover:text-[#ffff00]"
+            : "text-black border-2 border-black hover:border-[#00FFFF] hover:bg-[#00FFFF] hover:text-black"
+        }
+        dark:text-[#f0f0f0] dark:border-[#2a2a2a] dark:hover:border-accent dark:hover:bg-transparent dark:hover:text-[#ffff00]
+      `}
     >
       {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
     </button>

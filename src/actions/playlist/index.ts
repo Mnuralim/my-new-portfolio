@@ -62,8 +62,50 @@ export async function getPlaylistBySlug(slug: string) {
 
   return prisma.playlist.findUnique({
     where: { slug },
-    include: { posts: { include: { blogPost: true } } },
+    include: {
+      posts: {
+        include: { blogPost: true },
+        orderBy: { blogPost: { order: "asc" } },
+      },
+    },
   });
+}
+
+export async function getAdjacentPlaylistPosts(
+  playlistSlug: string,
+  currentPostSlug: string
+) {
+  "use cache";
+  cacheTag("playlists");
+  cacheLife("weeks");
+
+  const playlist = await prisma.playlist.findUnique({
+    where: { slug: playlistSlug },
+    include: {
+      posts: {
+        include: { blogPost: true },
+        orderBy: { blogPost: { order: "asc" } },
+      },
+    },
+  });
+
+  if (!playlist) {
+    return { prev: null, next: null, playlistName: null };
+  }
+
+  const index = playlist.posts.findIndex(
+    (p) => p.blogPost.slug === currentPostSlug
+  );
+
+  if (index === -1) {
+    return { prev: null, next: null, playlistName: playlist.name };
+  }
+
+  return {
+    prev: playlist.posts[index - 1]?.blogPost ?? null,
+    next: playlist.posts[index + 1]?.blogPost ?? null,
+    playlistName: playlist.name,
+  };
 }
 
 function slugify(name: string): string {

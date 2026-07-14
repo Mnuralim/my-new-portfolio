@@ -14,7 +14,7 @@ export default async function ExperienceSection() {
             data-cursor-hover
             className="
               grid grid-cols-1 md:grid-cols-[180px_1fr]
-              bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px
+              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px
               group transition-colors duration-200 hover:border-accent
             "
           >

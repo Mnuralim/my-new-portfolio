@@ -13,7 +13,7 @@ export default async function SkillsSection() {
             key={skill.name}
             data-cursor-hover
             className="
-              bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
+              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
               relative overflow-hidden
               group transition-all duration-200 hover:border-accent
               cursor-pointer

@@ -40,7 +40,7 @@ export default async function BlogSection() {
       </div>
 
       {featured && (
-        <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mb-px">
+        <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mb-px">
           <div
             data-cursor-hover
             className="p-8 md:border-r-2 border-b-2 md:border-b-0 border-[#333] dark:border-[#2a2a2a] group cursor-pointer relative overflow-hidden transition-colors duration-200 hover:bg-[#161616]"
@@ -122,7 +122,7 @@ export default async function BlogSection() {
             href={post.href}
             data-cursor-hover
             className="
-              bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
+              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
               no-underline group cursor-pointer
               transition-colors duration-200 hover:border-accent hover:bg-[#0a0a0a] dark:hover:bg-[#0d0d0d]
             "
@@ -154,7 +154,7 @@ export default async function BlogSection() {
         ))}
       </div>
 
-      <div className="bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px p-8 flex justify-between items-center gap-8 flex-wrap">
+      <div className="bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px p-8 flex justify-between items-center gap-8 flex-wrap">
         <div>
           <p className="text-meta-2xs tracking-widest text-[#ffff00] mb-1">
             {"// NEWSLETTER"}
@@ -177,7 +177,7 @@ export default async function BlogSection() {
               focus:border-accent placeholder:text-[#444444]
             "
           />
-          <button className="btn-primary px-5 py-2.5 text-meta-xs whitespace-nowrap border-l-0">
+          <button className="bg-accent text-black font-mono text-meta-xs font-bold px-5 py-2.5 tracking-widest border-2 border-accent border-l-0 cursor-pointer uppercase whitespace-nowrap transition-all duration-200 hover:bg-[#00FFFF] hover:border-[#00FFFF] hover:text-black">
             SUBSCRIBE
           </button>
         </div>

@@ -13,7 +13,7 @@ export default async function ServicesSection() {
             key={service.title}
             data-cursor-hover
             className="
-              bg-black border-2 border-black dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8
+              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8
               flex gap-6
               group transition-colors duration-200 hover:border-accent
             "
