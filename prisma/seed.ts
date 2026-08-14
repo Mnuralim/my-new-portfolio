@@ -42,11 +42,7 @@ async function createSkills() {
     },
   ];
 
-  const count = await prisma.skill.count();
-  if (count > 0) {
-    console.log("Skills already exist. Skipping.");
-    return;
-  }
+  await prisma.skill.deleteMany();
 
   await prisma.skill.createMany({
     data: data.map((d, i) => ({ ...d, order: i })),
@@ -90,11 +86,7 @@ async function createExperiences() {
     },
   ];
 
-  const count = await prisma.experience.count();
-  if (count > 0) {
-    console.log("Experiences already exist. Skipping.");
-    return;
-  }
+  await prisma.experience.deleteMany();
 
   for (let i = 0; i < data.length; i++) {
     await prisma.experience.create({ data: { ...data[i], order: i } });
@@ -192,11 +184,7 @@ async function createProjects() {
     },
   ];
 
-  const count = await prisma.project.count();
-  if (count > 0) {
-    console.log("Projects already exist. Skipping.");
-    return;
-  }
+  await prisma.project.deleteMany();
 
   for (let i = 0; i < data.length; i++) {
     await prisma.project.create({ data: { ...data[i], order: i } });
@@ -240,11 +228,7 @@ async function createServices() {
     },
   ];
 
-  const count = await prisma.service.count();
-  if (count > 0) {
-    console.log("Services already exist. Skipping.");
-    return;
-  }
+  await prisma.service.deleteMany();
 
   for (let i = 0; i < data.length; i++) {
     await prisma.service.create({ data: { ...data[i], order: i } });
@@ -266,11 +250,7 @@ async function createContactLinks() {
     { label: "WEBSITE", href: "https://izzy.my.id" },
   ];
 
-  const count = await prisma.contactLink.count();
-  if (count > 0) {
-    console.log("Contact links already exist. Skipping.");
-    return;
-  }
+  await prisma.contactLink.deleteMany();
 
   for (let i = 0; i < data.length; i++) {
     await prisma.contactLink.create({ data: { ...data[i], order: i } });
