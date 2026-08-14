@@ -125,6 +125,7 @@ export default function Navbar() {
                   <li key={link.label} style={{ borderTop: "1px solid var(--c-divider)" }}>
                     <Link
                       href={link.href}
+                      onClick={() => setMobileOpen(false)}
                       aria-current={isActive ? "page" : undefined}
                       className="block py-3.5 text-meta-md no-underline"
                       style={{ color: isActive ? "var(--color-accent)" : "var(--c-text)" }}
@@ -136,7 +137,10 @@ export default function Navbar() {
               })}
               <li style={{ borderTop: "1px solid var(--c-divider)" }} className="py-3.5">
                 <button
-                  onClick={() => setCvOpen(true)}
+                  onClick={() => {
+                    setCvOpen(true);
+                    setMobileOpen(false);
+                  }}
                   className="text-meta-md bg-transparent border-none cursor-pointer p-0"
                   style={{ color: "var(--c-text)" }}
                 >

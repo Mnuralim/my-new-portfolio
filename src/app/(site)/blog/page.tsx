@@ -1,5 +1,20 @@
+import type { Metadata } from "next";
 import { getLatestPosts } from "@/lib/data";
 import { BlogListClient } from "./_components/blog-list-client";
+
+export const metadata: Metadata = {
+  title: "Blog & Tutorials — Izzy Dev",
+  description:
+    "Tulisan seputar networking, web development, dan IT support dari Muhamad Nur Fatahil Alim. Tutorial praktis buat developer dan IT support.",
+  alternates: { canonical: "https://izzy.my.id/blog" },
+  openGraph: {
+    title: "Blog & Tutorials — Izzy Dev",
+    description:
+      "Tulisan seputar networking, web development, dan IT support dari Muhamad Nur Fatahil Alim.",
+    type: "website",
+    url: "https://izzy.my.id/blog",
+  },
+};
 
 export default async function BlogIndexPage() {
   const posts = await getLatestPosts();

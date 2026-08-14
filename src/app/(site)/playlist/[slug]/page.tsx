@@ -1,10 +1,39 @@
 import Link from "next/link";
 import { Suspense } from "react";
+import type { Metadata } from "next";
 import { ArrowLeft } from "lucide-react";
+import { getPlaylistBySlug } from "@/actions/playlist";
 import { PlaylistContent } from "./_components/playlist-content";
 
 interface Props {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const playlist = await getPlaylistBySlug(slug);
+
+  if (!playlist) {
+    return { title: "Playlist tidak ditemukan — Izzy Dev" };
+  }
+
+  const url = `https://izzy.my.id/playlist/${playlist.slug}`;
+  const description =
+    playlist.description ??
+    `Playlist "${playlist.name}" — kumpulan tulisan dari Izzy Dev.`;
+
+  return {
+    title: `${playlist.name} — Izzy Dev`,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: playlist.name,
+      description,
+      type: "website",
+      url,
+      images: playlist.coverImage ? [{ url: playlist.coverImage }] : undefined,
+    },
+  };
 }
 
 export default function PlaylistDetailPage({ params }: Props) {

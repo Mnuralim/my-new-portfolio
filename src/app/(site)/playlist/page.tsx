@@ -1,5 +1,20 @@
+import type { Metadata } from "next";
 import { getPlaylists } from "@/lib/data";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "Blog Playlists — Izzy Dev",
+  description:
+    "Kumpulan playlist tutorial dan tulisan seputar networking, web development, dan IT support dari Muhamad Nur Fatahil Alim.",
+  alternates: { canonical: "https://izzy.my.id/playlist" },
+  openGraph: {
+    title: "Blog Playlists — Izzy Dev",
+    description:
+      "Kumpulan playlist tutorial seputar networking, web development, dan IT support.",
+    type: "website",
+    url: "https://izzy.my.id/playlist",
+  },
+};
 
 export default async function PlaylistIndexPage() {
   const playlists = await getPlaylists();

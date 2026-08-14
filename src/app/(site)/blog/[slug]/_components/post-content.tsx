@@ -31,8 +31,30 @@ export async function PostContent({ params, searchParams }: Props) {
   const showPlaylistNav =
     adjacent && (adjacent.prev || adjacent.next) && adjacent.playlistName;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.description,
+    image: post.coverImage ? [post.coverImage] : undefined,
+    datePublished: post.date,
+    dateModified: post.updatedAt.toISOString(),
+    author: {
+      "@type": "Person",
+      name: "Muhamad Nur Fatahil Alim",
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://izzy.my.id/blog/${post.slug}`,
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mt-8 mb-6">
         <span className={`${tagClass(post.tagColor)} mb-4 inline-block`}>
           {post.tag}

@@ -1,10 +1,43 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
+import { getBlogPostBySlug } from "@/actions/blog-post";
 import { PostContent } from "./_components/post-content";
 import { BackLink } from "./_components/back-link";
 
 interface Props {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ playlist?: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getBlogPostBySlug(slug);
+
+  if (!post) {
+    return { title: "Post tidak ditemukan — Izzy Dev" };
+  }
+
+  const url = `https://izzy.my.id/blog/${post.slug}`;
+
+  return {
+    title: `${post.title} — Izzy Dev`,
+    description: post.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      type: "article",
+      url,
+      publishedTime: post.date,
+      images: post.coverImage ? [{ url: post.coverImage }] : undefined,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: post.coverImage ? [post.coverImage] : undefined,
+    },
+  };
 }
 
 export default function BlogPostPage({ params, searchParams }: Props) {
