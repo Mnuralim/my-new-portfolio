@@ -36,9 +36,34 @@ export default function Modal({
 
   useEffect(() => {
     if (!isOpen) return;
+    const FOCUSABLE_SELECTOR =
+      'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab" || !modalRef.current) return;
+
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      );
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
+
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => {
@@ -57,7 +82,7 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 overflow-y-auto p-4 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto p-4 sm:p-6"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -68,41 +93,45 @@ export default function Modal({
       <div
         ref={modalRef}
         tabIndex={-1}
-        className={`
-          w-full ${sizeMap[size]} bg-black border-2 border-accent
-          flex flex-col max-h-[90vh] outline-none
-          animate-fadeUp
-        `}
+        className={`w-full ${sizeMap[size]} flex flex-col max-h-[90vh] outline-none rounded-[16px] overflow-hidden animate-fadeUp`}
+        style={{
+          background: "var(--c-cardbg2)",
+          border: "1px solid var(--c-cardborder)",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+        }}
       >
-        <div className="flex justify-between items-center px-6 py-4 border-b-2 border-[#2a2a2a] flex-shrink-0">
+        <div
+          className="flex justify-between items-center px-6 py-4 flex-shrink-0"
+          style={{ borderBottom: "1px solid var(--c-cardborder)" }}
+        >
           <div className="flex flex-col gap-0.5">
             {eyebrow && (
-              <span className="text-meta-2xs tracking-[3px] text-[#ffff00]">
+              <span
+                className="text-meta-2xs tracking-[3px]"
+                style={{ color: "var(--color-accent)" }}
+              >
                 {eyebrow}
               </span>
             )}
-            <h2 className="font-display font-extrabold text-base tracking-tight leading-none text-[#ffff00]">
+            <h2
+              className="font-sans font-bold text-base tracking-tight leading-none"
+              style={{ color: "var(--c-text)" }}
+            >
               {title}
             </h2>
           </div>
           <button
             onClick={onClose}
             aria-label="Tutup modal"
-            className="
-              w-11 h-11 border-2 border-[#2a2a2a] flex-shrink-0
-              flex items-center justify-center
-              text-[#999999] text-sm font-mono
-              bg-transparent cursor-pointer
-              transition-all duration-200
-              hover:border-accent hover:text-[#ffff00]
-            "
+            className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-mono bg-transparent cursor-pointer transition-opacity hover:opacity-70"
+            style={{ border: "1px solid var(--c-border)", color: "var(--c-muted2)" }}
           >
             ✕
           </button>
         </div>
 
         {subheader && (
-          <div className="border-b-2 border-[#2a2a2a] flex-shrink-0">
+          <div className="flex-shrink-0" style={{ borderBottom: "1px solid var(--c-cardborder)" }}>
             {subheader}
           </div>
         )}
@@ -110,7 +139,10 @@ export default function Modal({
         <div className="overflow-y-auto flex-1">{children}</div>
 
         {footer && (
-          <div className="border-t-2 border-[#2a2a2a] px-6 py-3.5 flex-shrink-0">
+          <div
+            className="px-6 py-3.5 flex-shrink-0"
+            style={{ borderTop: "1px solid var(--c-cardborder)" }}
+          >
             {footer}
           </div>
         )}

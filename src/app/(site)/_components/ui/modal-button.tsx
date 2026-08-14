@@ -8,12 +8,9 @@ interface ModalButtonProps {
 }
 
 const variantClass: Record<ModalButtonVariant, string> = {
-  default:
-    "bg-transparent text-[#999999] border-[#2a2a2a] hover:border-accent hover:text-[#ffff00]",
-  primary:
-    "bg-accent text-black border-accent hover:bg-transparent hover:text-[#ffff00]",
-  danger:
-    "bg-accent2 text-black border-accent2 hover:bg-transparent hover:text-accent2",
+  default: "bg-transparent hover:opacity-70",
+  primary: "bg-accent text-[#0b0b0c] border-accent hover:opacity-90",
+  danger: "bg-accent2 text-white border-accent2 hover:opacity-90",
 };
 
 export default function ModalButton({
@@ -26,12 +23,12 @@ export default function ModalButton({
     <button
       type={type}
       onClick={onClick}
-      className={`
-        font-mono text-meta-xs tracking-widest
-        px-5 py-2.5 border-2 -ml-px
-        cursor-pointer transition-all duration-200
-        ${variantClass[variant]}
-      `}
+      className={`font-mono text-meta-xs tracking-widest px-5 py-2.5 rounded-[8px] cursor-pointer transition-all duration-200 ${variantClass[variant]}`}
+      style={
+        variant === "default"
+          ? { color: "var(--c-muted2)", border: "1px solid var(--c-border)" }
+          : undefined
+      }
     >
       {children}
     </button>

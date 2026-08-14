@@ -34,22 +34,18 @@ export default function ProjectsModal({
       : allProjects.filter((p) => p.filter === activeFilter);
 
   const filterTabs = (
-    <div className="flex overflow-x-auto">
+    <div className="flex gap-2 overflow-x-auto px-6 py-4">
       {FILTERS.map((f) => (
         <button
           key={f}
           onClick={() => setActiveFilter(f)}
-          style={{ borderRight: "2px solid #2a2a2a" }}
-          className={`
-            font-mono text-meta-2xs tracking-widest
-            px-5 py-3 cursor-pointer whitespace-nowrap
-            border-none transition-all duration-200
-            ${
-              activeFilter === f
-                ? "bg-accent text-black"
-                : "bg-transparent text-[#999999] hover:text-[#ffff00] hover:bg-[#161616]"
-            }
-          `}
+          aria-pressed={activeFilter === f}
+          style={{
+            color: activeFilter === f ? "#0b0b0c" : "var(--c-muted2)",
+            background: activeFilter === f ? "var(--color-accent)" : "transparent",
+            border: activeFilter === f ? "1px solid var(--color-accent)" : "1px solid var(--c-border)",
+          }}
+          className="font-mono text-meta-2xs tracking-widest px-4 py-2 rounded-full cursor-pointer whitespace-nowrap transition-all duration-200"
         >
           {f}
         </button>
@@ -61,13 +57,22 @@ export default function ProjectsModal({
     <ModalFooter
       info={
         <>
-          MENAMPILKAN <span className="text-[#ffff00]">{filtered.length}</span>{" "}
-          DARI <span className="text-[#ffff00]">{allProjects.length}</span> PROYEK
+          MENAMPILKAN{" "}
+          <span style={{ color: "var(--color-accent)" }}>{filtered.length}</span>{" "}
+          DARI{" "}
+          <span style={{ color: "var(--color-accent)" }}>{allProjects.length}</span>{" "}
+          PROYEK
         </>
       }
     >
       <ModalButton onClick={onClose}>TUTUP</ModalButton>
     </ModalFooter>
+  );
+
+  const liveCount = (
+    <p aria-live="polite" className="sr-only">
+      Menampilkan {filtered.length} dari {allProjects.length} proyek.
+    </p>
   );
 
   return (
@@ -80,68 +85,77 @@ export default function ProjectsModal({
       subheader={filterTabs}
       footer={footer}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2">
+      <div className="p-6">
+        {liveCount}
         {filtered.length === 0 ? (
-          <div className="col-span-2 py-16 text-center text-[#999999] text-meta-sm tracking-widest">
+          <div
+            className="py-16 text-center text-meta-sm tracking-widest"
+            style={{ color: "var(--c-muted2)" }}
+          >
             TIDAK ADA PROYEK DI KATEGORI INI
           </div>
         ) : (
-          filtered.map((project, i) => (
-            <a
-              key={project.num}
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              data-cursor-hover
-              className={`
-                block p-6 no-underline relative
-                transition-colors duration-200 hover:bg-[#161616]
-                group cursor-pointer
-                ${i % 2 === 0 ? "sm:border-r-2 border-[#2a2a2a]" : ""}
-                border-b-2 border-[#2a2a2a]
-                last:border-b-0
-                [&:nth-last-child(2):nth-child(odd)]:border-b-0
-              `}
-            >
-              <div
-                className="font-display font-extrabold text-[2.2rem] leading-none mb-3"
-                style={{ WebkitTextStroke: "1px #333", color: "transparent" }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {filtered.map((project) => (
+              <a
+                key={project.num}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="card-hoverable block p-6 rounded-[12px] no-underline relative overflow-hidden"
+                style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
               >
-                {project.num}
-              </div>
+                <div
+                  className="absolute -top-2 -right-1 font-sans font-extrabold text-[3.2rem] leading-none pointer-events-none select-none"
+                  style={{ color: "var(--c-divider)" }}
+                >
+                  {project.num}
+                </div>
 
-              <span
-                className={`${tagClass(
-                  project.tagColor
-                )} mb-2 block w-fit text-meta-2xs`}
-              >
-                {project.tag}
-              </span>
-
-              <h3 className="font-display font-bold text-meta-lg leading-[1.25] tracking-tight mb-2 text-[#ffff00] group-hover:text-white transition-colors duration-200">
-                {project.title}
-              </h3>
-
-              <p className="text-meta-xs text-[#999999] leading-[1.8] mb-3">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1">
-                {project.stack.map((s) => (
+                <div className="relative">
                   <span
-                    key={s}
-                    className="text-meta-2xs px-1.5 py-0.5 bg-[#0a0a0a] border border-[#2a2a2a] text-[#444444] tracking-[1px]"
+                    className={`${tagClass(project.tagColor)} mb-3 block w-fit text-meta-2xs`}
                   >
-                    {s}
+                    {project.tag}
                   </span>
-                ))}
-              </div>
 
-              <span className="absolute top-4 right-4 text-[#999999] text-base group-hover:text-[#ffff00] transition-colors duration-200">
-                ↗
-              </span>
-            </a>
-          ))
+                  <h3
+                    className="font-sans font-bold text-meta-lg leading-[1.25] tracking-tight mb-2 pr-8"
+                    style={{ color: "var(--c-text)" }}
+                  >
+                    {project.title}
+                    <span className="sr-only"> (buka di tab baru)</span>
+                  </h3>
+
+                  <p
+                    className="text-meta-xs leading-[1.8] mb-4"
+                    style={{ color: "var(--c-muted)" }}
+                  >
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map((s) => (
+                      <span
+                        key={s}
+                        className="text-meta-2xs px-2 py-0.5 rounded-full tracking-[1px]"
+                        style={{ color: "var(--c-muted3)", border: "1px solid var(--c-border)" }}
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <span
+                  className="absolute top-5 right-5 text-base"
+                  style={{ color: "var(--c-muted2)" }}
+                >
+                  ↗
+                </span>
+              </a>
+            ))}
+          </div>
         )}
       </div>
     </Modal>

@@ -122,6 +122,14 @@ model Playlist {
   @@map("tb_playlist")
 }
 
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique @db.VarChar(150)
+  createdAt DateTime @default(now())
+
+  @@map("tb_subscriber")
+}
+
 model BlogPostPlaylist {
   blogPostId String
   playlistId String

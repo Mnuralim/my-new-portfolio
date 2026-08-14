@@ -1,43 +1,40 @@
 import { getSkills } from "@/lib/data";
+import Reveal from "@/app/_components/reveal";
 
 export default async function SkillsSection() {
   const skills = await getSkills();
 
   return (
-    <section id="skills" className="px-3 py-20">
-      <h2 className="section-label">02 / SKILLS</h2>
+    <section
+      id="skills"
+      className="px-4 sm:px-8 py-16 sm:py-20"
+      style={{ borderTop: "1px solid var(--c-divider)" }}
+    >
+      <h2 className="section-label">02 / Skills</h2>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
-        {skills.map((skill) => (
-          <div
-            key={skill.name}
-            data-cursor-hover
-            className="
-              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
-              relative overflow-hidden
-              group transition-all duration-200 hover:border-accent
-              cursor-pointer
-            "
-          >
-            <div
-              className="
-                absolute inset-0 bg-accent z-0
-                translate-y-full group-hover:translate-y-0
-                transition-transform duration-300 ease-in-out
-              "
-            />
-
-            <div className="relative z-10">
-              <p className="text-meta-2xs tracking-widest text-[#999999] mb-2 group-hover:text-black transition-colors duration-200">
+      <Reveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-px rounded-[14px] overflow-hidden">
+        <div
+          className="contents"
+          style={{ background: "var(--c-divider)" }}
+        >
+          {skills.map((skill) => (
+            <div key={skill.name} className="skill-cell px-6 py-[26px]">
+              <div
+                className="font-mono text-meta-sm tracking-[0.08em] mb-2.5"
+                style={{ color: "var(--color-accent)" }}
+              >
                 {skill.category}
-              </p>
-              <p className="font-display font-bold text-base text-[#ffff00] group-hover:text-black transition-colors duration-200">
+              </div>
+              <div
+                className="font-sans font-medium text-meta-lg"
+                style={{ color: "var(--c-text)" }}
+              >
                 {skill.name}
-              </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </Reveal>
     </section>
   );
 }

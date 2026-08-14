@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; background:#0B0B0C; }
+    a { color:#F4E400; text-decoration:none; }
+    a:hover { color:#FFF3A0; }
+    ::selection { background:#F4E400; color:#0B0B0C; }
+    @keyframes blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
+    :root{--c-bg:#0B0B0C;--c-text:#F2F2F0;--c-muted:#ADADA8;--c-muted2:#8A8A85;--c-muted3:#6A6A66;--c-border:#2C2C2D;--c-cardborder:#232324;--c-divider:#1E1E1F;--c-cardbg:#131314;--c-cardbg2:#141415;--c-navbg:rgba(11,11,12,0.85);--c-b5:#B5B5B0;--c-grad1:#151517;--c-grad2:#121213;}
+    #page-root[data-theme="light"]{--c-bg:#FAFAF7;--c-text:#141414;--c-muted:#4A4A46;--c-muted2:#6E6E68;--c-muted3:#97978F;--c-border:#DEDED6;--c-cardborder:#E3E3DC;--c-divider:#EAEAE3;--c-cardbg:#FFFFFF;--c-cardbg2:#FFFFFF;--c-navbg:rgba(250,250,247,0.85);--c-b5:#5A5A54;--c-grad1:#FFFFFF;--c-grad2:#F5F5F0;}
+  </style>
+</helmet>
+
+<div id="page-root" data-theme="{{ theme }}" style="background:var(--c-bg); color:var(--c-text); font-family:'Inter',sans-serif; min-height:100vh; overflow-x:hidden; transition:background 0.2s,color 0.2s;">
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:22px 64px; background:var(--c-navbg); backdrop-filter:blur(10px); border-bottom:1px solid var(--c-divider);">
+    <div style="display:flex; align-items:center; gap:8px; font-family:'JetBrains Mono',monospace; font-weight:600; font-size:16px; letter-spacing:0.02em;">
+      <span style="color:#F4E400;">&lt;/&gt;</span> izzy.dev
+    </div>
+    <div style="display:flex; align-items:center; gap:28px; font-size:14px; color:var(--c-b5); white-space:nowrap;">
+      <a href="#projects" style="color:var(--c-b5);">Projects</a>
+      <a href="#skills" style="color:var(--c-b5);">Skills</a>
+      <a href="#experience" style="color:var(--c-b5);">Experience</a>
+      <a href="#services" style="color:var(--c-b5);">Services</a>
+      <a href="#blog" style="color:var(--c-b5);">Blog</a>
+      <a href="#contact" style="color:var(--c-b5);">Contact</a>
+    </div>
+    <div style="display:flex; align-items:center; gap:14px;">
+      <button onClick="{{ toggleTheme }}" aria-label="Toggle theme" style="width:44px; height:24px; border-radius:20px; border:1px solid var(--c-border); background:var(--c-cardbg); position:relative; cursor:pointer; padding:0; flex-shrink:0;">
+        <span style="position:absolute; top:2px; left:{{ knobLeft }}; width:18px; height:18px; border-radius:50%; background:#F4E400; transition:left 0.2s;"></span>
+      </button>
+      <a href="https://izzy.my.id/cv" style="font-size:13px; color:var(--c-text); border:1px solid var(--c-border); padding:9px 16px; border-radius:8px; white-space:nowrap;">View CV</a>
+      <span style="font-size:12px; font-family:'JetBrains Mono',monospace; color:#F4E400; border:1px solid #3A3A1F; background:rgba(244,228,0,0.08); padding:8px 14px; border-radius:8px;">Open to work</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section style="padding:120px 64px 100px; display:grid; grid-template-columns:1.2fr 0.9fr; gap:60px; align-items:center; max-width:1400px; margin:0 auto;">
+    <div>
+      <div style="display:inline-block; font-family:'JetBrains Mono',monospace; font-size:13px; letter-spacing:0.08em; color:var(--c-text); background:#F4E400; padding:6px 14px; border-radius:6px; margin-bottom:28px;">// WEB DEVELOPER &amp; IT SUPPORT</div>
+      <h1 style="font-size:86px; line-height:1.02; font-weight:800; margin:0 0 28px; letter-spacing:-0.02em;">
+        Build.<br>Deploy.<br><span style="color:#F4E400;">Solve.</span>
+      </h1>
+      <p style="font-size:18px; line-height:1.6; color:var(--c-muted); max-width:520px; margin:0 0 40px;">
+        Gue bikin web yang berfungsi dengan baik dan bantu sistem IT berjalan tanpa hambatan. Full-stack dev + troubleshooter yang passionate.
+      </p>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:64px;">
+        <a href="#projects" style="background:#F4E400; color:var(--c-text); font-weight:600; font-size:15px; padding:15px 28px; border-radius:9px;">Lihat Proyek</a>
+        <a href="#contact" style="border:1px solid var(--c-border); color:var(--c-text); font-weight:600; font-size:15px; padding:15px 28px; border-radius:9px;">Hubungi Gue</a>
+        <a href="https://izzy.my.id/cv" style="color:var(--c-muted); font-size:15px; font-weight:500;">View CV ↗</a>
+      </div>
+      <div style="display:flex; gap:48px;">
+        <div><div style="font-size:30px; font-weight:800; color:#F4E400;">1+</div><div style="font-size:13px; color:var(--c-muted2); margin-top:4px;">Years Exp</div></div>
+        <div><div style="font-size:30px; font-weight:800; color:#F4E400;">10+</div><div style="font-size:13px; color:var(--c-muted2); margin-top:4px;">Projects Done</div></div>
+        <div><div style="font-size:30px; font-weight:800; color:#F4E400;">100%</div><div style="font-size:13px; color:var(--c-muted2); margin-top:4px;">Problem Solved</div></div>
+      </div>
+    </div>
+
+    <div style="background:var(--c-cardbg2); border:1px solid var(--c-cardborder); border-radius:14px; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,0.4);">
+      <div style="display:flex; align-items:center; gap:8px; padding:14px 18px; border-bottom:1px solid var(--c-cardborder);">
+        <span style="width:11px; height:11px; border-radius:50%; background:#FF5F56;"></span>
+        <span style="width:11px; height:11px; border-radius:50%; background:#FFBD2E;"></span>
+        <span style="width:11px; height:11px; border-radius:50%; background:#27C93F;"></span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2); margin-left:8px;">izzy@dev — zsh</span>
+      </div>
+      <div style="padding:24px 22px; font-family:'JetBrains Mono',monospace; font-size:14px; line-height:1.9;">
+        <div><span style="color:#F4E400;">→</span> whoami</div>
+        <div style="color:var(--c-muted2); margin-bottom:14px;">// Fullstack Dev + IT Support</div>
+        <div><span style="color:#F4E400;">→</span> cat stack.txt</div>
+        <div style="color:var(--c-muted2); margin-bottom:14px;">Next.js · Bun · Prisma<br>Solidity · MySQL · Linux</div>
+        <div><span style="color:#F4E400;">→</span> status</div>
+        <div style="color:#5FE07A; margin-bottom:14px;">● ONLINE &amp; READY TO BUILD</div>
+        <div><span style="color:#F4E400;">→</span> <span style="display:inline-block; width:8px; height:15px; background:#F4E400; animation:blink 1s step-end infinite; vertical-align:middle;"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" style="padding:80px 64px; max-width:1400px; margin:0 auto;">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:48px;">
+      <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500;">01 / PROJECTS</h2>
+      <a href="https://izzy.my.id/#projects" style="font-size:14px; color:var(--c-text); font-weight:500;">View all projects →</a>
+    </div>
+
+    <div style="border:1px solid var(--c-cardborder); border-radius:14px; padding:44px; margin-bottom:24px; background:linear-gradient(180deg,var(--c-grad1),var(--c-grad2));">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#F4E400; background:rgba(244,228,0,0.1); padding:4px 10px; border-radius:6px;">FEATURED</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--c-muted2);">03</span>
+      </div>
+      <h3 style="font-size:30px; font-weight:700; margin:0 0 14px;">E-Voting System Based on Blockchain</h3>
+      <p style="font-size:16px; color:var(--c-muted); line-height:1.6; max-width:680px; margin:0 0 24px;">Sistem e-voting berbasis blockchain yang aman dan transparan menggunakan Solidity smart contract dan NFT-based voter authentication.</p>
+      <div style="display:flex; align-items:center; justify-content:space-between;">
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <sc-for list="{{ tagsFeatured }}" as="tag" hint-placeholder-count="4">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-b5); border:1px solid var(--c-border); padding:6px 12px; border-radius:20px;">{{ tag }}</span>
+          </sc-for>
+        </div>
+        <a href="https://github.com/Mnuralim" style="width:40px; height:40px; border-radius:50%; border:1px solid var(--c-border); display:flex; align-items:center; justify-content:center; font-size:16px;">↗</a>
+      </div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+      <sc-for list="{{ projects }}" as="proj" hint-placeholder-count="2">
+        <div style="border:1px solid var(--c-cardborder); border-radius:14px; padding:36px; background:var(--c-cardbg);">
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2); border:1px solid var(--c-border); padding:4px 10px; border-radius:6px;">{{ proj.category }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2);">{{ proj.num }}</span>
+          </div>
+          <h3 style="font-size:22px; font-weight:700; margin:0 0 12px;">{{ proj.title }}</h3>
+          <p style="font-size:15px; color:var(--c-muted); line-height:1.6; margin:0 0 22px;">{{ proj.desc }}</p>
+          <div style="display:flex; align-items:center; justify-content:space-between;">
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-for list="{{ proj.tags }}" as="tag" hint-placeholder-count="4">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--c-b5); border:1px solid var(--c-border); padding:5px 10px; border-radius:20px;">{{ tag }}</span>
+              </sc-for>
+            </div>
+            <a href="{{ proj.link }}" style="width:34px; height:34px; border-radius:50%; border:1px solid var(--c-border); display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;">↗</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" style="padding:80px 64px; max-width:1400px; margin:0 auto; border-top:1px solid var(--c-divider);">
+    <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500; margin-bottom:48px;">02 / SKILLS</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--c-divider); border:1px solid var(--c-divider); border-radius:14px; overflow:hidden;">
+      <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="12">
+        <div style="background:var(--c-cardbg); padding:26px 24px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.08em; color:#F4E400; margin-bottom:10px;">{{ sk.cat }}</div>
+          <div style="font-size:15px; color:var(--c-text); font-weight:500;">{{ sk.items }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience" style="padding:80px 64px; max-width:1100px; margin:0 auto; border-top:1px solid var(--c-divider);">
+    <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500; margin-bottom:48px;">03 / EXPERIENCE</h2>
+    <div style="display:flex; flex-direction:column; gap:0;">
+      <sc-for list="{{ experience }}" as="exp" hint-placeholder-count="2">
+        <div style="display:grid; grid-template-columns:200px 1fr; gap:36px; padding:36px 0; border-top:1px solid var(--c-divider);">
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#F4E400; margin-bottom:8px;">{{ exp.period }}</div>
+            <div style="font-size:14px; color:var(--c-muted2);">{{ exp.company }}</div>
+            <div style="font-size:12px; color:var(--c-muted3); margin-top:4px;">{{ exp.type }}</div>
+          </div>
+          <div>
+            <h3 style="font-size:21px; font-weight:700; margin:0 0 12px;">{{ exp.role }}</h3>
+            <p style="font-size:15px; color:var(--c-muted); line-height:1.65; margin:0 0 18px;">{{ exp.desc }}</p>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <sc-for list="{{ exp.tags }}" as="tag" hint-placeholder-count="3">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--c-b5); border:1px solid var(--c-border); padding:5px 10px; border-radius:20px;">{{ tag }}</span>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="padding:80px 64px; max-width:1400px; margin:0 auto; border-top:1px solid var(--c-divider);">
+    <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500; margin-bottom:48px;">04 / SERVICES</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+      <sc-for list="{{ services }}" as="svc" hint-placeholder-count="4">
+        <div style="border:1px solid var(--c-cardborder); border-radius:14px; padding:30px; background:var(--c-cardbg);">
+          <div style="font-size:26px; color:#F4E400; margin-bottom:22px; font-family:'JetBrains Mono',monospace;">{{ svc.icon }}</div>
+          <h3 style="font-size:18px; font-weight:700; margin:0 0 12px;">{{ svc.title }}</h3>
+          <p style="font-size:14px; color:var(--c-muted); line-height:1.6; margin:0;">{{ svc.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" style="padding:100px 64px; max-width:1400px; margin:0 auto; border-top:1px solid var(--c-divider);">
+    <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:60px; align-items:end;">
+      <div>
+        <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500; margin-bottom:24px;">05 / CONTACT</h2>
+        <h3 style="font-size:56px; font-weight:800; line-height:1.05; margin:0 0 28px; letter-spacing:-0.01em;">Let's work<br>together.</h3>
+        <p style="font-size:15px; color:var(--c-muted2); max-width:420px; line-height:1.6;">Based in Indonesia. Siap kerja remote atau on-site. Respon dalam 24 jam. Available for freelance &amp; full-time.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:0;">
+        <a href="https://izzy.my.id/cdn-cgi/l/email-protection" style="display:flex; align-items:center; justify-content:space-between; padding:20px 4px; border-top:1px solid var(--c-divider); color:var(--c-text); font-size:17px; font-weight:600;">Email <span>↗</span></a>
+        <a href="https://linkedin.com/in/muhamad-nur-fatahil-alim" style="display:flex; align-items:center; justify-content:space-between; padding:20px 4px; border-top:1px solid var(--c-divider); color:var(--c-text); font-size:17px; font-weight:600;">LinkedIn <span>↗</span></a>
+        <a href="https://github.com/Mnuralim" style="display:flex; align-items:center; justify-content:space-between; padding:20px 4px; border-top:1px solid var(--c-divider); color:var(--c-text); font-size:17px; font-weight:600;">GitHub <span>↗</span></a>
+        <a href="https://wa.me/6285176996948" style="display:flex; align-items:center; justify-content:space-between; padding:20px 4px; border-top:1px solid var(--c-divider); border-bottom:1px solid var(--c-divider); color:var(--c-text); font-size:17px; font-weight:600;">WhatsApp <span>↗</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" style="padding:80px 64px; max-width:1400px; margin:0 auto; border-top:1px solid var(--c-divider);">
+    <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:48px;">
+      <h2 style="font-size:14px; font-family:'JetBrains Mono',monospace; letter-spacing:0.1em; color:var(--c-muted2); font-weight:500;">06 / BLOG &amp; TUTORIALS</h2>
+      <div style="display:flex; gap:24px;">
+        <a href="https://izzy.my.id/blog" style="font-size:14px; color:var(--c-text); font-weight:500;">View all posts →</a>
+        <a href="https://izzy.my.id/playlist" style="font-size:14px; color:var(--c-text); font-weight:500;">View all playlists →</a>
+      </div>
+    </div>
+
+    <a href="https://izzy.my.id/blog/memahami-7-layer-osi-dari-dasar" style="display:block; border:1px solid var(--c-cardborder); border-radius:14px; padding:44px; margin-bottom:24px; background:linear-gradient(180deg,var(--c-grad1),var(--c-grad2)); color:inherit;">
+      <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#F4E400; background:rgba(244,228,0,0.1); padding:4px 10px; border-radius:6px;">FEATURED</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2);">SRV</span>
+      </div>
+      <h3 style="font-size:26px; font-weight:700; margin:0 0 14px;">Memahami 7 Layer OSI dari Dasar</h3>
+      <p style="font-size:15px; color:var(--c-muted); line-height:1.6; max-width:680px; margin:0 0 20px;">Kenapa OSI Layer ada, apa fungsi tiap 7 lapisnya, dan kenapa ngerti urutan ini bikin troubleshooting jaringan jauh lebih cepat.</p>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2);">2026-07-14 · 8 menit</div>
+    </a>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-bottom:24px;">
+      <sc-for list="{{ blogMid }}" as="post" hint-placeholder-count="2">
+        <a href="{{ post.link }}" style="display:block; border:1px solid var(--c-cardborder); border-radius:14px; padding:28px; background:var(--c-cardbg); color:inherit;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#F4E400; margin-bottom:14px;">{{ post.tag }}</div>
+          <h3 style="font-size:19px; font-weight:700; margin:0 0 14px;">{{ post.title }}</h3>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2);">{{ post.meta }} ↗</div>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:24px; margin-bottom:56px;">
+      <sc-for list="{{ blogLower }}" as="post" hint-placeholder-count="2">
+        <a href="{{ post.link }}" style="display:block; border:1px solid var(--c-cardborder); border-radius:14px; padding:28px; background:var(--c-cardbg); color:inherit;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--c-muted2); margin-bottom:14px;">{{ post.num }} · {{ post.tag }}</div>
+          <h3 style="font-size:18px; font-weight:700; margin:0 0 12px;">{{ post.title }}</h3>
+          <p style="font-size:14px; color:var(--c-muted); line-height:1.6; margin:0 0 16px;">{{ post.desc }}</p>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--c-muted2);">{{ post.date }} ↗</div>
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="display:flex; align-items:center; justify-content:space-between; border:1px solid var(--c-cardborder); border-radius:14px; padding:32px 40px; background:var(--c-cardbg); gap:24px; flex-wrap:wrap;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#F4E400; margin-bottom:8px;">// NEWSLETTER</div>
+        <div style="font-size:17px; font-weight:600;">Dapat notif tiap ada tutorial baru</div>
+        <div style="font-size:13px; color:var(--c-muted2); margin-top:4px;">No spam. Unsubscribe kapan aja.</div>
+      </div>
+      <button style="background:#F4E400; color:var(--c-text); font-weight:600; font-size:15px; padding:15px 28px; border-radius:9px; border:none; cursor:pointer; font-family:inherit;">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer style="padding:36px 64px; display:flex; align-items:center; justify-content:space-between; border-top:1px solid var(--c-divider); flex-wrap:wrap; gap:16px;">
+    <div style="font-size:13px; color:var(--c-muted3);">© 2026 — Muhamad Nur Fatahil Alim · Kolaka, ID</div>
+    <div style="display:flex; gap:28px; font-size:13px;">
+      <a href="#projects" style="color:var(--c-muted2);">Projects</a>
+      <a href="#skills" style="color:var(--c-muted2);">Skills</a>
+      <a href="#experience" style="color:var(--c-muted2);">Experience</a>
+      <a href="#services" style="color:var(--c-muted2);">Services</a>
+      <a href="#blog" style="color:var(--c-muted2);">Blog</a>
+      <a href="#contact" style="color:var(--c-muted2);">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { theme: 'dark' };
+  renderVals() {
+    return {
+      theme: this.state.theme,
+      knobLeft: this.state.theme === 'dark' ? '2px' : '22px',
+      toggleTheme: () => this.setState(s => ({ theme: s.theme === 'dark' ? 'light' : 'dark' })),
+      tagsFeatured: ["SOLIDITY", "NEXT.JS", "SMART CONTRACT", "NFT"],
+      projects: [
+        {
+          num: "01",
+          category: "IT INFRA",
+          title: "Permintaan Pengadaan Apps",
+          desc: "Aplikasi permintaan pengadaan, permintaan BBM, dan pencatatan jurnal kas.",
+          tags: ["NEXT.JS", "BUN.JS", "MYSQL", "PRISMA"],
+          link: "https://github.com/Mnuralim"
+        },
+        {
+          num: "02",
+          category: "WEB DEV",
+          title: "Preducation Platform",
+          desc: "Admin dashboard dan landing page untuk platform kursus video online Preducation, lengkap dengan RESTful API untuk autentikasi, enrollment, dan progress tracking.",
+          tags: ["NEXT.JS", "EXPRESS.JS", "POSTGRESQL", "JWT"],
+          link: "https://github.com/Mnuralim"
+        }
+      ],
+      skills: [
+        { cat: "FRONTEND", items: "React / Next.js" },
+        { cat: "FRONTEND", items: "TailwindCSS / Bootstrap" },
+        { cat: "BACKEND", items: "Bun.js / Express.js" },
+        { cat: "BACKEND", items: "JWT / Prisma / Sequelize" },
+        { cat: "DATABASE", items: "MySQL / PostgreSQL" },
+        { cat: "DATABASE", items: "MongoDB / Firebase" },
+        { cat: "LANGUAGE", items: "JavaScript / TypeScript" },
+        { cat: "BLOCKCHAIN", items: "Solidity / Smart Contract" },
+        { cat: "IT SUPPORT", items: "Windows / Linux" },
+        { cat: "TESTING", items: "Jest / Unit Testing" },
+        { cat: "TOOLS", items: "Git / GitHub" },
+        { cat: "CLOUD", items: "AWS Cloud Basics" }
+      ],
+      experience: [
+        {
+          period: "2025 — NOW",
+          company: "PT. Sumber Setia Budi",
+          type: "FULL-TIME",
+          role: "IT Staff & IT Programmer",
+          desc: "Troubleshoot dan repair laptop hardware/software, instalasi OS Windows & Linux, develop dan maintain aplikasi permintaan pengadaan, permintaan BBM, pencatatan jurnal kas dan incident report untuk departemen HSE. Manage dan maintain application server untuk memastikan uptime sistem.",
+          tags: ["IT SUPPORT", "NEXT.JS", "BUN.JS", "SERVER MANAGEMENT"]
+        },
+        {
+          period: "SEP 2024 — DES 2024",
+          company: "PT. Pilihanmu Indonesia Jaya",
+          type: "INTERNSHIP",
+          role: "Front-End Web Developer Intern",
+          desc: "Kolaborasi dengan PM dan UI/UX team untuk pengembangan produk. Refactor kode untuk meningkatkan maintainability dan performa. Integrasi Firebase sebagai dynamic CMS, unit testing, dan build UI berdasarkan desain Figma dengan presisi tinggi.",
+          tags: ["REACT.JS", "FIREBASE", "FIGMA", "UNIT TESTING"]
+        }
+      ],
+      services: [
+        { icon: "</>", title: "Web Development", desc: "Bikin web app fullstack dari nol — landing page, dashboard, platform, sampai sistem manajemen. Responsive, scalable, dan production-ready." },
+        { icon: "#", title: "IT Support & Helpdesk", desc: "Troubleshoot hardware/software, instalasi OS Windows & Linux, dan pemeliharaan perangkat untuk kelancaran operasional kantor." },
+        { icon: "⬡", title: "Blockchain Development", desc: "Develop smart contract Solidity, NFT, dan sistem berbasis blockchain untuk kebutuhan voting, transaksi, dan otomatisasi." },
+        { icon: "↻", title: "Server & App Maintenance", desc: "Manage dan maintain application server, backup data, monitoring uptime, dan pastikan sistem berjalan 24/7." }
+      ],
+      blogMid: [
+        { tag: "NETWORKING", title: "TCP/IP Model vs OSI Model", meta: "2026-07-14 · 6 Menit", link: "https://izzy.my.id/blog/tcpip-model-vs-osi-model" },
+        { tag: "NETWORKING", title: "Hub vs Switch vs Router", meta: "2026-07-14 · 7 Menit", link: "https://izzy.my.id/blog/hub-vs-switch-vs-router" }
+      ],
+      blogLower: [
+        { num: "04", tag: "NETWORKING", title: "IP Address (IPv4) — Network ID, Host ID, Broadcast", desc: "Konsep dasar IPv4 — cara kerja Network ID dan Host ID, subnet mask (/24, /16, dst), Network Address & Broadcast Address, dan kenapa ini jadi fondasi wajib sebelum masuk ke subnetting.", date: "2026-07-14", link: "https://izzy.my.id/blog/ip-address-ipv4-network-id-host-id-broadcast" },
+        { num: "05", tag: "NETWORKING", title: "Subnetting — Bisa Hitung Manual Tanpa Kalkulator", desc: "Teknik Block Size buat hitung Network Address, Broadcast Address, dan range host secara manual tanpa kalkulator subnet online — modal wajib sebelum masuk CIDR dan latihan subnetting cepat.", date: "2026-07-21", link: "https://izzy.my.id/blog/subnetting-bisa-hitung-manual-tanpa-kalkulator" }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

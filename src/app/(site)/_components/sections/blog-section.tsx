@@ -1,6 +1,8 @@
 import { getLatestPosts } from "@/lib/data";
 import type { BlogPost } from "../../../../../types";
 import Link from "next/link";
+import Reveal from "@/app/_components/reveal";
+import { NewsletterForm } from "./newsletter-form";
 
 function tagClass(color?: BlogPost["tagColor"]) {
   if (color === "it") return "tag-it";
@@ -14,173 +16,156 @@ export default async function BlogSection() {
   const rest = latestPosts.filter((p) => !p.featured);
 
   return (
-    <section id="blog" className="px-3 pb-20">
-      <h2 className="section-label">06 / BLOG & TUTORIALS</h2>
-
-      <div className="flex justify-between items-end mb-10 flex-wrap gap-4">
-        <h3 className="font-display font-extrabold leading-[0.95] tracking-[-2px] text-[clamp(1.8rem,4vw,3rem)]">
-          LATEST
-          <br />
-          <span className="text-outline-sm">WRITES.</span>
-        </h3>
+    <section
+      id="blog"
+      className="px-4 sm:px-8 py-16 sm:py-20"
+      style={{ borderTop: "1px solid var(--c-divider)" }}
+    >
+      <div className="flex justify-between items-baseline flex-wrap gap-4 mb-12">
+        <h2 className="section-label !mb-0 !flex-none">06 / Blog &amp; Tutorials</h2>
         <div className="flex gap-6 flex-wrap">
           <Link
             href="/blog"
-            className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] border-b border-black dark:border-[#2a2a2a] pb-0.5 no-underline transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent"
+            className="text-meta-sm font-medium no-underline"
+            style={{ color: "var(--c-text)" }}
           >
-            VIEW ALL POSTS →
+            View all posts →
           </Link>
           <Link
             href="/playlist"
-            className="text-meta-xs tracking-widest text-black/70 dark:text-[#999999] border-b border-black dark:border-[#2a2a2a] pb-0.5 no-underline transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent"
+            className="text-meta-sm font-medium no-underline"
+            style={{ color: "var(--c-text)" }}
           >
-            VIEW ALL PLAYLISTS →
+            View all playlists →
           </Link>
         </div>
       </div>
 
       {featured && (
-        <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mb-px">
-          <div
-            data-cursor-hover
-            className="p-8 md:border-r-2 border-b-2 md:border-b-0 border-[#333] dark:border-[#2a2a2a] group cursor-pointer relative overflow-hidden transition-colors duration-200 hover:bg-[#161616]"
+        <Reveal className="mb-6">
+          <a
+            href={featured.href}
+            className="card-hoverable block rounded-[14px] p-8 sm:p-11 no-underline"
+            style={{
+              border: "1px solid var(--c-cardborder)",
+              background: "linear-gradient(180deg, var(--c-grad1), var(--c-grad2))",
+              color: "inherit",
+            }}
           >
-            <span
-              className="absolute bottom-[-10px] right-3 font-display font-extrabold text-[5rem] leading-none pointer-events-none opacity-100"
-              style={{ WebkitTextStroke: "1px #333", color: "transparent" }}
-            >
-              SRV
-            </span>
-
-            <div className="relative z-10">
+            <div className="flex items-center gap-3.5 mb-5">
               <span
-                className={`${tagClass(featured.tagColor)} mb-4 block w-fit`}
+                className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
+                style={{ color: "var(--color-accent)", background: "rgba(244,228,0,0.1)" }}
               >
                 FEATURED
               </span>
-              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3 text-[#ffff00]">
-                {featured.title}
-              </h3>
-              <p className="text-meta-sm text-[#999999] leading-[1.9] mb-6">
-                {featured.description}
-              </p>
-              <div className="flex gap-6 text-meta-xs text-[#999999] tracking-[1px] flex-wrap mb-6">
-                <span>{featured.date}</span>
-                <span>{featured.readTime}</span>
-                <span>{featured.views}</span>
-              </div>
-              <Link
-                href={featured.href}
-                className="
-                  inline-flex items-center gap-2
-                  text-meta-xs tracking-widest text-[#ffff00]
-                  border border-accent px-4 py-2
-                  no-underline transition-all duration-200
-                  hover:bg-accent hover:text-black
-                "
-              >
-                BACA ARTIKEL ↗
-              </Link>
+              <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+                SRV
+              </span>
             </div>
-          </div>
-
-          <div className="flex flex-col">
-            {rest.slice(0, 2).map((post, i) => (
-              <Link
-                key={post.num}
-                href={post.href}
-                data-cursor-hover
-                className={`
-                  flex flex-col gap-2 p-6 no-underline
-                  group cursor-pointer flex-1
-                  transition-colors duration-200 hover:bg-[#161616]
-                  ${i < 1 ? "border-b-2 border-[#333] dark:border-[#2a2a2a]" : ""}
-                `}
-              >
-                <span className={`${tagClass(post.tagColor)} w-fit`}>
-                  {post.tag}
-                </span>
-                <h4 className="font-display font-bold text-meta-lg leading-[1.3] tracking-tight text-[#ffff00] group-hover:text-white transition-colors duration-200">
-                  {post.title}
-                </h4>
-                <span className="text-meta-2xs tracking-[1px] text-[#999999] mt-auto">
-                  {post.date} · {post.readTime}
-                </span>
-                <span className="text-[1rem] text-[#999999] self-end group-hover:text-[#ffff00] transition-colors duration-200">
-                  ↗
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
+            <h3
+              className="font-sans font-bold text-[1.5rem] mb-3.5"
+              style={{ color: "var(--c-text)" }}
+            >
+              {featured.title}
+            </h3>
+            <p
+              className="text-meta-lg leading-[1.6] max-w-[680px] mb-5"
+              style={{ color: "var(--c-muted)" }}
+            >
+              {featured.description}
+            </p>
+            <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+              {featured.date} · {featured.readTime}
+            </div>
+          </a>
+        </Reveal>
       )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mb-8">
-        {rest.slice(featured ? 2 : 0).map((post) => (
-          <Link
-            key={post.num}
-            href={post.href}
-            data-cursor-hover
-            className="
-              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-6
-              no-underline group cursor-pointer
-              transition-colors duration-200 hover:border-accent hover:bg-[#0a0a0a] dark:hover:bg-[#0d0d0d]
-            "
-          >
-            <div
-              className="font-display font-extrabold text-[2.5rem] leading-none mb-4"
-              style={{ WebkitTextStroke: "1px #333", color: "transparent" }}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+        {rest.slice(0, 2).map((post, i) => (
+          <Reveal key={post.num} delay={i * 0.06}>
+            <Link
+              href={post.href}
+              className="card-hoverable block rounded-[14px] p-7 no-underline"
+              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)", color: "inherit" }}
             >
-              {post.num}
-            </div>
-            <span className={`${tagClass(post.tagColor)} mb-3 block w-fit`}>
-              {post.tag}
-            </span>
-            <h4 className="font-display font-bold text-meta-lg leading-[1.3] tracking-tight mb-2 text-[#ffff00] group-hover:text-white transition-colors duration-200">
-              {post.title}
-            </h4>
-            <p className="text-meta-xs text-[#999999] leading-[1.8] mb-4">
-              {post.description}
-            </p>
-            <div className="flex justify-between items-center">
-              <span className="text-meta-2xs tracking-[1px] text-[#444444]">
-                {post.date}
-              </span>
-              <span className="text-[#999999] text-base group-hover:text-[#ffff00] transition-colors duration-200">
-                ↗
-              </span>
-            </div>
-          </Link>
+              <div
+                className="font-mono text-meta-xs mb-3.5"
+                style={{ color: "var(--color-accent)" }}
+              >
+                {post.tag}
+              </div>
+              <h3
+                className="font-sans font-bold text-[1.2rem] mb-3.5"
+                style={{ color: "var(--c-text)" }}
+              >
+                {post.title}
+              </h3>
+              <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+                {post.date} · {post.readTime} ↗
+              </div>
+            </Link>
+          </Reveal>
         ))}
       </div>
 
-      <div className="bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px p-8 flex justify-between items-center gap-8 flex-wrap">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-14">
+        {rest.slice(2).map((post, i) => (
+          <Reveal key={post.num} delay={i * 0.06}>
+            <Link
+              href={post.href}
+              className="card-hoverable block rounded-[14px] p-7 no-underline"
+              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)", color: "inherit" }}
+            >
+              <div
+                className="font-mono text-meta-sm mb-3.5"
+                style={{ color: "var(--c-muted2)" }}
+              >
+                {post.num} · <span className={tagClass(post.tagColor)}>{post.tag}</span>
+              </div>
+              <h3
+                className="font-sans font-bold text-[1.1rem] mb-3"
+                style={{ color: "var(--c-text)" }}
+              >
+                {post.title}
+              </h3>
+              <p
+                className="text-meta-md leading-[1.6] mb-4"
+                style={{ color: "var(--c-muted)" }}
+              >
+                {post.description}
+              </p>
+              <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+                {post.date} ↗
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+
+      <div
+        className="flex items-center justify-between rounded-[14px] p-8 sm:px-10 gap-6 flex-wrap"
+        style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
+      >
         <div>
-          <p className="text-meta-2xs tracking-widest text-[#ffff00] mb-1">
+          <div
+            className="font-mono text-meta-sm mb-2"
+            style={{ color: "var(--color-accent)" }}
+          >
             {"// NEWSLETTER"}
-          </p>
-          <p className="font-display font-bold text-[1.1rem] text-[#ffff00]">
+          </div>
+          <div
+            className="font-sans font-semibold text-meta-lg"
+            style={{ color: "var(--c-text)" }}
+          >
             Dapat notif tiap ada tutorial baru
-          </p>
-          <p className="text-meta-sm text-[#999999] mt-1">
+          </div>
+          <div className="text-meta-sm mt-1" style={{ color: "var(--c-muted2)" }}>
             No spam. Unsubscribe kapan aja.
-          </p>
+          </div>
         </div>
-        <div className="flex flex-1 max-w-sm min-w-[220px]">
-          <input
-            type="email"
-            placeholder="email@domain.com"
-            className="
-              flex-1 bg-[#111111] border-2 border-[#333] dark:border-[#2a2a2a] border-r-0
-              text-[#ffff00] font-mono text-meta-sm px-4 py-2.5
-              outline-none transition-colors duration-200
-              focus:border-accent placeholder:text-[#444444]
-            "
-          />
-          <button className="bg-accent text-black font-mono text-meta-xs font-bold px-5 py-2.5 tracking-widest border-2 border-accent border-l-0 cursor-pointer uppercase whitespace-nowrap transition-all duration-200 hover:bg-[#00FFFF] hover:border-[#00FFFF] hover:text-black">
-            SUBSCRIBE
-          </button>
-        </div>
+        <NewsletterForm />
       </div>
     </section>
   );

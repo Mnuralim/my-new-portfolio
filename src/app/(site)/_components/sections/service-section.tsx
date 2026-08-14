@@ -1,36 +1,44 @@
 import { getServices } from "@/lib/data";
+import Reveal from "@/app/_components/reveal";
 
 export default async function ServicesSection() {
   const services = await getServices();
 
   return (
-    <section id="services" className="px-3 pb-20">
-      <h2 className="section-label">04 / SERVICES</h2>
+    <section
+      id="services"
+      className="px-4 sm:px-8 py-16 sm:py-20"
+      style={{ borderTop: "1px solid var(--c-divider)" }}
+    >
+      <h2 className="section-label">04 / Services</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        {services.map((service) => (
-          <div
-            key={service.title}
-            data-cursor-hover
-            className="
-              bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8
-              flex gap-6
-              group transition-colors duration-200 hover:border-accent
-            "
-          >
-            <div className="w-11 h-11 flex-shrink-0 border-2 border-[#333] dark:border-[#2a2a2a] flex items-center justify-center text-lg font-mono text-[#ffff00] group-hover:border-accent transition-colors duration-200">
-              {service.icon}
-            </div>
-
-            <div>
-              <h3 className="font-display font-bold text-base mb-2 text-[#ffff00]">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {services.map((service, i) => (
+          <Reveal key={service.title} delay={i * 0.06}>
+            <div
+              className="card-hoverable rounded-[14px] p-[30px] h-full"
+              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
+            >
+              <div
+                className="font-mono text-[1.6rem] mb-[22px]"
+                style={{ color: "var(--color-accent)" }}
+              >
+                {service.icon}
+              </div>
+              <h3
+                className="font-sans font-bold text-meta-lg mb-3"
+                style={{ color: "var(--c-text)" }}
+              >
                 {service.title}
               </h3>
-              <p className="text-meta-sm text-[#999999] leading-[1.8]">
+              <p
+                className="text-meta-md leading-[1.6] m-0"
+                style={{ color: "var(--c-muted)" }}
+              >
                 {service.description}
               </p>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>

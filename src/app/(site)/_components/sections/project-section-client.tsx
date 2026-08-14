@@ -1,6 +1,7 @@
 "use client";
 import type { Project } from "../../../../../types";
 import { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import ProjectsModal from "../ui/projects-modal";
 
 interface Props {
@@ -16,105 +17,131 @@ function tagClass(color?: Project["tagColor"]) {
 
 export function ProjectsSectionClient({ projects, allProjects }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
+  const reduce = useReducedMotion();
   const featured = projects.find((p) => p.featured);
   const rest = projects.filter((p) => !p.featured);
 
   return (
     <>
-      <section id="projects" className="px-3 pt-12 pb-20">
-        <div className="flex justify-between items-center flex-wrap gap-4">
-          <h2 className="section-label flex-1">01 / PROJECTS</h2>
+      <section id="projects" className="px-4 sm:px-8 pt-10 pb-16 sm:pb-20">
+        <div className="flex justify-between items-baseline flex-wrap gap-4 mb-12">
+          <h2 className="section-label !mb-0">01 / Projects</h2>
           <button
             onClick={() => setModalOpen(true)}
-            className="
-              text-meta-xs tracking-widest text-black/70 dark:text-[#999999]
-              border-b border-black dark:border-[#2a2a2a] pb-0.5 mb-12 ml-4
-              bg-transparent font-mono cursor-pointer
-              transition-colors hover:text-black dark:hover:text-[#ffff00] hover:border-accent
-            "
+            className="text-meta-sm font-medium bg-transparent border-none cursor-pointer p-0"
+            style={{ color: "var(--c-text)" }}
           >
-            VIEW ALL PROJECTS →
+            View all projects →
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2">
-          {featured && (
-            <div
-              data-cursor-hover
-              className="md:col-span-2 border-2 border-black dark:border-accent bg-black p-8 relative overflow-hidden -mb-px"
-            >
-              <div className="font-display font-extrabold text-[4rem] leading-none mb-4 text-[#ffff00] opacity-15">
-                {featured.num}
-              </div>
+        {featured && (
+          <motion.div
+            initial={reduce ? false : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="card-hoverable rounded-[14px] p-8 sm:p-11 mb-6"
+            style={{
+              border: "1px solid var(--c-cardborder)",
+              background: "linear-gradient(180deg, var(--c-grad1), var(--c-grad2))",
+            }}
+          >
+            <div className="flex items-center gap-3.5 mb-5">
               <span
-                className={`${tagClass(featured.tagColor)} mb-4 block w-fit`}
+                className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
+                style={{ color: "var(--color-accent)", background: "rgba(244,228,0,0.1)" }}
               >
-                {featured.tag}
+                FEATURED
               </span>
-              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3 text-[#ffff00]">
-                {featured.title}
-              </h3>
-              <p className="text-meta-md text-[#999999] leading-[1.8] mb-6">
-                {featured.description}
-              </p>
-              <div className="flex flex-wrap gap-1.5">
+              <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+                {featured.num}
+              </span>
+            </div>
+            <h3
+              className="font-sans font-bold text-[1.6rem] mb-3.5"
+              style={{ color: "var(--c-text)" }}
+            >
+              {featured.title}
+            </h3>
+            <p
+              className="text-base leading-[1.6] max-w-[680px] mb-6"
+              style={{ color: "var(--c-muted)" }}
+            >
+              {featured.description}
+            </p>
+            <div className="flex items-center justify-between flex-wrap gap-4">
+              <div className="flex gap-2.5 flex-wrap">
                 {featured.stack.map((s) => (
-                  <span key={s} className="stack-pill">
+                  <span key={s} className={tagClass(featured.tagColor)}>
                     {s}
                   </span>
                 ))}
               </div>
               <a
                 href={featured.href}
-                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#333] dark:border-[#2a2a2a] flex items-center justify-center text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#ffff00]"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-base no-underline transition-opacity hover:opacity-70"
+                style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
                 aria-label={`View ${featured.title}`}
               >
                 ↗
               </a>
             </div>
-          )}
+          </motion.div>
+        )}
 
-          {rest.map((project) => (
-            <div
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {rest.map((project, i) => (
+            <motion.div
               key={project.num}
-              data-cursor-hover
-              className="bg-black border-2 border-[#333] dark:bg-transparent dark:border-[#2a2a2a] -mt-px -ml-px p-8 relative overflow-hidden group transition-colors duration-200 hover:border-accent"
+              initial={reduce ? false : { opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              className="card-hoverable rounded-[14px] p-8 sm:p-9"
+              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
             >
-              <div
-                className="font-display font-extrabold text-[4rem] leading-none mb-4"
-                style={{
-                  WebkitTextStroke: "1px #333",
-                  color: "transparent",
-                }}
-              >
-                {project.num}
+              <div className="flex items-center gap-3.5 mb-4.5 mb-[18px]">
+                <span
+                  className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
+                  style={{ color: "var(--c-muted2)", border: "1px solid var(--c-border)" }}
+                >
+                  {project.tag}
+                </span>
+                <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+                  {project.num}
+                </span>
               </div>
-              <span
-                className={`${tagClass(project.tagColor)} mb-4 block w-fit`}
+              <h3
+                className="font-sans font-bold text-[1.35rem] mb-3"
+                style={{ color: "var(--c-text)" }}
               >
-                {project.tag}
-              </span>
-              <h3 className="font-display font-extrabold text-[1.3rem] tracking-tight leading-[1.2] mb-3 text-[#ffff00]">
                 {project.title}
               </h3>
-              <p className="text-meta-md text-[#999999] leading-[1.8] mb-6">
+              <p
+                className="text-meta-lg leading-[1.6] mb-[22px]"
+                style={{ color: "var(--c-muted)" }}
+              >
                 {project.description}
               </p>
-              <div className="flex flex-wrap gap-1.5">
-                {project.stack.map((s) => (
-                  <span key={s} className="stack-pill">
-                    {s}
-                  </span>
-                ))}
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex gap-2 flex-wrap">
+                  {project.stack.map((s) => (
+                    <span key={s} className={tagClass(project.tagColor)}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
+                <a
+                  href={project.href}
+                  className="w-[34px] h-[34px] rounded-full flex items-center justify-center text-meta-lg no-underline flex-shrink-0 transition-opacity hover:opacity-70"
+                  style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
+                  aria-label={`View ${project.title}`}
+                >
+                  ↗
+                </a>
               </div>
-              <a
-                href={project.href}
-                className="absolute top-6 right-6 w-11 h-11 border-2 border-[#333] dark:border-[#2a2a2a] flex items-center justify-center text-[#999999] text-base no-underline transition-all duration-200 hover:border-accent hover:text-[#ffff00]"
-                aria-label={`View ${project.title}`}
-              >
-                ↗
-              </a>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>

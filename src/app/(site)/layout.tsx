@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Navbar from "./_components/ui/navbar";
-import Cursor from "./_components/ui/cursor";
 
 export default function SiteLayout({
   children,
@@ -8,12 +7,16 @@ export default function SiteLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="site-cursor-none">
+    <div>
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
       <Suspense fallback={<div className="h-[77px]" />}>
         <Navbar />
       </Suspense>
-      <Cursor />
-      <div className="max-w-7xl mx-auto">{children}</div>
+      <div id="main-content" className="max-w-7xl mx-auto">
+        {children}
+      </div>
     </div>
   );
 }

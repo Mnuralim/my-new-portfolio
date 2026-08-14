@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { Sun, Moon } from "lucide-react";
 
 const THEME_EVENT = "themechange";
 
@@ -20,11 +19,7 @@ function getServerSnapshot(): "light" | "dark" | null {
   return null;
 }
 
-interface Props {
-  scrolled?: boolean;
-}
-
-export default function ThemeToggle({ scrolled = false }: Props) {
+export default function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   function toggle() {
@@ -37,7 +32,8 @@ export default function ThemeToggle({ scrolled = false }: Props) {
   if (!theme) {
     return (
       <div
-        className="w-9 h-9 border-2 border-black dark:border-[#2a2a2a] flex-shrink-0"
+        className="w-11 h-6 rounded-full flex-shrink-0"
+        style={{ border: "1px solid var(--c-border)", background: "var(--c-cardbg)" }}
         aria-hidden
       />
     );
@@ -48,19 +44,13 @@ export default function ThemeToggle({ scrolled = false }: Props) {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"}
-      className={`
-        w-9 h-9 flex-shrink-0 flex items-center justify-center
-        bg-transparent
-        cursor-pointer transition-all duration-200
-        ${
-          scrolled
-            ? "text-[#f0f0f0] border-2 border-[#2a2a2a] hover:border-accent hover:bg-transparent hover:text-[#ffff00]"
-            : "text-black border-2 border-black hover:border-[#00FFFF] hover:bg-[#00FFFF] hover:text-black"
-        }
-        dark:text-[#f0f0f0] dark:border-[#2a2a2a] dark:hover:border-accent dark:hover:bg-transparent dark:hover:text-[#ffff00]
-      `}
+      className="relative w-11 h-6 rounded-full flex-shrink-0 cursor-pointer p-0"
+      style={{ border: "1px solid var(--c-border)", background: "var(--c-cardbg)" }}
     >
-      {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+      <span
+        className="absolute top-0.5 w-[18px] h-[18px] rounded-full bg-accent transition-[left] duration-200"
+        style={{ left: theme === "dark" ? "2px" : "22px" }}
+      />
     </button>
   );
 }

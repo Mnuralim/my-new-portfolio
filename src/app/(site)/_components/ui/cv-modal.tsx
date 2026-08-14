@@ -17,7 +17,8 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
     <ModalFooter
       info={
         <>
-          Last updated: <span className="text-[#ffff00]">{CV_UPDATED}</span>
+          Last updated:{" "}
+          <span style={{ color: "var(--color-accent)" }}>{CV_UPDATED}</span>
         </>
       }
     >
@@ -39,16 +40,32 @@ export default function CvModal({ isOpen, onClose }: CvModalProps) {
       size="lg"
       footer={footer}
     >
+      <p className="sr-only">
+        Preview PDF ada di bawah. Kalau gak bisa terlihat, pakai tombol
+        Download PDF di footer modal ini.
+      </p>
       {/* PDF embed via iframe */}
       <div
-        className="w-full bg-[#0d0d0d] border-b-2 border-[#2a2a2a]"
-        style={{ height: "70vh" }}
+        className="w-full"
+        style={{
+          height: "70vh",
+          background: "var(--c-cardbg)",
+          borderBottom: "1px solid var(--c-cardborder)",
+        }}
       >
         <iframe
           src={`${CV_PATH}#toolbar=0&navpanes=0&scrollbar=1`}
           className="w-full h-full"
           title="CV Muhamad Nur Alim"
-        />
+        >
+          <p style={{ padding: "20px", color: "var(--c-muted)" }}>
+            Browser lo gak support preview PDF.{" "}
+            <a href={CV_PATH} download style={{ color: "var(--color-accent)" }}>
+              Download langsung
+            </a>
+            .
+          </p>
+        </iframe>
       </div>
     </Modal>
   );

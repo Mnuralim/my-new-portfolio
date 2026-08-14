@@ -1,138 +1,152 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import CvModal from "./cv-modal";
 import Image from "next/image";
 import ThemeToggle from "@/app/_components/theme-toggle";
 
 const navLinks = [
-  { label: "PROJECTS", href: "/#projects" },
-  { label: "SKILLS", href: "/#skills" },
-  { label: "EXPERIENCE", href: "/#experience" },
-  { label: "SERVICES", href: "/#services" },
-  { label: "BLOG", href: "/#blog" },
-  { label: "CONTACT", href: "/#contact" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Services", href: "/#services" },
+  { label: "Blog", href: "/#blog" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [cvOpen, setCvOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-  const isWhiteRoute =
-    pathname?.startsWith("/blog") || pathname?.startsWith("/playlist") || false;
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   return (
     <>
       <nav
-        className={`
-          sticky top-0 z-50 transition-all duration-200
-          border-b-2
-          ${
-            scrolled
-              ? "py-4 bg-black border-accent dark:bg-[#0a0a0a] dark:border-[#2a2a2a]"
-              : isWhiteRoute
-              ? "py-5 bg-white border-[#e5e5e5] dark:bg-[#0a0a0a] dark:border-[#2a2a2a]"
-              : "py-5 bg-[#ffff00] border-black dark:bg-[#0a0a0a] dark:border-[#2a2a2a]"
-          }
-        `}
+        className="sticky top-0 z-50 flex items-center justify-between px-4 sm:px-8 py-4 sm:py-[22px] backdrop-blur-md"
+        style={{
+          background: "var(--c-navbg)",
+          borderBottom: "1px solid var(--c-divider)",
+        }}
       >
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-3">
-          <div className="flex items-center gap-2">
-            <div className="relative w-[30px] h-[30px]">
-              <Image
-                src="/mylogo-black.png"
-                alt="Izzy Dev Logo"
-                fill
-                className={`object-contain ${
-                  scrolled ? "hidden" : "block"
-                } dark:hidden`}
-              />
-              <Image
-                src="/mylogo.png"
-                alt="Izzy Dev Logo"
-                fill
-                className={`object-contain ${
-                  scrolled ? "block" : "hidden"
-                } dark:block`}
-              />
-            </div>
-            <div
-              className={`font-display font-extrabold text-lg tracking-tight ${
-                scrolled ? "text-[#ffff00]" : "text-black"
-              } dark:text-[#ffff00]`}
-            >
-              IZZY.DEV
-            </div>
+        <Link href="/" className="flex items-center gap-2 no-underline">
+          <div
+            className="relative w-[30px] h-[30px] rounded-[7px] flex items-center justify-center flex-shrink-0"
+            style={{ background: "#0b0b0c" }}
+          >
+            <Image
+              src="/mylogo.png"
+              alt="Izzy Dev Logo"
+              width={20}
+              height={20}
+              className="object-contain"
+            />
           </div>
+          <span
+            className="font-mono font-semibold text-base tracking-tight"
+            style={{ color: "var(--c-text)" }}
+          >
+            izzy.dev
+          </span>
+        </Link>
 
-          <ul className="hidden md:flex gap-8 list-none">
-            {navLinks.map((link) => (
+        <ul className="hidden md:flex gap-7 list-none">
+          {navLinks.map((link) => {
+            const isActive = link.href === pathname;
+            return (
               <li key={link.label}>
                 <Link
                   href={link.href}
-                  className={`
-                    text-meta-sm tracking-widest transition-colors no-underline
-                    ${
-                      scrolled
-                        ? "text-[#ffff00] hover:text-[#ffff00]/80"
-                        : "text-black/70 hover:text-black"
-                    }
-                    dark:text-[#999999] dark:hover:text-[#ffff00]
-                  `}
+                  aria-current={isActive ? "page" : undefined}
+                  className="text-meta-sm no-underline transition-colors"
+                  style={{ color: isActive ? "var(--color-accent)" : "var(--c-b5)" }}
                 >
                   {link.label}
                 </Link>
               </li>
-            ))}
-          </ul>
+            );
+          })}
+        </ul>
 
-          <div className="flex items-center gap-2">
-            <ThemeToggle scrolled={scrolled} />
-            <div className="flex items-center" style={{ gap: 0 }}>
-              <button
-                onClick={() => setCvOpen(true)}
-                className={`
-                  hidden sm:block
-                  bg-transparent font-mono text-meta-2xs
-                  tracking-widest px-4 py-2
-                  -mr-px
-                  cursor-pointer transition-all duration-200
-                  ${
-                    scrolled
-                      ? "text-[#f0f0f0] border-2 border-[#2a2a2a] hover:bg-transparent hover:text-[#ffff00]"
-                      : "text-black border-2 border-black hover:bg-[#00FFFF] hover:text-black"
-                  }
-                  dark:text-[#f0f0f0] dark:border-[#2a2a2a] dark:hover:bg-transparent dark:hover:text-[#ffff00]
-                `}
-              >
-                VIEW CV
-              </button>
-
-              <div
-                className={`
-                  hidden sm:block text-meta-2xs px-3 py-2 tracking-widest
-                  ${
-                    scrolled
-                      ? "bg-transparent border-2 border-accent text-[#ffff00]"
-                      : "bg-black border-2 border-black text-[#ffff00]"
-                  }
-                  dark:bg-transparent dark:border-accent dark:text-[#ffff00]
-                `}
-              >
-                OPEN TO WORK
-              </div>
-            </div>
-          </div>
+        <div className="flex items-center gap-3.5">
+          <ThemeToggle />
+          <button
+            onClick={() => setCvOpen(true)}
+            className="hidden sm:block font-sans text-meta-sm px-4 py-2.5 rounded-[8px] cursor-pointer transition-opacity hover:opacity-70 bg-transparent"
+            style={{ color: "var(--c-text)", border: "1px solid var(--c-border)" }}
+          >
+            View CV
+          </button>
+          <span
+            className="hidden sm:block font-mono text-meta-sm px-3.5 py-2 rounded-[8px] whitespace-nowrap"
+            style={{
+              color: "var(--color-accent)",
+              border: "1px solid #3a3a1f",
+              background: "rgba(244,228,0,0.08)",
+            }}
+          >
+            Open to work
+          </span>
+          <button
+            onClick={() => setMobileOpen((v) => !v)}
+            aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
+            aria-expanded={mobileOpen}
+            className="md:hidden w-9 h-9 flex items-center justify-center rounded-[8px] cursor-pointer bg-transparent"
+            style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
+          >
+            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </div>
       </nav>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden sticky top-[65px] z-40 overflow-hidden"
+            style={{ background: "var(--c-bg)", borderBottom: "1px solid var(--c-divider)" }}
+          >
+            <ul className="flex flex-col list-none px-4 py-2">
+              {navLinks.map((link) => {
+                const isActive = link.href === pathname;
+                return (
+                  <li key={link.label} style={{ borderTop: "1px solid var(--c-divider)" }}>
+                    <Link
+                      href={link.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className="block py-3.5 text-meta-md no-underline"
+                      style={{ color: isActive ? "var(--color-accent)" : "var(--c-text)" }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li style={{ borderTop: "1px solid var(--c-divider)" }} className="py-3.5">
+                <button
+                  onClick={() => setCvOpen(true)}
+                  className="text-meta-md bg-transparent border-none cursor-pointer p-0"
+                  style={{ color: "var(--c-text)" }}
+                >
+                  View CV
+                </button>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <CvModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
     </>
