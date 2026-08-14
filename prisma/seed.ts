@@ -22,18 +22,24 @@ async function createSkills() {
   console.log("Seeding skills...");
 
   const data = [
-    { category: "FRONTEND", name: "React / Next.js" },
-    { category: "FRONTEND", name: "TailwindCSS / Bootstrap" },
-    { category: "BACKEND", name: "Bun.js / Express.js" },
-    { category: "BACKEND", name: "JWT / Prisma / Sequelize" },
+    { category: "LANGUAGE", name: "JavaScript / TypeScript / Solidity" },
+    { category: "BACKEND", name: "Node.js / Express.js / REST API" },
+    { category: "BACKEND", name: "JWT Authentication" },
+    { category: "FRONTEND", name: "React.js / Next.js" },
+    { category: "FRONTEND", name: "TailwindCSS / Bootstrap / Zustand" },
+    { category: "BLOCKCHAIN", name: "Smart Contract (Solidity)" },
     { category: "DATABASE", name: "MySQL / PostgreSQL" },
     { category: "DATABASE", name: "MongoDB / Firebase" },
-    { category: "LANGUAGE", name: "JavaScript / TypeScript" },
-    { category: "BLOCKCHAIN", name: "Solidity / Smart Contract" },
-    { category: "IT SUPPORT", name: "Windows / Linux" },
-    { category: "TESTING", name: "Jest / Unit Testing" },
     { category: "TOOLS", name: "Git / GitHub" },
-    { category: "CLOUD", name: "AWS Cloud Basics" },
+    { category: "MOBILE", name: "React Native / Expo" },
+    {
+      category: "SERVER & INFRA",
+      name: "Linux / Docker / Nginx / Proxmox VE / TrueNAS",
+    },
+    {
+      category: "NETWORKING",
+      name: "MikroTik RouterOS / TCP-IP / DHCP / DNS / NAT / VLAN / Firewall",
+    },
   ];
 
   const count = await prisma.skill.count();
@@ -54,16 +60,26 @@ async function createExperiences() {
   const data = [
     {
       num: "01",
-      period: "2025 — NOW",
+      period: "2025 — PRESENT",
+      company: "Self-Employed",
+      type: "FREELANCE",
+      role: "Freelance Web & Mobile Developer",
+      description:
+        "Develop dan deliver berbagai proyek web klien termasuk website profil sekolah, portal berita mahasiswa, sistem manajemen TV kabel, dan platform institusional. Build full-stack web application pakai Next.js, TypeScript, Prisma, MySQL/PostgreSQL. Develop cross-platform mobile app pakai React Native/Expo. Manage end-to-end development dari requirement gathering sampai deployment.",
+      tags: ["NEXT.JS", "TYPESCRIPT", "PRISMA", "REACT NATIVE"],
+    },
+    {
+      num: "02",
+      period: "JULI 2025 — SEKARANG",
       company: "PT. Sumber Setia Budi",
       type: "FULL-TIME",
       role: "IT Staff & IT Programmer",
       description:
-        "Troubleshoot dan repair laptop hardware/software, instalasi OS Windows & Linux, develop dan maintain aplikasi permintaan pengadaan, permintaan BBM, pencatatan jurnal kas dan incident report untuk departemen HSE. Manage dan maintain application server untuk memastikan uptime sistem.",
-      tags: ["IT SUPPORT", "NEXT.JS", "BUN.JS", "SERVER MANAGEMENT"],
+        "Troubleshoot dan repair laptop hardware/software, instalasi OS Windows & Linux, develop dan maintain aplikasi permintaan pengadaan, permintaan BBM, pencatatan jurnal kas dan incident report untuk departemen HSE. Manage web server dan file server pakai TrueNAS, serta konfigurasi router Mikrotik untuk network management.",
+      tags: ["IT SUPPORT", "TRUENAS", "MIKROTIK", "SERVER MANAGEMENT"],
     },
     {
-      num: "02",
+      num: "03",
       period: "SEP 2024 — DES 2024",
       company: "PT. Pilihanmu Indonesia Jaya",
       type: "INTERNSHIP",
@@ -92,75 +108,87 @@ async function createProjects() {
   const data = [
     {
       num: "01",
-      tag: "IT INFRA",
-      tagColor: "net",
-      title: "Permintaan Pengadaan Apps",
-      description:
-        "Aplikasi permintaan pengadaan, permintaan BBM, dan pencatatan jurnal kas.",
-      stack: ["NEXT.JS", "Bun.JS", "MYSQL", "PRISMA"],
-      href: "https://github.com/Mnuralim",
-      featured: false,
-      filter: "IT SUPPORT",
-    },
-    {
-      num: "02",
-      tag: "WEB DEV",
-      tagColor: "accent",
-      title: "Preducation Platform",
-      description:
-        "Admin dashboard dan landing page untuk platform kursus video online Preducation, lengkap dengan RESTful API untuk autentikasi, enrollment, dan progress tracking.",
-      stack: ["NEXT.JS", "EXPRESS.JS", "POSTGRESQL", "JWT"],
-      href: "https://github.com/Mnuralim",
-      featured: false,
-      filter: "WEB DEV",
-    },
-    {
-      num: "03",
       tag: "FEATURED",
       tagColor: "accent",
       title: "E-Voting System Based on Blockchain",
       description:
-        "Sistem e-voting berbasis blockchain yang aman dan transparan menggunakan Solidity smart contract dan NFT-based voter authentication.",
+        "Sistem e-voting berbasis blockchain yang aman dan transparan menggunakan Solidity smart contract dan NFT-based voter authentication. Tamper-proof, hanya voter whitelisted yang bisa berpartisipasi, hasil pemilu tetap transparan.",
       stack: ["SOLIDITY", "NEXT.JS", "SMART CONTRACT", "NFT"],
       href: "https://github.com/Mnuralim",
       featured: true,
       filter: "BLOCKCHAIN",
     },
     {
+      num: "02",
+      tag: "WEB DEV",
+      tagColor: "accent",
+      title: "Homeschooling Kak Seto",
+      description:
+        "Website profil untuk Homeschooling Kak Seto, institusi homeschooling terakreditasi A, dengan info program, lokasi cabang, showcase alumni, dan pendaftaran online calon siswa.",
+      stack: ["NEXT.JS", "TYPESCRIPT", "PRISMA"],
+      href: "https://github.com/Mnuralim",
+      featured: false,
+      filter: "WEB DEV",
+    },
+    {
+      num: "03",
+      tag: "IT INFRA",
+      tagColor: "net",
+      title: "Procurement App",
+      description:
+        "Sistem manajemen pengadaan dengan fitur purchase request, permintaan BBM, jurnal kas, dan multi-level approval workflow.",
+      stack: ["NEXT.JS", "TYPESCRIPT", "MYSQL", "PRISMA"],
+      href: "https://github.com/Mnuralim",
+      featured: false,
+      filter: "IT SUPPORT",
+    },
+    {
       num: "04",
       tag: "WEB DEV",
       tagColor: "accent",
-      title: "Instagram & TikTok Clone",
+      title: "LPMLT",
       description:
-        "Clone Instagram untuk berbagi foto/video dan clone TikTok untuk multimedia content — fullstack development frontend dan backend.",
-      stack: ["NEXT.JS", "Bun.JS", "MONGODB", "SOCKET.IO"],
+        "Portal berita mahasiswa dengan info kampus, update organisasi, dan berita edukasi — dirancang untuk penyampaian konten cepat dan akurat bagi mahasiswa Indonesia.",
+      stack: ["NEXT.JS", "TYPESCRIPT", "POSTGRESQL"],
       href: "https://github.com/Mnuralim",
       featured: false,
       filter: "WEB DEV",
     },
     {
       num: "05",
-      tag: "BLOCKCHAIN",
-      tagColor: "purple",
-      title: "Blockchain Transaction Bots",
-      description:
-        "Bot otomatisasi transaksi di berbagai blockchain network dan interaksi smart contract untuk berbagai kebutuhan.",
-      stack: ["SOLIDITY", "WEB3.JS", "Bun.JS", "SMART CONTRACT"],
-      href: "https://github.com/Mnuralim",
-      featured: false,
-      filter: "BLOCKCHAIN",
-    },
-    {
-      num: "06",
       tag: "WEB DEV",
       tagColor: "accent",
-      title: "WhatsApp Clone",
+      title: "MartabakTa",
       description:
-        "Redesign WhatsApp Clone dengan fokus pada kemampuan real-time messaging menggunakan WebSocket.",
-      stack: ["NEXT.JS", "SOCKET.IO", "Bun.JS", "MONGODB"],
+        "Aplikasi food ordering yang support walk-in dan online ordering, dengan customer ordering, admin/kasir management, owner dashboard, dan integrasi pembayaran Midtrans.",
+      stack: ["NEXT.JS", "TYPESCRIPT", "MIDTRANS", "PRISMA"],
       href: "https://github.com/Mnuralim",
       featured: false,
       filter: "WEB DEV",
+    },
+    {
+      num: "06",
+      tag: "IT INFRA",
+      tagColor: "net",
+      title: "Enterprise File Server Deployment",
+      description:
+        "Desain, deploy, dan administrasi file server TrueNAS terpusat untuk departemen Workshop, HSE, dan Warehouse — RAID storage, SMB/CIFS, shared folder, user permission, scheduled backup, dan storage monitoring.",
+      stack: ["TRUENAS", "RAID", "SMB/CIFS"],
+      href: "https://github.com/Mnuralim",
+      featured: false,
+      filter: "IT SUPPORT",
+    },
+    {
+      num: "07",
+      tag: "NETWORKING",
+      tagColor: "net",
+      title: "Enterprise Network Infrastructure Deployment",
+      description:
+        "Desain, konfigurasi, dan maintain infrastruktur jaringan berbasis MikroTik RouterOS untuk tiga departemen operasional (Workshop, HSE, Warehouse) — VLAN segmentation, DHCP, IP addressing, NAT, firewall rules dasar.",
+      stack: ["MIKROTIK", "VLAN", "DHCP", "NAT"],
+      href: "https://github.com/Mnuralim",
+      featured: false,
+      filter: "IT SUPPORT",
     },
   ];
 
@@ -182,9 +210,9 @@ async function createServices() {
   const data = [
     {
       icon: "</>",
-      title: "Web Development",
+      title: "Web & Mobile Development",
       description:
-        "Bikin web app fullstack dari nol — landing page, dashboard, platform, sampai sistem manajemen. Responsive, scalable, dan production-ready.",
+        "Bikin web app fullstack dan mobile app cross-platform dari nol — landing page, dashboard, platform, sampai sistem manajemen. Responsive, scalable, dan production-ready.",
     },
     {
       icon: "#",
@@ -197,6 +225,12 @@ async function createServices() {
       title: "Blockchain Development",
       description:
         "Develop smart contract Solidity, NFT, dan sistem berbasis blockchain untuk kebutuhan voting, transaksi, dan otomatisasi.",
+    },
+    {
+      icon: "☰",
+      title: "Network & Infrastructure",
+      description:
+        "Konfigurasi dan maintain jaringan MikroTik RouterOS, VLAN, firewall, serta deploy file/web server pakai TrueNAS dan Proxmox VE.",
     },
     {
       icon: "↻",
@@ -229,6 +263,7 @@ async function createContactLinks() {
     },
     { label: "GITHUB", href: "https://github.com/Mnuralim" },
     { label: "WHATSAPP", href: "https://wa.me/6285176996948" },
+    { label: "WEBSITE", href: "https://izzy.my.id" },
   ];
 
   const count = await prisma.contactLink.count();

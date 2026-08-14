@@ -7,6 +7,7 @@ export default function Footer() {
       style={{ borderTop: "1px solid var(--c-divider)", color: "var(--c-muted3)" }}
     >
       <span>© 2026 — Muhamad Nur Fatahil Alim · Kolaka, ID</span>
+
       <div className="flex flex-wrap gap-x-7 gap-y-2">
         <Link href="/#projects" style={{ color: "var(--c-muted2)" }}>Projects</Link>
         <Link href="/#skills" style={{ color: "var(--c-muted2)" }}>Skills</Link>

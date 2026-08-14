@@ -15,12 +15,15 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Izzy — Full Stack Developer & IT Support",
+  title: "Izzy — IT Engineer & Full Stack Developer",
   description:
-    "Portfolio of Muhamad Nur Fatahil Alim — Full Stack Developer & IT Support based in Cilacap, Indonesia. Building scalable web apps and solving IT problems.",
+    "Portfolio of Muhamad Nur Fatahil Alim — IT Engineer & Full Stack Developer based in Kolaka, Southeast Sulawesi, Indonesia. Building scalable web apps, managing IT infrastructure, and network administration.",
   keywords: [
+    "IT engineer",
     "full stack developer",
     "IT support",
+    "network administration",
+    "MikroTik",
     "Next.js",
     "React",
     "TypeScript",
@@ -29,9 +32,9 @@ export const metadata: Metadata = {
     "Indonesia",
   ],
   openGraph: {
-    title: "Izzy — Full Stack Developer & IT Support",
+    title: "Izzy — IT Engineer & Full Stack Developer",
     description:
-      "Building scalable web apps and solving IT problems from Indonesia.",
+      "IT Engineer & Full Stack Developer — building enterprise web apps and managing IT infrastructure from Indonesia.",
     type: "website",
   },
   icons: {
