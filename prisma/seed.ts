@@ -18,7 +18,7 @@ async function createAdmin() {
   }
 }
 
-async function createSkills() {
+export async function createSkills() {
   console.log("Seeding skills...");
 
   const data = [
@@ -72,7 +72,7 @@ async function createSkills() {
   console.log("Skills seeded.");
 }
 
-async function createExperiences() {
+export async function createExperiences() {
   console.log("Seeding experiences...");
 
   const data = [
@@ -116,7 +116,7 @@ async function createExperiences() {
   console.log("Experiences seeded.");
 }
 
-async function createProjects() {
+export async function createProjects() {
   console.log("Seeding projects...");
 
   const data = [
@@ -453,7 +453,7 @@ export async function createCredentials() {
   console.log("Credentials seeded.");
 }
 
-async function createCvs() {
+export async function createCvs() {
   console.log("Seeding CVs...");
 
   // placeholder pointing at the bundled file; upload the real PDFs via /admin/cv
