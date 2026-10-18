@@ -50,6 +50,16 @@
   }
 }
 
+@theme inline {
+  --color-base: var(--c-bg);
+  --color-fg: var(--c-text);
+  --color-muted: var(--c-muted2);
+  --color-faint: var(--c-muted3);
+  --color-line: var(--c-border);
+  --color-card: var(--c-cardbg);
+  --color-soft: var(--c-divider);
+}
+
 :root,
 [data-theme="dark"] {
   --c-bg: #0b0b0c;

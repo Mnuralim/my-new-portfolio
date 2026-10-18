@@ -84,13 +84,13 @@ export function ExperienceList({
         <div className="flex items-center justify-center gap-1.5">
           <button
             onClick={() => setEditing(e)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-muted border border-line rounded-[9px] hover:border-accent hover:text-accent transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => setConfirmId(e.id)}
-            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border-2 border-accent2/40 hover:border-accent2 transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border rounded-[9px] border-accent2/40 hover:border-accent2 transition-colors"
           >
             <Trash2 size={13} />
           </button>
@@ -154,15 +154,15 @@ export function ExperienceList({
         </div>
       </div>
 
-      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
+      <div className="bg-card border border-line rounded-[14px] p-6 h-fit">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#ffff00]">
+          <span className="text-meta-xs tracking-widest text-accent">
             {editing ? "EDIT EXPERIENCE" : "TAMBAH EXPERIENCE"}
           </span>
           {editing && (
             <button
               onClick={() => setEditing(null)}
-              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
+              className="text-meta-xs text-muted hover:text-accent"
             >
               BATAL
             </button>
@@ -181,13 +181,13 @@ export function ExperienceList({
           <Field label="COMPANY" name="company" defaultValue={editing?.company} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               TYPE
             </label>
             <select
               name="type"
               defaultValue={editing?.type ?? TYPES[0]}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             >
               {TYPES.map((t) => (
                 <option key={t} value={t}>
@@ -200,7 +200,7 @@ export function ExperienceList({
           <Field label="ROLE" name="role" defaultValue={editing?.role} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               DESCRIPTION
             </label>
             <textarea
@@ -208,12 +208,12 @@ export function ExperienceList({
               defaultValue={editing?.description}
               required
               rows={4}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-none"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               TAGS (pisah koma)
             </label>
             <input
@@ -221,7 +221,7 @@ export function ExperienceList({
               defaultValue={
                 editing ? (editing.tags as string[]).join(", ") : ""
               }
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             />
           </div>
 
@@ -279,7 +279,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+      <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
         {label}
       </label>
       <input
@@ -287,7 +287,7 @@ function Field({
         type={type}
         defaultValue={defaultValue}
         required
-        className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+        className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
       />
     </div>
   );

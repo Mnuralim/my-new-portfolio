@@ -170,13 +170,13 @@ export function BlogPostList({
         <div className="flex items-center justify-center gap-1.5">
           <button
             onClick={() => startEdit(p)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-muted border border-line rounded-[9px] hover:border-accent hover:text-accent transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => setConfirmId(p.id)}
-            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border-2 border-accent2/40 hover:border-accent2 transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border rounded-[9px] border-accent2/40 hover:border-accent2 transition-colors"
           >
             <Trash2 size={13} />
           </button>
@@ -263,14 +263,14 @@ export function BlogPostList({
 
   return (
     <div>
-      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 max-w-3xl mx-auto">
+      <div className="bg-card border border-line rounded-[14px] p-6 max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#ffff00]">
+          <span className="text-meta-xs tracking-widest text-accent">
             {editing ? "EDIT POST" : "TAMBAH POST"}
           </span>
           <button
             onClick={closeForm}
-            className="flex items-center gap-1.5 text-meta-xs text-[#999999] hover:text-[#ffff00]"
+            className="flex items-center gap-1.5 text-meta-xs text-muted hover:text-accent"
           >
             <X className="w-3.5 h-3.5" />
             BATAL
@@ -289,13 +289,13 @@ export function BlogPostList({
           <Field label="TAG" name="tag" defaultValue={editing?.tag} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               TAG COLOR
             </label>
             <select
               name="tagColor"
               defaultValue={editing?.tagColor ?? "accent"}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             >
               {TAG_COLORS.map((c) => (
                 <option key={c} value={c}>
@@ -308,7 +308,7 @@ export function BlogPostList({
           <Field label="TITLE" name="title" defaultValue={editing?.title} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               DESCRIPTION (excerpt)
             </label>
             <textarea
@@ -316,7 +316,7 @@ export function BlogPostList({
               defaultValue={editing?.description}
               required
               rows={2}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-none"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent resize-none"
             />
           </div>
 
@@ -329,10 +329,10 @@ export function BlogPostList({
 
           <div>
             <div className="flex justify-between items-center mb-1.5">
-              <label className="block text-meta-2xs tracking-widest text-[#999999]">
+              <label className="block text-meta-2xs tracking-widest text-muted">
                 CONTENT (markdown)
               </label>
-              <label className="text-meta-2xs tracking-widest text-[#ffff00] cursor-pointer hover:opacity-70">
+              <label className="text-meta-2xs tracking-widest text-accent cursor-pointer hover:opacity-70">
                 {insertingImage ? "UPLOADING..." : "+ SISIP GAMBAR"}
                 <input
                   type="file"
@@ -371,14 +371,14 @@ export function BlogPostList({
           <Field label="VIEWS" name="views" defaultValue={editing?.views} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               PLAYLISTS
             </label>
             <select
               multiple
               name="playlistIds"
               defaultValue={editing?.playlists.map((p) => p.playlistId) ?? []}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent min-h-[120px]"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent min-h-[120px]"
             >
               {allPlaylists.map((pl) => (
                 <option key={pl.id} value={pl.id}>
@@ -388,7 +388,7 @@ export function BlogPostList({
             </select>
           </div>
 
-          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#999999]">
+          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-muted">
             <input
               type="checkbox"
               name="featured"
@@ -435,7 +435,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+      <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
         {label}
       </label>
       <input
@@ -444,7 +444,7 @@ function Field({
         defaultValue={defaultValue}
         required
         style={type === "date" ? { colorScheme: "dark" } : undefined}
-        className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+        className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
       />
     </div>
   );

@@ -51,9 +51,10 @@ model Project {
   title       String   @db.VarChar(150)
   description String   @db.Text
   stack       Json
-  href        String   @db.VarChar(255)
+  href        String?  @db.VarChar(255)
   featured    Boolean  @default(false)
   filter      String?  @db.VarChar(50)
+  coverImage  String?  @db.VarChar(500)
   order       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -71,6 +72,32 @@ model Service {
   updatedAt   DateTime @updatedAt
 
   @@map("tb_service")
+}
+
+model Credential {
+  id        String   @id @default(uuid())
+  kind      String   @db.VarChar(20)
+  title     String   @db.VarChar(255)
+  issuer    String   @db.VarChar(150)
+  period    String?  @db.VarChar(50)
+  note      String?  @db.VarChar(100)
+  url       String?  @db.VarChar(500)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tb_credential")
+}
+
+model Cv {
+  id        String   @id @default(uuid())
+  title     String   @db.VarChar(100)
+  fileUrl   String   @db.VarChar(500)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tb_cv")
 }
 
 model ContactLink {

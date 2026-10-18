@@ -10,7 +10,7 @@ export default async function ContactSection() {
       className="px-4 sm:px-8 py-16 sm:py-20"
       style={{ borderTop: "1px solid var(--c-divider)" }}
     >
-      <h2 className="section-label">05 / Contact</h2>
+      <h2 className="section-label">06 / Contact</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         <Reveal>

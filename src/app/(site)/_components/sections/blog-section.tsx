@@ -22,7 +22,7 @@ export default async function BlogSection() {
       style={{ borderTop: "1px solid var(--c-divider)" }}
     >
       <div className="flex justify-between items-baseline flex-wrap gap-4 mb-12">
-        <h2 className="section-label !mb-0 !flex-none">06 / Blog &amp; Tutorials</h2>
+        <h2 className="section-label !mb-0 !flex-none">07 / Blog &amp; Tutorials</h2>
         <div className="flex gap-6 flex-wrap">
           <Link
             href="/blog"

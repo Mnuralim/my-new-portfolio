@@ -3,6 +3,8 @@ import { getAllExperiencesRaw } from "@/actions/experience";
 import { getAllProjectsRaw } from "@/actions/project";
 import { getAllServicesRaw } from "@/actions/service";
 import { getAllContactLinksRaw } from "@/actions/contact-link";
+import { getAllCredentialsRaw } from "@/actions/credential";
+import { getAllCvsRaw } from "@/actions/cv";
 import { getAllBlogPostsRaw } from "@/actions/blog-post";
 import { getAllPlaylistsRaw } from "@/actions/playlist";
 import type {
@@ -44,6 +46,7 @@ export async function getProjects(): Promise<Project[]> {
     stack: p.stack as string[],
     href: p.href,
     featured: p.featured,
+    coverImage: p.coverImage,
   }));
 }
 
@@ -60,6 +63,7 @@ export async function getAllProjectsForModal(): Promise<
     stack: p.stack as string[],
     href: p.href,
     featured: p.featured,
+    coverImage: p.coverImage,
     filter: p.filter ?? "",
   }));
 }
@@ -72,6 +76,22 @@ export async function getServices(): Promise<Service[]> {
     description: s.description,
   }));
 }
+
+export async function getCredentials() {
+  const credentials = await getAllCredentialsRaw();
+  return {
+    education: credentials.filter((c) => c.kind === "EDUCATION"),
+    certifications: credentials.filter((c) => c.kind === "CERTIFICATION"),
+    publications: credentials.filter((c) => c.kind === "PUBLICATION"),
+  };
+}
+
+export async function getCvs() {
+  const cvs = await getAllCvsRaw();
+  return cvs.map((c) => ({ title: c.title, fileUrl: c.fileUrl, updatedAt: c.updatedAt }));
+}
+
+export type CvFile = Awaited<ReturnType<typeof getCvs>>[number];
 
 export async function getContactLinks(): Promise<ContactLink[]> {
   const contactLinks = await getAllContactLinksRaw();
@@ -110,6 +130,7 @@ export async function getPlaylists(): Promise<Playlist[]> {
 
 export const stats = [
   { num: "1+", label: "YEARS EXP" },
-  { num: "10+", label: "PROJECTS DONE" },
-  { num: "100%", label: "PROBLEM SOLVED" },
+  { num: "5", label: "PRODUCTS LIVE" },
+  { num: "~50", label: "USERS SUPPORTED" },
 ];
+

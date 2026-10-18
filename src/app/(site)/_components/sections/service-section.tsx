@@ -10,7 +10,7 @@ export default async function ServicesSection() {
       className="px-4 sm:px-8 py-16 sm:py-20"
       style={{ borderTop: "1px solid var(--c-divider)" }}
     >
-      <h2 className="section-label">04 / Services</h2>
+      <h2 className="section-label">05 / Services</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {services.map((service, i) => (

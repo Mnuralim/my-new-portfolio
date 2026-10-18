@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import CvModal from "./cv-modal";
+import type { CvFile } from "@/lib/data";
 import Image from "next/image";
 import ThemeToggle from "@/app/_components/theme-toggle";
 
@@ -13,12 +14,13 @@ const navLinks = [
   { label: "Projects", href: "/#projects" },
   { label: "Skills", href: "/#skills" },
   { label: "Experience", href: "/#experience" },
+  { label: "Credentials", href: "/#credentials" },
   { label: "Services", href: "/#services" },
   { label: "Blog", href: "/#blog" },
   { label: "Contact", href: "/#contact" },
 ];
 
-export default function Navbar() {
+export default function Navbar({ cvs }: { cvs: CvFile[] }) {
   const [cvOpen, setCvOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
@@ -152,7 +154,7 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      <CvModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
+      <CvModal cvs={cvs} isOpen={cvOpen} onClose={() => setCvOpen(false)} />
     </>
   );
 }

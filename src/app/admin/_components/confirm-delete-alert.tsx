@@ -34,13 +34,13 @@ export const ConfirmDeleteAlert = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex flex-col items-center gap-3 text-center py-2">
-        <div className="flex items-center justify-center w-12 h-12 border-2 border-accent2 bg-accent2/10">
+        <div className="flex items-center justify-center w-12 h-12 rounded-full border border-accent2 bg-accent2/10">
           <AlertTriangle size={22} className="text-accent2" />
         </div>
 
         <div>
-          <h3 className="text-meta-lg font-bold text-[#ffff00]">{title}</h3>
-          <p className="text-meta-sm text-[#999999] mt-1.5 leading-relaxed">
+          <h3 className="text-meta-lg font-bold text-accent">{title}</h3>
+          <p className="text-meta-sm text-muted mt-1.5 leading-relaxed">
             {description}
           </p>
         </div>
@@ -50,7 +50,7 @@ export const ConfirmDeleteAlert = ({
             type="button"
             onClick={onClose}
             disabled={isPending}
-            className="flex-1 px-4 py-2.5 text-meta-sm tracking-widest border-2 border-[#2a2a2a] text-[#999999] hover:border-white hover:text-[#ffff00] transition-colors disabled:opacity-50"
+            className="flex-1 px-4 py-2.5 text-meta-sm tracking-widest border rounded-[9px] border-line text-muted hover:border-accent hover:text-accent transition-colors disabled:opacity-50"
           >
             {cancelLabel}
           </button>
@@ -66,7 +66,7 @@ export const ConfirmDeleteAlert = ({
             <button
               type="submit"
               disabled={isPending}
-              className="w-full px-4 py-2.5 text-meta-sm tracking-widest bg-accent2 border-2 border-accent2 text-black hover:bg-transparent hover:text-accent2 transition-colors disabled:opacity-50 font-medium"
+              className="w-full px-4 py-2.5 text-meta-sm tracking-widest bg-accent2 border rounded-[9px] border-accent2 text-black hover:bg-transparent hover:text-accent2 transition-colors disabled:opacity-50 font-medium"
             >
               {isPending ? "Menghapus..." : confirmLabel}
             </button>

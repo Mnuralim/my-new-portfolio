@@ -18,7 +18,7 @@ export default function HeroSection() {
             className="inline-block font-mono text-meta-xs tracking-[0.08em] px-3.5 py-1.5 rounded-[6px] mb-7"
             style={{ color: "#0b0b0c", background: "var(--color-accent)" }}
           >
-            {"// WEB DEVELOPER & IT SUPPORT"}
+            {"// FULL-STACK DEV & NETWORK ENGINEER"}
           </div>
 
           <h1
@@ -37,9 +37,9 @@ export default function HeroSection() {
             className="text-meta-lg leading-[1.6] max-w-[520px] mb-10"
             style={{ color: "var(--c-muted)" }}
           >
-            Gue bikin web yang berfungsi dengan baik dan bantu sistem IT
-            berjalan tanpa hambatan. Full-stack dev + troubleshooter yang
-            passionate.
+            Gue bikin aplikasi web &amp; mobile buat kebutuhan bisnis nyata, sekaligus
+            ngurus jaringan multi-site, file server, dan server Linux di
+            production. Dari requirement sampai deploy, end to end.
           </p>
 
           <div className="flex items-center gap-4 flex-wrap mb-16">
@@ -102,16 +102,16 @@ export default function HeroSection() {
               whoami
             </div>
             <div className="mb-3.5" style={{ color: "var(--c-muted2)" }}>
-              {"// Fullstack Dev + IT Support"}
+              {"// Full-Stack Dev + Network & IT Infra"}
             </div>
             <div>
               <span style={{ color: "var(--color-accent)" }}>→ </span>
               cat stack.txt
             </div>
             <div className="mb-3.5" style={{ color: "var(--c-muted2)" }}>
-              Next.js · Bun · Prisma
+              Next.js · TypeScript · Prisma
               <br />
-              Solidity · MySQL · Linux
+              MikroTik · Linux · TrueNAS
             </div>
             <div>
               <span style={{ color: "var(--color-accent)" }}>→ </span>

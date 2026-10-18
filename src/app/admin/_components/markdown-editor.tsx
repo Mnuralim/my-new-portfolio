@@ -17,10 +17,12 @@ interface Props {
 const theme = EditorView.theme(
   {
     "&": {
-      backgroundColor: "#0a0a0a",
-      color: "#ffff00",
+      backgroundColor: "var(--c-bg)",
+      color: "var(--c-text)",
       fontSize: "0.875rem",
-      border: "2px solid #2a2a2a",
+      border: "1px solid var(--c-border)",
+      borderRadius: "9px",
+      overflow: "hidden",
     },
     "&.cm-focused": {
       outline: "none",
@@ -28,24 +30,24 @@ const theme = EditorView.theme(
     },
     ".cm-content": {
       fontFamily: "var(--font-mono, monospace)",
-      caretColor: "#ffff00",
+      caretColor: "var(--color-accent)",
     },
     ".cm-gutters": {
-      backgroundColor: "#0a0a0a",
-      color: "#555555",
+      backgroundColor: "var(--c-bg)",
+      color: "var(--c-muted3)",
       border: "none",
     },
     ".cm-activeLine": {
-      backgroundColor: "#111111",
+      backgroundColor: "var(--c-divider)",
     },
     ".cm-activeLineGutter": {
-      backgroundColor: "#111111",
+      backgroundColor: "var(--c-divider)",
     },
     ".cm-selectionBackground, &.cm-focused .cm-selectionBackground": {
-      backgroundColor: "#2a2a2a !important",
+      backgroundColor: "var(--c-border) !important",
     },
   },
-  { dark: true }
+  {}
 );
 
 export const MarkdownEditor = forwardRef<MarkdownEditorHandle, Props>(

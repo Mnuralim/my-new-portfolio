@@ -68,7 +68,7 @@ function PortalDropdown({
       <div className="fixed inset-0 z-[9998]" onClick={onClose} />
       <div
         className={cn(
-          "fixed z-[9999] shadow-lg py-1 overflow-y-auto border-2",
+          "fixed z-[9999] shadow-lg py-1 overflow-y-auto border rounded-[9px]",
           dropdownCls
         )}
         style={dropdownStyle}
@@ -113,7 +113,7 @@ function IppControl({
         onClick={handleClick}
         type="button"
         className={cn(
-          "flex items-center gap-1.5 h-7 px-2 border-2 font-mono",
+          "flex items-center gap-1.5 h-7 px-2 border rounded-[7px] font-mono",
           "text-meta-xs tracking-widest transition-all",
           t.ippBtn
         )}
@@ -225,7 +225,7 @@ export function Pagination({
   return (
     <div className={cn("w-full font-mono", className)}>
       <div className="block sm:hidden">
-        <div className={cn("border-2 p-3 space-y-3", t.wrapperBg, t.wrapperBorder)}>
+        <div className={cn("border rounded-[10px] p-3 space-y-3", t.wrapperBg, t.wrapperBorder)}>
           <div className="flex items-center justify-between">
             <span className={cn("text-meta-xs", t.infoText)}>
               {startItem}–{endItem} {L.ofText}{" "}
@@ -245,7 +245,7 @@ export function Pagination({
               onClick={() => onPageChange(currentPage - 1)}
               disabled={currentPage === 1}
               className={cn(
-                "h-7 px-3 text-meta-xs tracking-widest font-medium border-2 transition-all flex items-center gap-1",
+                "h-7 px-3 text-meta-xs tracking-widest font-medium border rounded-[7px] transition-all flex items-center gap-1",
                 currentPage === 1 ? t.navBtnDisabled : t.navBtn
               )}
             >
@@ -263,7 +263,7 @@ export function Pagination({
                     key={p}
                     onClick={() => onPageChange(p as number)}
                     className={cn(
-                      "min-w-[28px] h-7 px-2 text-meta-xs font-medium border-2 transition-all",
+                      "min-w-[28px] h-7 px-2 text-meta-xs font-medium border rounded-[7px] transition-all",
                       p === currentPage ? t.pageActive : t.pageInactive
                     )}
                   >
@@ -276,7 +276,7 @@ export function Pagination({
               onClick={() => onPageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
               className={cn(
-                "h-7 px-3 text-meta-xs tracking-widest font-medium border-2 transition-all flex items-center gap-1",
+                "h-7 px-3 text-meta-xs tracking-widest font-medium border rounded-[7px] transition-all flex items-center gap-1",
                 currentPage === totalPages ? t.navBtnDisabled : t.navBtn
               )}
             >
@@ -314,7 +314,7 @@ export function Pagination({
             onClick={() => onPageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className={cn(
-              "h-7 px-3 text-meta-xs tracking-widest font-medium border-2 transition-all flex items-center gap-1",
+              "h-7 px-3 text-meta-xs tracking-widest font-medium border rounded-[7px] transition-all flex items-center gap-1",
               currentPage === 1 ? t.navBtnDisabled : t.navBtn
             )}
           >
@@ -332,7 +332,7 @@ export function Pagination({
                   key={p}
                   onClick={() => onPageChange(p as number)}
                   className={cn(
-                    "min-w-[28px] h-7 px-2 text-meta-xs font-medium border-2 transition-all",
+                    "min-w-[28px] h-7 px-2 text-meta-xs font-medium border rounded-[7px] transition-all",
                     p === currentPage ? t.pageActive : t.pageInactive
                   )}
                 >
@@ -345,7 +345,7 @@ export function Pagination({
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             className={cn(
-              "h-7 px-3 text-meta-xs tracking-widest font-medium border-2 transition-all flex items-center gap-1",
+              "h-7 px-3 text-meta-xs tracking-widest font-medium border rounded-[7px] transition-all flex items-center gap-1",
               currentPage === totalPages ? t.navBtnDisabled : t.navBtn
             )}
           >

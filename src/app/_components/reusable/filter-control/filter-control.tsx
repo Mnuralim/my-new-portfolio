@@ -58,7 +58,7 @@ export const FilterControl = ({
   const hasActions = visibleCustomButtons.length > 0 || !!addButton;
 
   const actionBtnBase =
-    "h-[34px] flex-shrink-0 flex items-center gap-1.5 px-3 text-meta-xs tracking-widest font-bold transition-all active:scale-[0.98] border-2";
+    "h-[34px] flex-shrink-0 flex items-center gap-1.5 px-3 text-meta-xs tracking-widest font-bold transition-all active:scale-[0.98] border rounded-[9px]";
 
   const renderActionButton = (btn: CustomButton, extraCls = "") => (
     <button
@@ -99,7 +99,7 @@ export const FilterControl = ({
               defaultValue={searchParams.get("search") || ""}
               placeholder={searchPlaceholder}
               className={cn(
-                "w-full h-[34px] text-meta-md font-mono pl-8 pr-8 border-2 outline-none transition-all",
+                "w-full h-[34px] text-meta-md font-mono pl-8 pr-8 border rounded-[9px] outline-none transition-all",
                 t.filterInputBg,
                 t.filterInputBorder,
                 t.filterInputText,
@@ -128,7 +128,7 @@ export const FilterControl = ({
           {!hideSortControls && visibleSortOptions.length > 0 && (
             <div
               className={cn(
-                "flex items-center border-2 overflow-hidden flex-shrink-0 h-[34px]",
+                "flex items-center border rounded-[9px] overflow-hidden flex-shrink-0 h-[34px]",
                 t.filterSortBg,
                 t.filterSortBorder
               )}
@@ -150,7 +150,7 @@ export const FilterControl = ({
               <div className={cn("w-px h-3.5 mx-1", t.filterSortDivider)} />
               <button
                 onClick={handleSortOrder}
-                className="h-full px-2 flex items-center transition-colors text-[#999999] hover:text-[#ffff00]"
+                className="h-full px-2 flex items-center transition-colors text-muted hover:text-accent"
                 title={
                   currentSortOrder === "asc" ? "Urutan naik" : "Urutan turun"
                 }

@@ -40,7 +40,7 @@ export function DataTable<T>({
           <div
             key={keyExtractor(item)}
             className={cn(
-              "border-2 p-3 space-y-2.5",
+              "border rounded-[10px] p-3 space-y-2.5",
               t.mobileCardBg,
               t.mobileCardBorder
             )}
@@ -114,7 +114,7 @@ export function DataTable<T>({
 
       <div
         className={cn(
-          "hidden sm:block overflow-hidden border-2",
+          "hidden sm:block overflow-hidden border rounded-[14px]",
           t.cardBg,
           t.cardBorder
         )}

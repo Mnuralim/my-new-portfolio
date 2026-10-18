@@ -20,8 +20,9 @@ export interface Project {
   title: string;
   description: string;
   stack: string[];
-  href: string;
+  href?: string | null;
   featured?: boolean;
+  coverImage?: string | null;
 }
 
 export interface Service {

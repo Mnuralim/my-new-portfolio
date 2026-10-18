@@ -11,23 +11,23 @@ export default function AdminLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col md:flex-row">
-      <aside className="md:w-56 border-b-2 md:border-b-0 md:border-r-2 border-black dark:border-[#2a2a2a] p-6 flex flex-col justify-between bg-black text-[#ffff00] dark:bg-transparent dark:text-inherit">
-        <div>
-          <div className="font-display font-extrabold text-[1rem] tracking-tight mb-8">
-            ADMIN
-          </div>
+      <aside className="sticky top-0 z-40 grid grid-cols-[1fr_auto] items-center gap-3 px-4 py-3 md:flex md:flex-col md:items-stretch md:gap-0 md:w-56 md:shrink-0 md:h-screen md:overflow-y-auto md:p-6 border-b md:border-b-0 md:border-r border-line bg-card text-fg">
+        <div className="font-display font-extrabold text-[1rem] tracking-tight md:mb-8">
+          ADMIN
+        </div>
+        <div className="col-span-2 min-w-0 md:flex-1">
           <SidebarNav />
         </div>
 
-        <div className="mt-8 flex items-center gap-2">
+        <div className="row-start-1 col-start-2 md:mt-8 flex items-center gap-2">
           <ThemeToggle />
-          <form action={logOut} className="flex-1">
+          <form action={logOut} className="md:flex-1">
             <button
               type="submit"
               className="
-                w-full bg-transparent text-[#ffff00] font-mono text-meta-xs font-bold px-4 py-3
-                tracking-widest border-2 border-[#2a2a2a] cursor-pointer uppercase
-                transition-all duration-200 hover:border-accent hover:text-[#ffff00]
+                w-full bg-transparent text-muted font-mono text-meta-xs font-bold px-3 py-2 md:px-4 md:py-3
+                tracking-widest border border-line rounded-[9px] cursor-pointer uppercase
+                transition-all duration-200 hover:border-accent hover:text-accent
               "
             >
               LOGOUT

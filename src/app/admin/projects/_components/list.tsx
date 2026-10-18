@@ -12,6 +12,7 @@ import { Pagination } from "@/app/_components/reusable/pagination/pagination";
 import { ConfirmDeleteAlert } from "@/app/admin/_components/confirm-delete-alert";
 import { PendingOverlay } from "@/app/admin/_components/pending-overlay";
 import { useActionWithToast } from "@/app/admin/_components/use-action-toast";
+import { ImageUploader } from "@/app/admin/_components/image-uploader";
 
 interface Props {
   projects: Project[];
@@ -35,15 +36,20 @@ export function ProjectList({
 
   const [editing, setEditing] = useState<Project | null>(null);
   const [confirmId, setConfirmId] = useState<string | null>(null);
+  const [coverImage, setCoverImage] = useState("");
+  const edit = (p: Project | null) => {
+    setEditing(p);
+    setCoverImage(p?.coverImage ?? "");
+  };
   const confirmingProject = projects.find((p) => p.id === confirmId);
 
   const [createState, createDispatch, createPending] = useActionWithToast(
     createProject,
-    { onSuccess: () => setEditing(null) }
+    { onSuccess: () => edit(null) }
   );
   const [updateState, updateDispatch, updatePending] = useActionWithToast(
     updateProject,
-    { onSuccess: () => setEditing(null) }
+    { onSuccess: () => edit(null) }
   );
   const [, deleteDispatch, deletePending] = useActionWithToast(deleteProject, {
     onSuccess: () => setConfirmId(null),
@@ -78,14 +84,14 @@ export function ProjectList({
       cell: (p) => (
         <div className="flex items-center justify-center gap-1.5">
           <button
-            onClick={() => setEditing(p)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
+            onClick={() => edit(p)}
+            className="inline-flex items-center justify-center w-11 h-11 text-muted border border-line rounded-[9px] hover:border-accent hover:text-accent transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => setConfirmId(p.id)}
-            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border-2 border-accent2/40 hover:border-accent2 transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border rounded-[9px] border-accent2/40 hover:border-accent2 transition-colors"
           >
             <Trash2 size={13} />
           </button>
@@ -145,15 +151,15 @@ export function ProjectList({
         </div>
       </div>
 
-      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
+      <div className="bg-card border border-line rounded-[14px] p-6 h-fit">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#ffff00]">
+          <span className="text-meta-xs tracking-widest text-accent">
             {editing ? "EDIT PROJECT" : "TAMBAH PROJECT"}
           </span>
           {editing && (
             <button
-              onClick={() => setEditing(null)}
-              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
+              onClick={() => edit(null)}
+              className="text-meta-xs text-muted hover:text-accent"
             >
               BATAL
             </button>
@@ -166,18 +172,27 @@ export function ProjectList({
           key={editing?.id ?? "new"}
         >
           {editing && <input type="hidden" name="id" value={editing.id} />}
+          <input type="hidden" name="coverImage" value={coverImage} />
+
+          <ImageUploader
+            label="COVER (gambar atau video mp4/webm, opsional)"
+            accept="image/*,video/mp4,video/webm"
+            folder="project-cover"
+            value={coverImage}
+            onChange={setCoverImage}
+          />
 
           <Field label="NUM" name="num" defaultValue={editing?.num} />
           <Field label="TAG" name="tag" defaultValue={editing?.tag} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               TAG COLOR
             </label>
             <select
               name="tagColor"
               defaultValue={editing?.tagColor ?? "accent"}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             >
               {TAG_COLORS.map((c) => (
                 <option key={c} value={c}>
@@ -190,7 +205,7 @@ export function ProjectList({
           <Field label="TITLE" name="title" defaultValue={editing?.title} />
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               DESCRIPTION
             </label>
             <textarea
@@ -198,12 +213,12 @@ export function ProjectList({
               defaultValue={editing?.description}
               required
               rows={4}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent resize-none"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent resize-none"
             />
           </div>
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               STACK (pisah koma)
             </label>
             <input
@@ -211,11 +226,16 @@ export function ProjectList({
               defaultValue={
                 editing ? (editing.stack as string[]).join(", ") : ""
               }
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             />
           </div>
 
-          <Field label="HREF" name="href" defaultValue={editing?.href} />
+          <Field
+            label="LINK (kosongkan kalau private/internal; /blog/... untuk studi kasus)"
+            name="href"
+            defaultValue={editing?.href ?? ""}
+            required={false}
+          />
           <Field
             label="FILTER (WEB DEV / IT SUPPORT / BLOCKCHAIN)"
             name="filter"
@@ -223,7 +243,7 @@ export function ProjectList({
             required={false}
           />
 
-          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-[#999999]">
+          <label className="flex items-center gap-2 text-meta-xs tracking-widest text-muted">
             <input
               type="checkbox"
               name="featured"
@@ -286,7 +306,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+      <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
         {label}
       </label>
       <input
@@ -294,7 +314,7 @@ function Field({
         type={type}
         defaultValue={defaultValue}
         required={required}
-        className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+        className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
       />
     </div>
   );

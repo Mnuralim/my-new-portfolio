@@ -5,6 +5,7 @@ import type { Project } from "../../../../../types";
 import ModalFooter from "./modal-footer";
 import ModalButton from "./modal-button";
 import Modal from "./modal";
+import { CoverMedia, linkTarget } from "../sections/project-section-client";
 
 interface ProjectsModalProps {
   isOpen: boolean;
@@ -21,17 +22,35 @@ function tagClass(color?: Project["tagColor"]) {
   return "tag-accent";
 }
 
-export default function ProjectsModal({
-  isOpen,
-  onClose,
-  allProjects,
-}: ProjectsModalProps) {
+function CardLink({
+  href,
+  className,
+  style,
+  children,
+}: {
+  href?: string | null;
+  className: string;
+  style: React.CSSProperties;
+  children: React.ReactNode;
+}) {
+  if (!href)
+    return (
+      <div className={className} style={style}>
+        {children}
+      </div>
+    );
+  return (
+    <a href={href} {...linkTarget(href)} className={className} style={style}>
+      {children}
+    </a>
+  );
+}
+
+export default function ProjectsModal({ isOpen, onClose, allProjects }: ProjectsModalProps) {
   const [activeFilter, setActiveFilter] = useState("SEMUA");
 
   const filtered =
-    activeFilter === "SEMUA"
-      ? allProjects
-      : allProjects.filter((p) => p.filter === activeFilter);
+    activeFilter === "SEMUA" ? allProjects : allProjects.filter((p) => p.filter === activeFilter);
 
   const filterTabs = (
     <div className="flex gap-2 overflow-x-auto px-6 py-4">
@@ -43,7 +62,8 @@ export default function ProjectsModal({
           style={{
             color: activeFilter === f ? "#0b0b0c" : "var(--c-muted2)",
             background: activeFilter === f ? "var(--color-accent)" : "transparent",
-            border: activeFilter === f ? "1px solid var(--color-accent)" : "1px solid var(--c-border)",
+            border:
+              activeFilter === f ? "1px solid var(--color-accent)" : "1px solid var(--c-border)",
           }}
           className="font-mono text-meta-2xs tracking-widest px-4 py-2 rounded-full cursor-pointer whitespace-nowrap transition-all duration-200"
         >
@@ -57,11 +77,8 @@ export default function ProjectsModal({
     <ModalFooter
       info={
         <>
-          MENAMPILKAN{" "}
-          <span style={{ color: "var(--color-accent)" }}>{filtered.length}</span>{" "}
-          DARI{" "}
-          <span style={{ color: "var(--color-accent)" }}>{allProjects.length}</span>{" "}
-          PROYEK
+          MENAMPILKAN <span style={{ color: "var(--color-accent)" }}>{filtered.length}</span> DARI{" "}
+          <span style={{ color: "var(--color-accent)" }}>{allProjects.length}</span> PROYEK
         </>
       }
     >
@@ -97,25 +114,30 @@ export default function ProjectsModal({
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {filtered.map((project) => (
-              <a
+              <CardLink
                 key={project.num}
                 href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="card-hoverable block p-6 rounded-[12px] no-underline relative overflow-hidden"
                 style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
               >
-                <div
-                  className="absolute -top-2 -right-1 font-sans font-extrabold text-[3.2rem] leading-none pointer-events-none select-none"
-                  style={{ color: "var(--c-divider)" }}
-                >
-                  {project.num}
-                </div>
+                {project.coverImage ? (
+                  <div
+                    className="-mx-6 -mt-6 mb-5 aspect-video overflow-hidden"
+                    style={{ borderBottom: "1px solid var(--c-cardborder)" }}
+                  >
+                    <CoverMedia src={project.coverImage} alt="" />
+                  </div>
+                ) : (
+                  <div
+                    className="absolute -top-2 -right-1 font-sans font-extrabold text-[3.2rem] leading-none pointer-events-none select-none"
+                    style={{ color: "var(--c-divider)" }}
+                  >
+                    {project.num}
+                  </div>
+                )}
 
                 <div className="relative">
-                  <span
-                    className={`${tagClass(project.tagColor)} mb-3 block w-fit text-meta-2xs`}
-                  >
+                  <span className={`${tagClass(project.tagColor)} mb-3 block w-fit text-meta-2xs`}>
                     {project.tag}
                   </span>
 
@@ -124,7 +146,9 @@ export default function ProjectsModal({
                     style={{ color: "var(--c-text)" }}
                   >
                     {project.title}
-                    <span className="sr-only"> (buka di tab baru)</span>
+                    {project.href && !project.href.startsWith("/") && (
+                      <span className="sr-only"> (buka di tab baru)</span>
+                    )}
                   </h3>
 
                   <p
@@ -147,13 +171,30 @@ export default function ProjectsModal({
                   </div>
                 </div>
 
-                <span
-                  className="absolute top-5 right-5 text-base"
-                  style={{ color: "var(--c-muted2)" }}
-                >
-                  ↗
-                </span>
-              </a>
+                {project.href ? (
+                  <span
+                    className={`absolute top-5 right-5 text-base ${
+                      project.coverImage
+                        ? "w-8 h-8 rounded-full flex items-center justify-center"
+                        : ""
+                    }`}
+                    style={
+                      project.coverImage
+                        ? { color: "#f2f2f0", background: "rgba(11,11,12,0.6)" }
+                        : { color: "var(--c-muted2)" }
+                    }
+                  >
+                    ↗
+                  </span>
+                ) : (
+                  <span
+                    className="inline-block mt-4 font-mono text-meta-2xs tracking-widest px-2 py-0.5 rounded-full"
+                    style={{ color: "var(--c-muted2)", border: "1px solid var(--c-border)" }}
+                  >
+                    PRIVATE / INTERNAL
+                  </span>
+                )}
+              </CardLink>
             ))}
           </div>
         )}

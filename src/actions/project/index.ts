@@ -4,6 +4,7 @@ import type { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 import { cacheLife, cacheTag, updateTag } from "next/cache";
 import { getSession } from "../session";
+import { deleteImageKitByUrl } from "@/lib/imagekit";
 
 export async function getAllProjectsRaw() {
   "use cache";
@@ -52,6 +53,13 @@ export async function getAllProjects(params: ProjectParams) {
   };
 }
 
+// empty = private/internal project; rendered as href, so only http(s) or site-relative paths
+function parseHref(formData: FormData): string | null | false {
+  const href = (formData.get("href") as string)?.trim();
+  if (!href) return null;
+  return /^(https?:\/\/|\/(?!\/))/i.test(href) ? href : false;
+}
+
 function parseStack(formData: FormData): string[] {
   const raw = formData.get("stack") as string;
   return raw
@@ -72,18 +80,23 @@ export async function createProject(
     const tagColor = formData.get("tagColor") as string;
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const href = formData.get("href") as string;
+    const href = parseHref(formData);
     const filter = formData.get("filter") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
+    const coverImage = formData.get("coverImage") as string;
 
     const session = await getSession();
     if (!session) {
       return { formData, error: "Tidak punya akses." };
     }
 
-    if (!num || !tag || !title || !description || !href) {
+    if (!num || !tag || !title || !description) {
       return { formData, error: "Semua field wajib diisi." };
+    }
+
+    if (href === false) {
+      return { formData, error: "Link harus diawali http(s):// atau /." };
     }
 
     await prisma.project.create({
@@ -94,9 +107,10 @@ export async function createProject(
         title: title.trim(),
         description: description.trim(),
         stack: parseStack(formData),
-        href: href.trim(),
+        href,
         filter: filter?.trim() || null,
         featured,
+        coverImage: coverImage?.trim() || null,
         order: order ? parseInt(order, 10) : 0,
       },
     });
@@ -121,18 +135,28 @@ export async function updateProject(
     const tagColor = formData.get("tagColor") as string;
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
-    const href = formData.get("href") as string;
+    const href = parseHref(formData);
     const filter = formData.get("filter") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
+    const coverImage = formData.get("coverImage") as string;
 
     const session = await getSession();
     if (!session) {
       return { formData, error: "Tidak punya akses." };
     }
 
-    if (!id || !num || !tag || !title || !description || !href) {
+    if (!id || !num || !tag || !title || !description) {
       return { formData, error: "Semua field wajib diisi." };
+    }
+
+    if (href === false) {
+      return { formData, error: "Link harus diawali http(s):// atau /." };
+    }
+
+    const project = await prisma.project.findUnique({ where: { id } });
+    if (!project) {
+      return { formData, error: "Project tidak ditemukan." };
     }
 
     await prisma.project.update({
@@ -144,12 +168,18 @@ export async function updateProject(
         title: title.trim(),
         description: description.trim(),
         stack: parseStack(formData),
-        href: href.trim(),
+        href,
         filter: filter?.trim() || null,
         featured,
+        coverImage: coverImage?.trim() || null,
         order: order ? parseInt(order, 10) : 0,
       },
     });
+
+    // delete the replaced image only after the update succeeded
+    if (project.coverImage && project.coverImage !== coverImage) {
+      await deleteImageKitByUrl(project.coverImage).catch(() => {});
+    }
 
     updateTag("projects");
 
@@ -174,6 +204,11 @@ export async function deleteProject(
 
     if (!id) {
       return { formData, error: "ID tidak valid." };
+    }
+
+    const project = await prisma.project.findUnique({ where: { id } });
+    if (project?.coverImage) {
+      await deleteImageKitByUrl(project.coverImage).catch(() => {});
     }
 
     await prisma.project.delete({ where: { id } });

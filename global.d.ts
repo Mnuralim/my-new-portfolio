@@ -34,6 +34,14 @@ interface ServiceParams extends PaginationParams {
   search?: string;
 }
 
+interface CredentialParams extends PaginationParams {
+  search?: string;
+}
+
+interface CvParams extends PaginationParams {
+  search?: string;
+}
+
 interface ContactLinkParams extends PaginationParams {
   search?: string;
 }

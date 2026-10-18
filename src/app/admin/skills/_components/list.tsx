@@ -82,13 +82,13 @@ export function SkillList({
         <div className="flex items-center justify-center gap-1.5">
           <button
             onClick={() => setEditing(s)}
-            className="inline-flex items-center justify-center w-11 h-11 text-[#999999] border-2 border-[#2a2a2a] hover:border-accent hover:text-[#ffff00] transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-muted border border-line rounded-[9px] hover:border-accent hover:text-accent transition-colors"
           >
             <Pencil size={13} />
           </button>
           <button
             onClick={() => setConfirmId(s.id)}
-            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border-2 border-accent2/40 hover:border-accent2 transition-colors"
+            className="inline-flex items-center justify-center w-11 h-11 text-accent2 border rounded-[9px] border-accent2/40 hover:border-accent2 transition-colors"
           >
             <Trash2 size={13} />
           </button>
@@ -148,15 +148,15 @@ export function SkillList({
         </div>
       </div>
 
-      <div className="bg-[#111111] border-2 border-[#2a2a2a] p-6 h-fit">
+      <div className="bg-card border border-line rounded-[14px] p-6 h-fit">
         <div className="flex justify-between items-center mb-6">
-          <span className="text-meta-xs tracking-widest text-[#ffff00]">
+          <span className="text-meta-xs tracking-widest text-accent">
             {editing ? "EDIT SKILL" : "TAMBAH SKILL"}
           </span>
           {editing && (
             <button
               onClick={() => setEditing(null)}
-              className="text-meta-xs text-[#999999] hover:text-[#ffff00]"
+              className="text-meta-xs text-muted hover:text-accent"
             >
               BATAL
             </button>
@@ -171,38 +171,38 @@ export function SkillList({
           {editing && <input type="hidden" name="id" value={editing.id} />}
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               CATEGORY
             </label>
             <input
               name="category"
               defaultValue={editing?.category}
               required
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             />
           </div>
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               NAME
             </label>
             <input
               name="name"
               defaultValue={editing?.name}
               required
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             />
           </div>
 
           <div>
-            <label className="block text-meta-2xs tracking-widest text-[#999999] mb-1.5">
+            <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">
               ORDER
             </label>
             <input
               name="order"
               type="number"
               defaultValue={editing?.order ?? 0}
-              className="w-full bg-[#0a0a0a] border-2 border-[#2a2a2a] px-3 py-2.5 text-meta-md font-mono text-[#ffff00] outline-none focus:border-accent"
+              className="w-full bg-base border border-line rounded-[9px] px-3 py-2.5 text-meta-md font-mono text-fg outline-none focus:border-accent"
             />
           </div>
 

@@ -52,7 +52,7 @@ export const PageContainer = ({
             <Link
               href={addData?.href || "#"}
               className={cn(
-                "flex items-center gap-1.5 transition-all active:scale-[0.98] border-2",
+                "flex items-center gap-1.5 transition-all active:scale-[0.98] border rounded-[9px]",
                 "text-meta-xs tracking-widest px-3 py-2 whitespace-nowrap",
                 t.pageAddBtn,
                 t.pageAddBtnText

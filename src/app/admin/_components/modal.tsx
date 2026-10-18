@@ -46,14 +46,14 @@ export const Modal = ({ isOpen, onClose, children }: Props) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-black/70 backdrop-blur-sm">
+    <div className="fixed inset-0 flex items-center justify-center z-[1000] bg-[var(--overlay-backdrop)] backdrop-blur-sm">
       <div
         ref={modalContentRef}
-        className="w-full max-w-md border-2 border-[#2a2a2a] bg-[#161616] mx-3 p-6 relative max-h-[90vh] overflow-y-auto font-mono"
+        className="w-full max-w-md border border-line rounded-[14px] bg-card mx-3 p-6 relative max-h-[90vh] overflow-y-auto font-mono"
       >
         <button
           onClick={handleClose}
-          className="absolute right-4 top-4 p-1.5 border-2 border-[#2a2a2a] text-[#999999] hover:border-accent hover:text-[#ffff00] transition-colors"
+          className="absolute right-4 top-4 p-1.5 border border-line rounded-[7px] text-muted hover:border-accent hover:text-accent transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
