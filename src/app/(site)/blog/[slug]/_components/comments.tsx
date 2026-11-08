@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Heart, LogOut, Reply, Trash2 } from "lucide-react";
 import {
@@ -296,6 +297,17 @@ export function Comments({ slug, user, initialComments }: Props) {
             </p>
           )}
           <LoginButtons />
+          <p className="mt-4 text-[0.85rem]" style={{ color: "var(--c-muted3)" }}>
+            Dengan login, kamu setuju dengan{" "}
+            <Link href="/terms" className="underline underline-offset-2" style={{ color: "inherit" }}>
+              Ketentuan
+            </Link>{" "}
+            dan{" "}
+            <Link href="/privacy" className="underline underline-offset-2" style={{ color: "inherit" }}>
+              Kebijakan Privasi
+            </Link>
+            .
+          </p>
         </div>
       )}
 

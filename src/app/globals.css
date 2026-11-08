@@ -322,6 +322,16 @@
   .prose-blog ol {
     @apply mb-5 pl-6;
   }
+  /* Tailwind preflight strips list markers */
+  .prose-blog ul {
+    list-style: disc;
+  }
+  .prose-blog ol {
+    list-style: decimal;
+  }
+  .prose-blog li::marker {
+    color: var(--c-muted3);
+  }
   .prose-blog li {
     @apply mb-1.5;
   }

@@ -368,7 +368,14 @@ export function BlogPostList({
             name="readTime"
             defaultValue={editing?.readTime}
           />
-          <Field label="VIEWS" name="views" defaultValue={editing?.views} />
+          {editing && (
+            <div>
+              <span className="block text-meta-2xs tracking-widest text-muted mb-1.5">VIEWS</span>
+              <p className="text-sm text-muted">
+                {editing.viewCount.toLocaleString("id-ID")} dibaca (dihitung otomatis dari pengunjung)
+              </p>
+            </div>
+          )}
 
           <div>
             <label className="block text-meta-2xs tracking-widest text-muted mb-1.5">

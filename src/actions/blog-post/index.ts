@@ -91,7 +91,6 @@ export async function createBlogPost(
     const coverImage = formData.get("coverImage") as string;
     const date = formData.get("date") as string;
     const readTime = formData.get("readTime") as string;
-    const views = formData.get("views") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
     const playlistIds = formData.getAll("playlistIds") as string[];
@@ -101,7 +100,7 @@ export async function createBlogPost(
       return { formData, error: "Tidak punya akses." };
     }
 
-    if (!num || !tag || !title || !description || !content || !date || !readTime || !views) {
+    if (!num || !tag || !title || !description || !content || !date || !readTime) {
       return { formData, error: "Semua field wajib diisi." };
     }
 
@@ -124,7 +123,8 @@ export async function createBlogPost(
         coverImage: coverImage?.trim() || null,
         date: date.trim(),
         readTime: readTime.trim(),
-        views: views.trim(),
+        // legacy column (NOT NULL, no default); real counts live in viewCount
+        views: "0",
         featured,
         order: order ? parseInt(order, 10) : 0,
         playlists: {
@@ -158,7 +158,6 @@ export async function updateBlogPost(
     const coverImage = formData.get("coverImage") as string;
     const date = formData.get("date") as string;
     const readTime = formData.get("readTime") as string;
-    const views = formData.get("views") as string;
     const featured = formData.get("featured") === "on";
     const order = formData.get("order") as string;
     const playlistIds = formData.getAll("playlistIds") as string[];
@@ -168,7 +167,7 @@ export async function updateBlogPost(
       return { formData, error: "Tidak punya akses." };
     }
 
-    if (!id || !num || !tag || !title || !description || !content || !date || !readTime || !views) {
+    if (!id || !num || !tag || !title || !description || !content || !date || !readTime) {
       return { formData, error: "Semua field wajib diisi." };
     }
 
@@ -193,7 +192,6 @@ export async function updateBlogPost(
         coverImage: coverImage?.trim() || null,
         date: date.trim(),
         readTime: readTime.trim(),
-        views: views.trim(),
         featured,
         order: order ? parseInt(order, 10) : 0,
         playlists: {

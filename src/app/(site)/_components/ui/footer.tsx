@@ -8,6 +8,8 @@ const links = [
   { label: "Services", href: "/#services" },
   { label: "Blog", href: "/#blog" },
   { label: "Contact", href: "/#contact" },
+  { label: "Privasi", href: "/privacy" },
+  { label: "Ketentuan", href: "/terms" },
 ];
 
 export default function Footer() {

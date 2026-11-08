@@ -1,0 +1,101 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import PageHeader from "../_components/ui/page-header";
+
+export const metadata: Metadata = {
+  title: "Kebijakan Privasi — Izzy Dev",
+  description: "Data apa yang disimpan izzy.my.id, untuk apa, dan cara menghapusnya.",
+  alternates: { canonical: "/privacy" },
+};
+
+export default function PrivacyPage() {
+  return (
+    <article className="max-w-3xl mx-auto px-4 sm:px-8 pt-12 pb-24 sm:pt-16">
+      <PageHeader title="Kebijakan Privasi" intro="Terakhir diperbarui 8 November 2026." />
+
+      <div className="prose-blog text-[1.05rem] leading-[1.8]" style={{ color: "var(--c-b5)" }}>
+        <p>
+          Halaman ini menjelaskan data apa yang disimpan oleh izzy.my.id (dikelola oleh Muhamad Nur Fatahil
+          Alim), untuk apa data itu dipakai, dan bagaimana kamu bisa menghapusnya. Situs ini tidak menjual data
+          dan tidak memasang iklan.
+        </p>
+
+        <h2>Data yang disimpan</h2>
+        <h3>Saat kamu login untuk berkomentar atau memberi suka</h3>
+        <ul>
+          <li>
+            <strong>Login dengan Google:</strong> ID akun Google, nama, foto profil, dan alamat email (hanya jika
+            sudah diverifikasi Google).
+          </li>
+          <li>
+            <strong>Login dengan GitHub:</strong> ID akun GitHub, nama atau username, dan foto profil. Email tidak
+            diminta.
+          </li>
+          <li>Komentar, balasan, dan suka yang kamu berikan, beserta waktunya.</li>
+        </ul>
+        <p>
+          Situs ini tidak pernah menerima password akunmu, dan tidak meminta akses ke data lain seperti kontak,
+          file, atau repository.
+        </p>
+
+        <h3>Saat kamu membaca tulisan</h3>
+        <p>
+          Untuk menghitung berapa kali sebuah tulisan dibaca, situs menyimpan ID acak di cookie dan mencatat
+          ID tersebut sekali per tulisan per hari. ID ini tidak terhubung ke nama, email, atau alamat IP.
+        </p>
+
+        <h3>Saat kamu berlangganan newsletter</h3>
+        <p>Alamat email yang kamu isi, hanya untuk mengirim kabar tulisan baru.</p>
+
+        <h2>Untuk apa data dipakai</h2>
+        <ul>
+          <li>Nama dan foto profil ditampilkan di samping komentarmu.</li>
+          <li>Email tidak pernah ditampilkan publik. Email hanya dipakai jika perlu menghubungimu soal komentar atau akunmu.</li>
+          <li>Hitungan pembaca dan suka ditampilkan sebagai angka total di setiap tulisan.</li>
+        </ul>
+
+        <h2>Cookie</h2>
+        <ul>
+          <li>
+            <code>user_session</code>: menjaga kamu tetap login, berlaku 30 hari atau sampai kamu keluar.
+          </li>
+          <li>
+            <code>oauth_state</code>: pengaman saat proses login, berlaku 10 menit.
+          </li>
+          <li>
+            <code>vid</code>: ID acak untuk hitungan pembaca, berlaku 1 tahun.
+          </li>
+          <li>Pilihan tema terang atau gelap disimpan di browsermu (localStorage), tidak dikirim ke server.</li>
+        </ul>
+        <p>Tidak ada cookie iklan atau pelacak dari pihak ketiga.</p>
+
+        <h2>Layanan pihak ketiga</h2>
+        <ul>
+          <li>Google dan GitHub, untuk proses login.</li>
+          <li>Cloudflare, untuk jaringan dan keamanan situs.</li>
+          <li>ImageKit, untuk menyimpan dan menampilkan gambar.</li>
+        </ul>
+
+        <h2>Berapa lama data disimpan</h2>
+        <p>
+          Data akun dan komentar disimpan selama akunmu ada. Kamu bisa menghapus komentarmu sendiri kapan saja
+          lewat tombol Hapus. Catatan hitungan pembaca tidak berisi data pribadi.
+        </p>
+
+        <h2>Hak kamu</h2>
+        <p>
+          Sesuai UU Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi, kamu bisa meminta salinan datamu,
+          meminta perbaikan, atau meminta akun beserta seluruh komentarmu dihapus. Hubungi lewat salah satu
+          kontak di <Link href="/#contact">halaman kontak</Link>, dan permintaan akan diproses paling lambat 14
+          hari.
+        </p>
+
+        <h2>Perubahan kebijakan</h2>
+        <p>
+          Kalau kebijakan ini berubah, tanggal di atas ikut diperbarui. Perubahan besar akan diumumkan di
+          situs ini.
+        </p>
+      </div>
+    </article>
+  );
+}
