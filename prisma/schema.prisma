@@ -126,10 +126,15 @@ model BlogPost {
   views       String   @db.VarChar(50)
   featured    Boolean  @default(false)
   order       Int      @default(0)
+  // incremented with raw SQL so it does not bump updatedAt (sitemap lastmod, JSON-LD dateModified)
+  viewCount   Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   playlists BlogPostPlaylist[]
+  comments  Comment[]
+  likes     PostLike[]
+  viewLog   PostView[]
 
   @@map("tb_blog_post")
 }
@@ -165,4 +170,82 @@ model BlogPostPlaylist {
 
   @@id([blogPostId, playlistId])
   @@map("tb_blog_post_playlist")
+}
+
+// reader account created by Google/GitHub sign-in (separate from Admin)
+model User {
+  id         String   @id @default(uuid())
+  provider   String   @db.VarChar(20)
+  providerId String   @db.VarChar(100)
+  name       String   @db.VarChar(100)
+  email      String?  @db.VarChar(150)
+  image      String?  @db.VarChar(500)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  comments     Comment[]
+  postLikes    PostLike[]
+  commentLikes CommentLike[]
+
+  @@unique([provider, providerId])
+  @@map("tb_user")
+}
+
+model Comment {
+  id         String   @id @default(uuid())
+  blogPostId String
+  userId     String
+  // replies are one level deep: a reply to a reply is attached to the top-level comment
+  parentId   String?
+  content    String   @db.Text
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  blogPost BlogPost  @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent   Comment?  @relation("Replies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies  Comment[] @relation("Replies")
+  likes    CommentLike[]
+
+  @@index([blogPostId, createdAt])
+  @@index([parentId])
+  @@map("tb_comment")
+}
+
+model PostLike {
+  blogPostId String
+  userId     String
+  createdAt  DateTime @default(now())
+
+  blogPost BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([blogPostId, userId])
+  @@map("tb_post_like")
+}
+
+model CommentLike {
+  commentId String
+  userId    String
+  createdAt DateTime @default(now())
+
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([commentId, userId])
+  @@map("tb_comment_like")
+}
+
+// one row per visitor per article per day; the unique key is what makes a view count once
+model PostView {
+  id         String   @id @default(uuid())
+  blogPostId String
+  visitorId  String   @db.VarChar(36)
+  day        String   @db.VarChar(10)
+  createdAt  DateTime @default(now())
+
+  blogPost BlogPost @relation(fields: [blogPostId], references: [id], onDelete: Cascade)
+
+  @@unique([blogPostId, visitorId, day])
+  @@map("tb_post_view")
 }

@@ -3,6 +3,14 @@ import { getAdjacentPlaylistPosts } from "@/actions/playlist";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { ViewTracker } from "./view-tracker";
+import { EngagementBar } from "./engagement-bar";
+import { Comments } from "./comments";
+import { getPostEngagement } from "@/actions/engagement";
+import { getComments } from "@/actions/comment";
+import { getCurrentUser } from "@/actions/user";
+
+const compact = new Intl.NumberFormat("id-ID", { notation: "compact" });
 import remarkGfm from "remark-gfm";
 
 interface Props {
@@ -18,6 +26,9 @@ export async function PostContent({ params, searchParams }: Props) {
   if (!post) {
     notFound();
   }
+
+  const [user, stats, comments] = await Promise.all([getCurrentUser(), getPostEngagement(slug), getComments(slug)]);
+  const url = `https://izzy.my.id/blog/${post.slug}`;
 
   const adjacent = playlistSlug
     ? await getAdjacentPlaylistPosts(playlistSlug, slug)
@@ -49,6 +60,7 @@ export async function PostContent({ params, searchParams }: Props) {
 
   return (
     <>
+      <ViewTracker slug={post.slug} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -66,7 +78,10 @@ export async function PostContent({ params, searchParams }: Props) {
         <div className="mt-5 flex gap-x-6 gap-y-1 font-mono text-meta-sm flex-wrap" style={{ color: "var(--c-muted3)" }}>
           <span>{post.date}</span>
           <span>{post.readTime}</span>
-          <span>{post.views}</span>
+          <span>{compact.format(stats?.viewCount ?? 0)} dibaca</span>
+          <a href="#comments" className="no-underline hover:text-[var(--c-text)]" style={{ color: "inherit" }}>
+            {stats?.commentCount ?? 0} komentar
+          </a>
         </div>
       </header>
 
@@ -84,6 +99,15 @@ export async function PostContent({ params, searchParams }: Props) {
           {post.content}
         </ReactMarkdown>
       </div>
+
+      <EngagementBar
+        slug={post.slug}
+        title={post.title}
+        url={url}
+        initialLiked={stats?.likedByMe ?? false}
+        initialCount={stats?.likeCount ?? 0}
+        loggedIn={Boolean(user)}
+      />
 
       {showPlaylistNav && (
         <nav aria-label="Navigasi playlist" className="mt-16 pt-8" style={{ borderTop: "1px solid var(--c-border)" }}>
@@ -132,6 +156,8 @@ export async function PostContent({ params, searchParams }: Props) {
           </div>
         </nav>
       )}
+
+      <Comments slug={post.slug} user={user} initialComments={comments} />
     </>
   );
 }
