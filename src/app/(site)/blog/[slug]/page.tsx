@@ -28,48 +28,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
       type: "article",
       url,
-      publishedTime: post.date,
-      images: post.coverImage ? [{ url: post.coverImage }] : undefined,
+      publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      // no cover: leave images out so ./opengraph-image.tsx is used
+      ...(post.coverImage && { images: [{ url: post.coverImage }] }),
     },
     twitter: {
       card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: post.coverImage ? [post.coverImage] : undefined,
+      ...(post.coverImage && { images: [post.coverImage] }),
     },
   };
 }
 
 export default function BlogPostPage({ params, searchParams }: Props) {
   return (
-    <div
-      className="-mx-3 sm:mx-[calc(50%-50vw)] px-3 sm:px-0 min-h-screen"
-      style={{ background: "var(--c-bg)" }}
-    >
-      <article className="max-w-3xl mx-auto px-3 py-20">
-        <Suspense
-          fallback={
-            <div
-              className="inline-flex items-center gap-2 text-meta-xs tracking-widest px-3 py-2 rounded-[8px]"
-              style={{ border: "1px solid var(--c-border)", color: "var(--c-muted2)" }}
-            >
-              ← BACK TO BLOG
-            </div>
-          }
-        >
-          <BackLink searchParams={searchParams} />
-        </Suspense>
+    <article className="max-w-3xl mx-auto px-4 sm:px-8 pt-12 pb-24 sm:pt-16">
+      <Suspense fallback={<div className="h-10" />}>
+        <BackLink searchParams={searchParams} />
+      </Suspense>
 
-        <Suspense
-          fallback={
-            <div className="mt-8 text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-              Loading...
-            </div>
-          }
-        >
-          <PostContent params={params} searchParams={searchParams} />
-        </Suspense>
-      </article>
-    </div>
+      <Suspense
+        fallback={
+          <div className="mt-10" style={{ color: "var(--c-muted)" }}>
+            Memuat...
+          </div>
+        }
+      >
+        <PostContent params={params} searchParams={searchParams} />
+      </Suspense>
+    </article>
   );
 }

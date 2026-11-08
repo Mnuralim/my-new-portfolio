@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { X } from "lucide-react";
 
-type ModalSize = "sm" | "md" | "lg" | "full";
+type ModalSize = "sm" | "md" | "lg" | "xl" | "full";
 
 interface ModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ const sizeMap: Record<ModalSize, string> = {
   sm: "max-w-sm",
   md: "max-w-xl",
   lg: "max-w-3xl",
+  xl: "max-w-5xl",
   full: "max-w-[95vw]",
 };
 
@@ -82,7 +84,8 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 overflow-y-auto p-4 sm:p-6"
+      className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto p-3 sm:p-6 backdrop-blur-sm"
+      style={{ background: "var(--overlay-backdrop)" }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -93,55 +96,45 @@ export default function Modal({
       <div
         ref={modalRef}
         tabIndex={-1}
-        className={`w-full ${sizeMap[size]} flex flex-col max-h-[90vh] outline-none rounded-[16px] overflow-hidden animate-fadeUp`}
+        className={`w-full ${sizeMap[size]} flex flex-col max-h-[92vh] outline-none rounded-[24px] overflow-hidden animate-fade-up`}
         style={{
-          background: "var(--c-cardbg2)",
-          border: "1px solid var(--c-cardborder)",
-          boxShadow: "0 30px 80px rgba(0,0,0,0.5)",
+          background: "var(--overlay-card-bg)",
+          border: "1px solid var(--overlay-card-border)",
+          boxShadow: "var(--overlay-card-shadow)",
         }}
       >
-        <div
-          className="flex justify-between items-center px-6 py-4 flex-shrink-0"
-          style={{ borderBottom: "1px solid var(--c-cardborder)" }}
-        >
-          <div className="flex flex-col gap-0.5">
-            {eyebrow && (
-              <span
-                className="text-meta-2xs tracking-[3px]"
-                style={{ color: "var(--color-accent)" }}
-              >
-                {eyebrow}
-              </span>
-            )}
+        <div className="flex justify-between items-start gap-4 px-6 sm:px-8 pt-6 sm:pt-7 pb-4 flex-shrink-0">
+          <div>
             <h2
-              className="font-sans font-bold text-base tracking-tight leading-none"
+              className="font-sans font-semibold text-[1.5rem] sm:text-[1.75rem] leading-[1.15] tracking-[-0.02em]"
               style={{ color: "var(--c-text)" }}
             >
               {title}
             </h2>
+            {eyebrow && (
+              <p className="mt-1 text-[0.95rem]" style={{ color: "var(--c-muted)" }}>
+                {eyebrow}
+              </p>
+            )}
           </div>
           <button
             onClick={onClose}
             aria-label="Tutup modal"
-            className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center text-sm font-mono bg-transparent cursor-pointer transition-opacity hover:opacity-70"
-            style={{ border: "1px solid var(--c-border)", color: "var(--c-muted2)" }}
+            className="w-11 h-11 rounded-full flex-shrink-0 grid place-items-center bg-transparent cursor-pointer transition-colors hover:border-[var(--c-text)]"
+            style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
           >
-            ✕
+            <X size={18} />
           </button>
         </div>
 
-        {subheader && (
-          <div className="flex-shrink-0" style={{ borderBottom: "1px solid var(--c-cardborder)" }}>
-            {subheader}
-          </div>
-        )}
+        {subheader && <div className="flex-shrink-0">{subheader}</div>}
 
         <div className="overflow-y-auto flex-1">{children}</div>
 
         {footer && (
           <div
-            className="px-6 py-3.5 flex-shrink-0"
-            style={{ borderTop: "1px solid var(--c-cardborder)" }}
+            className="px-6 sm:px-8 py-4 flex-shrink-0"
+            style={{ borderTop: "1px solid var(--c-border)" }}
           >
             {footer}
           </div>

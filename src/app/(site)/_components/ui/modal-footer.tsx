@@ -8,8 +8,8 @@ export default function ModalFooter({ info, children }: ModalFooterProps) {
     <div className="flex justify-between items-center flex-wrap gap-3">
       {info && (
         <span
-          className="text-meta-2xs tracking-[1px]"
-          style={{ color: "var(--c-muted2)" }}
+          className="text-[0.9rem]"
+          style={{ color: "var(--c-muted)" }}
         >
           {info}
         </span>

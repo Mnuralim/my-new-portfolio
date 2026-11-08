@@ -129,8 +129,8 @@ export async function getPlaylists(): Promise<Playlist[]> {
 }
 
 export const stats = [
-  { num: "1+", label: "YEARS EXP" },
-  { num: "5", label: "PRODUCTS LIVE" },
-  { num: "~50", label: "USERS SUPPORTED" },
+  { num: "5", label: "produk live" },
+  { num: "~50", label: "pengguna dibantu" },
+  { num: "1+", label: "tahun di lapangan" },
 ];
 

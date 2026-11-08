@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getLatestPosts } from "@/lib/data";
 import { BlogListClient } from "./_components/blog-list-client";
+import PageHeader from "../_components/ui/page-header";
 
 export const metadata: Metadata = {
   title: "Blog & Tutorials — Izzy Dev",
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
       "Tulisan seputar networking, web development, dan IT support dari Muhamad Nur Fatahil Alim.",
     type: "website",
     url: "https://izzy.my.id/blog",
+    images: "/opengraph-image",
   },
 };
 
@@ -20,23 +22,12 @@ export default async function BlogIndexPage() {
   const posts = await getLatestPosts();
 
   return (
-    <div
-      className="-mx-3 sm:mx-[calc(50%-50vw)] px-3 sm:px-0 min-h-screen"
-      style={{ background: "var(--c-bg)" }}
-    >
-      <div className="max-w-7xl mx-auto px-3 py-20">
-        <h2 className="section-label">Blog &amp; Tutorials</h2>
-        <h1
-          className="font-sans font-extrabold leading-[1.02] tracking-[-0.02em] text-[clamp(2.5rem,6vw,4rem)] mb-12"
-          style={{ color: "var(--c-text)" }}
-        >
-          All
-          <br />
-          <span style={{ color: "var(--color-accent)" }}>Writes.</span>
-        </h1>
-
-        <BlogListClient posts={posts} />
-      </div>
+    <div className="px-4 sm:px-8 pt-12 pb-24 sm:pt-16">
+      <PageHeader
+        title="Blog & tutorials"
+        intro="Catatan praktis soal jaringan, server, dan web development. Ditulis dari kerjaan sehari-hari."
+      />
+      <BlogListClient posts={posts} />
     </div>
   );
 }

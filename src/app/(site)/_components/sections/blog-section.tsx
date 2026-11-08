@@ -1,169 +1,75 @@
 import { getLatestPosts } from "@/lib/data";
-import type { BlogPost } from "../../../../../types";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import Reveal from "@/app/_components/reveal";
 import { NewsletterForm } from "./newsletter-form";
 
-function tagClass(color?: BlogPost["tagColor"]) {
-  if (color === "it") return "tag-it";
-  if (color === "net") return "tag-net";
-  return "tag-accent";
-}
-
 export default async function BlogSection() {
-  const latestPosts = await getLatestPosts();
-  const featured = latestPosts.find((p) => p.featured);
-  const rest = latestPosts.filter((p) => !p.featured);
+  const posts = await getLatestPosts();
+  // featured first, then the rest; the home page shows a short list only
+  const latest = [...posts.filter((p) => p.featured), ...posts.filter((p) => !p.featured)].slice(0, 4);
 
   return (
-    <section
-      id="blog"
-      className="px-4 sm:px-8 py-16 sm:py-20"
-      style={{ borderTop: "1px solid var(--c-divider)" }}
-    >
-      <div className="flex justify-between items-baseline flex-wrap gap-4 mb-12">
-        <h2 className="section-label !mb-0 !flex-none">07 / Blog &amp; Tutorials</h2>
-        <div className="flex gap-6 flex-wrap">
-          <Link
-            href="/blog"
-            className="text-meta-sm font-medium no-underline"
-            style={{ color: "var(--c-text)" }}
-          >
-            View all posts →
+    <section id="blog" className="px-4 sm:px-8 py-16 sm:py-24">
+      <div className="flex justify-between items-end flex-wrap gap-4 mb-8">
+        <h2 className="section-label !mb-0">Blog &amp; Tutorials</h2>
+        <div className="flex gap-3 flex-wrap">
+          <Link href="/playlist" className="btn-ghost btn-tactile">
+            Playlists
           </Link>
-          <Link
-            href="/playlist"
-            className="text-meta-sm font-medium no-underline"
-            style={{ color: "var(--c-text)" }}
-          >
-            View all playlists →
+          <Link href="/blog" className="btn-ghost btn-tactile">
+            All posts
           </Link>
         </div>
       </div>
 
-      {featured && (
-        <Reveal className="mb-6">
-          <a
-            href={featured.href}
-            className="card-hoverable block rounded-[14px] p-8 sm:p-11 no-underline"
-            style={{
-              border: "1px solid var(--c-cardborder)",
-              background: "linear-gradient(180deg, var(--c-grad1), var(--c-grad2))",
-              color: "inherit",
-            }}
-          >
-            <div className="flex items-center gap-3.5 mb-5">
-              <span
-                className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
-                style={{ color: "var(--color-accent)", background: "rgba(244,228,0,0.1)" }}
-              >
-                FEATURED
-              </span>
-              <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-                SRV
-              </span>
-            </div>
-            <h3
-              className="font-sans font-bold text-[1.5rem] mb-3.5"
-              style={{ color: "var(--c-text)" }}
-            >
-              {featured.title}
-            </h3>
-            <p
-              className="text-meta-lg leading-[1.6] max-w-[680px] mb-5"
-              style={{ color: "var(--c-muted)" }}
-            >
-              {featured.description}
-            </p>
-            <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-              {featured.date} · {featured.readTime}
-            </div>
-          </a>
-        </Reveal>
-      )}
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-        {rest.slice(0, 2).map((post, i) => (
-          <Reveal key={post.num} delay={i * 0.06}>
+      <div className="flex flex-col">
+        {latest.map((post, i) => (
+          <Reveal key={post.href} delay={i * 0.05}>
             <Link
               href={post.href}
-              className="card-hoverable block rounded-[14px] p-7 no-underline"
-              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)", color: "inherit" }}
+              className="group grid grid-cols-1 sm:grid-cols-[150px_1fr_auto] lg:grid-cols-[180px_1fr_auto] gap-x-8 gap-y-1.5 py-7 no-underline"
+              style={{ color: "inherit", borderTop: i > 0 ? "1px solid var(--c-border)" : undefined }}
             >
-              <div
-                className="font-mono text-meta-xs mb-3.5"
-                style={{ color: "var(--color-accent)" }}
-              >
-                {post.tag}
+              <div className="font-mono text-meta-sm pt-1.5" style={{ color: "var(--c-muted)" }}>
+                {post.date}
               </div>
-              <h3
-                className="font-sans font-bold text-[1.2rem] mb-3.5"
-                style={{ color: "var(--c-text)" }}
-              >
-                {post.title}
-              </h3>
-              <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-                {post.date} · {post.readTime} ↗
+              <div>
+                <h3
+                  className="font-semibold text-[1.25rem] sm:text-[1.4rem] leading-[1.25] tracking-[-0.01em] transition-colors"
+                  style={{ color: "var(--c-text)" }}
+                >
+                  {post.title}
+                </h3>
+                <p className="mt-1.5 leading-[1.6] max-w-[60ch] line-clamp-2" style={{ color: "var(--c-muted)" }}>
+                  {post.description}
+                </p>
+                <div className="mt-2 font-mono text-meta-sm" style={{ color: "var(--c-muted3)" }}>
+                  {post.tag}, {post.readTime}
+                </div>
               </div>
-            </Link>
-          </Reveal>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-14">
-        {rest.slice(2).map((post, i) => (
-          <Reveal key={post.num} delay={i * 0.06}>
-            <Link
-              href={post.href}
-              className="card-hoverable block rounded-[14px] p-7 no-underline"
-              style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)", color: "inherit" }}
-            >
-              <div
-                className="font-mono text-meta-sm mb-3.5"
-                style={{ color: "var(--c-muted2)" }}
-              >
-                {post.num} · <span className={tagClass(post.tagColor)}>{post.tag}</span>
-              </div>
-              <h3
-                className="font-sans font-bold text-[1.1rem] mb-3"
-                style={{ color: "var(--c-text)" }}
-              >
-                {post.title}
-              </h3>
-              <p
-                className="text-meta-md leading-[1.6] mb-4"
+              <ArrowUpRight
+                size={22}
+                aria-hidden="true"
+                className="hidden sm:block mt-1.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 style={{ color: "var(--c-muted)" }}
-              >
-                {post.description}
-              </p>
-              <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-                {post.date} ↗
-              </div>
+              />
             </Link>
           </Reveal>
         ))}
       </div>
 
       <div
-        className="flex items-center justify-between rounded-[14px] p-8 sm:px-10 gap-6 flex-wrap"
-        style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
+        className="mt-12 flex items-center justify-between rounded-[24px] p-6 sm:p-10 gap-6 flex-wrap"
+        style={{ background: "var(--c-divider)" }}
       >
         <div>
-          <div
-            className="font-mono text-meta-sm mb-2"
-            style={{ color: "var(--color-accent)" }}
-          >
-            {"// NEWSLETTER"}
-          </div>
-          <div
-            className="font-sans font-semibold text-meta-lg"
-            style={{ color: "var(--c-text)" }}
-          >
+          <h3 className="font-semibold text-[1.25rem]" style={{ color: "var(--c-text)" }}>
             Dapat notif tiap ada tutorial baru
-          </div>
-          <div className="text-meta-sm mt-1" style={{ color: "var(--c-muted2)" }}>
+          </h3>
+          <p className="mt-1" style={{ color: "var(--c-muted)" }}>
             No spam. Unsubscribe kapan aja.
-          </div>
+          </p>
         </div>
         <NewsletterForm />
       </div>

@@ -1,8 +1,12 @@
+import type { Metadata } from "next";
 import { logOut } from "@/actions/auth";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SidebarNav } from "./_components/sidebar-nav";
 import ThemeToggle from "@/app/_components/theme-toggle";
+
+// private pages: robots.txt alone does not stop indexing of linked URLs
+export const metadata: Metadata = { robots: { index: false, follow: false } };
 
 export default function AdminLayout({
   children,

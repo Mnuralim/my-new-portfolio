@@ -13,7 +13,7 @@ export function NewsletterForm() {
 
   return (
     <form action={formAction} className="flex flex-1 max-w-sm min-w-[220px] flex-col gap-2">
-      <div className="flex">
+      <div className="flex gap-2">
         <label htmlFor={emailId} className="sr-only">
           Alamat email
         </label>
@@ -25,23 +25,22 @@ export function NewsletterForm() {
           placeholder="email@domain.com"
           aria-describedby={statusId}
           defaultValue={state.formData?.get("email") as string}
-          className="flex-1 font-mono text-meta-sm px-4 py-2.5 outline-none transition-colors rounded-l-[8px]"
+          className="flex-1 min-w-0 h-12 px-5 rounded-full outline-none transition-colors placeholder:text-[var(--c-muted3)] focus:border-[var(--color-accent)]"
           style={{
-            background: "var(--c-cardbg)",
+            background: "var(--c-bg)",
             border: "1px solid var(--c-border)",
-            borderRight: "none",
             color: "var(--c-text)",
           }}
         />
         <button
           type="submit"
           disabled={pending}
-          className="btn-primary btn-tactile font-mono text-meta-xs px-5 py-2.5 whitespace-nowrap rounded-l-none disabled:opacity-50"
+          className="btn-primary btn-tactile disabled:opacity-50"
         >
           {pending ? "..." : "Subscribe"}
         </button>
       </div>
-      <p id={statusId} aria-live="polite" className="text-meta-xs">
+      <p id={statusId} aria-live="polite" className="text-[0.9rem] px-1">
         {state.error && <span style={{ color: "var(--color-accent2)" }}>{state.error}</span>}
         {state.success && <span style={{ color: "var(--color-accent)" }}>{state.success}</span>}
       </p>

@@ -4,52 +4,16 @@ import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import ProjectsModal from "../ui/projects-modal";
 import { isVideoUrl } from "@/lib/utils";
+import { ArrowUpRight } from "lucide-react";
 
 interface Props {
   projects: Project[];
   allProjects: (Project & { filter: string })[];
 }
 
-function tagClass(color?: Project["tagColor"]) {
-  if (color === "it") return "tag-it";
-  if (color === "net") return "tag-net";
-  return "tag-accent";
-}
-
 // external links open in a new tab; site-relative ones (e.g. /blog/...) stay in this tab
 export function linkTarget(href: string) {
   return href.startsWith("/") ? {} : { target: "_blank", rel: "noopener noreferrer" };
-}
-
-function ProjectLink({
-  href,
-  title,
-  className,
-}: {
-  href?: string | null;
-  title: string;
-  className: string;
-}) {
-  if (!href)
-    return (
-      <span
-        className="font-mono text-meta-2xs tracking-widest px-2.5 py-1 rounded-full flex-shrink-0"
-        style={{ color: "var(--c-muted2)", border: "1px solid var(--c-border)" }}
-      >
-        PRIVATE / INTERNAL
-      </span>
-    );
-  return (
-    <a
-      href={href}
-      {...linkTarget(href)}
-      className={`${className} rounded-full flex items-center justify-center no-underline flex-shrink-0 transition-opacity hover:opacity-70`}
-      style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
-      aria-label={`View ${title}`}
-    >
-      ↗
-    </a>
-  );
 }
 
 // image or looping muted video (mp4/webm); with reduced motion the video stays on its first frame
@@ -82,14 +46,50 @@ export function CoverMedia({ src, alt }: { src: string; alt: string }) {
   );
 }
 
-function Cover({ src, alt, className }: { src?: string | null; alt: string; className: string }) {
-  if (!src) return null;
+const ease = [0.16, 1, 0.3, 1] as const;
+
+function ProjectLink({ href, title }: { href?: string | null; title: string }) {
+  if (!href)
+    return (
+      <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+        Private / internal
+      </span>
+    );
   return (
-    <div
-      className={`${className} overflow-hidden`}
-      style={{ borderBottom: "1px solid var(--c-cardborder)" }}
+    <a
+      href={href}
+      {...linkTarget(href)}
+      className="group inline-flex items-center gap-1.5 font-semibold no-underline"
+      style={{ color: "var(--c-text)" }}
+      aria-label={`View ${title}`}
     >
-      <CoverMedia src={src} alt={alt} />
+      View project
+      <ArrowUpRight size={18} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    </a>
+  );
+}
+
+function Cover({ src, alt, label, className }: { src?: string | null; alt: string; label?: string; className: string }) {
+  return (
+    <div className={`${className} overflow-hidden rounded-[24px] grid place-items-center`} style={{ background: "var(--c-divider)" }}>
+      {!src && label && (
+        <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted)" }}>
+          {label}
+        </span>
+      )}
+      {src && (
+        <div className="w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
+          <CoverMedia src={src} alt={alt} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Stack({ items }: { items: string[] }) {
+  return (
+    <div className="font-mono text-meta-sm" style={{ color: "var(--c-muted)" }}>
+      {items.join(", ")}
     </div>
   );
 }
@@ -97,149 +97,63 @@ function Cover({ src, alt, className }: { src?: string | null; alt: string; clas
 export function ProjectsSectionClient({ projects, allProjects }: Props) {
   const [modalOpen, setModalOpen] = useState(false);
   const reduce = useReducedMotion();
-  const featured = projects.find((p) => p.featured);
-  const rest = projects.filter((p) => !p.featured);
+  const featured = projects.find((p) => p.featured) ?? projects[0];
+  const rest = projects.filter((p) => p !== featured);
+  const reveal = (delay = 0) => ({
+    // same initial on server and client (avoids hydration mismatch); reduced motion just skips the tween
+    initial: { opacity: 0, y: 24 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, amount: 0.2 },
+    transition: reduce ? { duration: 0 } : { duration: 0.8, delay, ease },
+  });
 
   return (
     <>
-      <section id="projects" className="px-4 sm:px-8 pt-10 pb-16 sm:pb-20">
-        <div className="flex justify-between items-baseline flex-wrap gap-4 mb-12">
-          <h2 className="section-label !mb-0">01 / Projects</h2>
-          <button
-            onClick={() => setModalOpen(true)}
-            className="text-meta-sm font-medium bg-transparent border-none cursor-pointer p-0"
-            style={{ color: "var(--c-text)" }}
-          >
-            View all projects →
+      <section id="projects" className="px-4 sm:px-8 py-16 sm:py-24">
+        <div className="flex justify-between items-end flex-wrap gap-4 mb-10">
+          <h2 className="section-label !mb-0">Projects</h2>
+          <button onClick={() => setModalOpen(true)} className="btn-ghost btn-tactile">
+            View all projects
           </button>
         </div>
 
         {featured && (
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="card-hoverable rounded-[14px] overflow-hidden mb-6"
-            style={{
-              border: "1px solid var(--c-cardborder)",
-              background: "linear-gradient(180deg, var(--c-grad1), var(--c-grad2))",
-            }}
-          >
-            <Cover
-              src={featured.coverImage}
-              alt={featured.title}
-              className="aspect-video sm:aspect-[21/9]"
-            />
-            <div className="p-8 sm:p-11">
-              <div className="flex items-center gap-3.5 mb-5">
-                <span
-                  className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
-                  style={{
-                    color: "var(--color-accent)",
-                    background: "rgba(244,228,0,0.1)",
-                  }}
-                >
-                  FEATURED
-                </span>
-                <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-                  {featured.num}
-                </span>
-              </div>
-              <h3
-                className="font-sans font-bold text-[1.6rem] mb-3.5"
-                style={{ color: "var(--c-text)" }}
-              >
+          <motion.article {...reveal()} className="group grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-6 lg:gap-12 items-center">
+            <Cover src={featured.coverImage} alt={featured.title} label={featured.tag} className="aspect-[4/3]" />
+            <div>
+              <h3 className="font-semibold text-[1.75rem] sm:text-[2rem] leading-[1.15] tracking-[-0.02em]" style={{ color: "var(--c-text)" }}>
                 {featured.title}
               </h3>
-              <p
-                className="text-base leading-[1.6] max-w-[680px] mb-6"
-                style={{ color: "var(--c-muted)" }}
-              >
+              <p className="text-[1.05rem] leading-[1.6] max-w-[42ch] mt-3.5 mb-5" style={{ color: "var(--c-muted)" }}>
                 {featured.description}
               </p>
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex gap-2.5 flex-wrap">
-                  {featured.stack.map((s) => (
-                    <span key={s} className={tagClass(featured.tagColor)}>
-                      {s}
-                    </span>
-                  ))}
-                </div>
-                <ProjectLink
-                  href={featured.href}
-                  title={featured.title}
-                  className="w-10 h-10 text-base"
-                />
+              <Stack items={featured.stack} />
+              <div className="mt-7">
+                <ProjectLink href={featured.href} title={featured.title} />
               </div>
             </div>
-          </motion.div>
+          </motion.article>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {rest.map((project, i) => (
-            <motion.div
-              key={project.num}
-              initial={reduce ? false : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{
-                duration: 0.5,
-                delay: i * 0.06,
-                ease: [0.16, 1, 0.3, 1],
-              }}
-              className="card-hoverable rounded-[14px] overflow-hidden flex flex-col"
-              style={{
-                border: "1px solid var(--c-cardborder)",
-                background: "var(--c-cardbg)",
-              }}
-            >
-              <Cover src={project.coverImage} alt={project.title} className="aspect-video" />
-              <div className="p-8 sm:p-9 flex flex-col flex-1">
-                <div className="flex items-center gap-3.5 mb-4.5 mb-[18px]">
-                  <span
-                    className="font-mono text-meta-sm px-2.5 py-1 rounded-[6px]"
-                    style={{
-                      color: "var(--c-muted2)",
-                      border: "1px solid var(--c-border)",
-                    }}
-                  >
-                    {project.tag}
-                  </span>
-                  <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
-                    {project.num}
-                  </span>
-                </div>
-                <h3
-                  className="font-sans font-bold text-[1.35rem] mb-3"
-                  style={{ color: "var(--c-text)" }}
-                >
+        {rest.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12 mt-14 lg:mt-[72px]">
+            {rest.map((project, i) => (
+              <motion.article key={project.title} {...reveal(i * 0.08)} className="group flex flex-col">
+                <Cover src={project.coverImage} alt={project.title} label={project.tag} className="aspect-[16/10] mb-5" />
+                <h3 className="font-semibold text-[1.35rem] tracking-[-0.01em]" style={{ color: "var(--c-text)" }}>
                   {project.title}
                 </h3>
-                <p
-                  className="text-meta-lg leading-[1.6] mb-[22px]"
-                  style={{ color: "var(--c-muted)" }}
-                >
+                <p className="leading-[1.6] max-w-[46ch] mt-1.5 mb-3" style={{ color: "var(--c-muted)" }}>
                   {project.description}
                 </p>
-                <div className="flex items-center justify-between flex-wrap gap-4 mt-auto">
-                  <div className="flex gap-2 flex-wrap">
-                    {project.stack.map((s) => (
-                      <span key={s} className={tagClass(project.tagColor)}>
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                  <ProjectLink
-                    href={project.href}
-                    title={project.title}
-                    className="w-[34px] h-[34px] text-meta-lg"
-                  />
+                <Stack items={project.stack} />
+                <div className="mt-4">
+                  <ProjectLink href={project.href} title={project.title} />
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+              </motion.article>
+            ))}
+          </div>
+        )}
       </section>
 
       <ProjectsModal

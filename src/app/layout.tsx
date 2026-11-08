@@ -1,20 +1,21 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-family-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-outfit",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-family-mono",
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://izzy.my.id"),
   title: "Izzy — IT Engineer & Full Stack Developer",
   description:
     "Portfolio of Muhamad Nur Fatahil Alim — IT Engineer & Full Stack Developer based in Kolaka, Southeast Sulawesi, Indonesia. Building scalable web apps, managing IT infrastructure, and network administration.",
@@ -31,14 +32,20 @@ export const metadata: Metadata = {
     "Solidity",
     "Indonesia",
   ],
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Izzy — IT Engineer & Full Stack Developer",
     description:
       "IT Engineer & Full Stack Developer — building enterprise web apps and managing IT infrastructure from Indonesia.",
     type: "website",
+    url: "/",
+    siteName: "Izzy",
+    locale: "id_ID",
   },
+  twitter: { card: "summary_large_image" },
   icons: {
-    icon: "/izzy-dev-nobg2.png",
+    icon: "/07-izzy-susun-2x2.png",
+    apple: "/07-izzy-susun-2x2.png",
   },
 };
 
@@ -60,11 +67,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id">
+    <html lang="id" className={`${outfit.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${inter.variable} ${jetbrainsMono.variable}`}>
+      <body>
         {children}
       </body>
     </html>

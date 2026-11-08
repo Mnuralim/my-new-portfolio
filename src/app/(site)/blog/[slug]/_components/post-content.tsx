@@ -10,12 +10,6 @@ interface Props {
   searchParams: Promise<{ playlist?: string }>;
 }
 
-function tagClass(color?: string | null) {
-  if (color === "it") return "tag-it";
-  if (color === "net") return "tag-net";
-  return "tag-accent";
-}
-
 export async function PostContent({ params, searchParams }: Props) {
   const { slug } = await params;
   const { playlist: playlistSlug } = await searchParams;
@@ -33,15 +27,19 @@ export async function PostContent({ params, searchParams }: Props) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Article",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.description,
-    image: post.coverImage ? [post.coverImage] : undefined,
-    datePublished: post.date,
+    ...(post.coverImage && { image: [post.coverImage] }),
+    // `date` is free text in the DB; schema.org needs ISO 8601
+    datePublished: post.createdAt.toISOString(),
     dateModified: post.updatedAt.toISOString(),
+    inLanguage: "id-ID",
+    keywords: post.tag,
     author: {
       "@type": "Person",
       name: "Muhamad Nur Fatahil Alim",
+      url: "https://izzy.my.id",
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -55,60 +53,59 @@ export async function PostContent({ params, searchParams }: Props) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="mt-8 mb-6">
-        <span className={`${tagClass(post.tagColor)} mb-4 inline-block`}>
+      <header className="mt-10 mb-10">
+        <div className="font-mono text-meta-sm mb-4" style={{ color: "var(--c-muted)" }}>
           {post.tag}
-        </span>
+        </div>
         <h1
-          className="font-sans font-extrabold leading-[1.05] tracking-[-0.02em] text-[clamp(2rem,5vw,3.2rem)] mb-4"
+          className="font-bold leading-[1.08] tracking-[-0.03em] text-[clamp(2.1rem,5vw,3.4rem)]"
           style={{ color: "var(--c-text)" }}
         >
           {post.title}
         </h1>
-        <div className="flex gap-6 font-mono text-meta-xs tracking-[1px] flex-wrap" style={{ color: "var(--c-muted2)" }}>
+        <div className="mt-5 flex gap-x-6 gap-y-1 font-mono text-meta-sm flex-wrap" style={{ color: "var(--c-muted3)" }}>
           <span>{post.date}</span>
           <span>{post.readTime}</span>
           <span>{post.views}</span>
         </div>
-      </div>
+      </header>
 
       {post.coverImage && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           src={post.coverImage}
           alt={post.title}
-          className="w-full rounded-[12px] mb-10 object-cover"
-          style={{ border: "1px solid var(--c-cardborder)" }}
+          className="w-full rounded-[24px] mb-12 object-cover"
         />
       )}
 
-      <div className="prose-blog text-meta-lg leading-[1.9]" style={{ color: "var(--c-muted)" }}>
+      <div className="prose-blog text-[1.075rem] leading-[1.85]" style={{ color: "var(--c-b5)" }}>
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {post.content}
         </ReactMarkdown>
       </div>
 
       {showPlaylistNav && (
-        <div className="mt-16 pt-8" style={{ borderTop: "1px solid var(--c-divider)" }}>
+        <nav aria-label="Navigasi playlist" className="mt-16 pt-8" style={{ borderTop: "1px solid var(--c-border)" }}>
           <Link
             href={`/playlist/${playlistSlug}`}
-            className="font-mono text-meta-2xs tracking-widest no-underline transition-colors"
-            style={{ color: "var(--c-muted2)" }}
+            className="text-[0.95rem] no-underline transition-colors hover:text-[var(--c-text)]"
+            style={{ color: "var(--c-muted)" }}
           >
-            PART OF PLAYLIST: {adjacent.playlistName}
+            Bagian dari playlist <span className="font-semibold" style={{ color: "var(--c-text)" }}>{adjacent.playlistName}</span>
           </Link>
 
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {adjacent.prev ? (
               <Link
                 href={`/blog/${adjacent.prev.slug}?playlist=${playlistSlug}`}
-                className="card-hoverable rounded-[12px] p-5 no-underline"
-                style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
+                className="group rounded-[24px] p-6 no-underline transition-colors"
+                style={{ background: "var(--c-divider)" }}
               >
-                <div className="font-mono text-meta-2xs tracking-widest mb-2" style={{ color: "var(--c-muted2)" }}>
-                  ← PREVIOUS
+                <div className="text-[0.9rem] mb-1.5" style={{ color: "var(--c-muted)" }}>
+                  Sebelumnya
                 </div>
-                <div className="font-sans font-bold text-meta-md" style={{ color: "var(--c-text)" }}>
+                <div className="font-semibold leading-[1.35]" style={{ color: "var(--c-text)" }}>
                   {adjacent.prev.title}
                 </div>
               </Link>
@@ -119,13 +116,13 @@ export async function PostContent({ params, searchParams }: Props) {
             {adjacent.next ? (
               <Link
                 href={`/blog/${adjacent.next.slug}?playlist=${playlistSlug}`}
-                className="card-hoverable rounded-[12px] p-5 no-underline sm:text-right"
-                style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
+                className="group rounded-[24px] p-6 no-underline sm:text-right transition-colors"
+                style={{ background: "var(--c-divider)" }}
               >
-                <div className="font-mono text-meta-2xs tracking-widest mb-2" style={{ color: "var(--c-muted2)" }}>
-                  NEXT →
+                <div className="text-[0.9rem] mb-1.5" style={{ color: "var(--c-muted)" }}>
+                  Selanjutnya
                 </div>
-                <div className="font-sans font-bold text-meta-md" style={{ color: "var(--c-text)" }}>
+                <div className="font-semibold leading-[1.35]" style={{ color: "var(--c-text)" }}>
                   {adjacent.next.title}
                 </div>
               </Link>
@@ -133,7 +130,7 @@ export async function PostContent({ params, searchParams }: Props) {
               <div />
             )}
           </div>
-        </div>
+        </nav>
       )}
     </>
   );

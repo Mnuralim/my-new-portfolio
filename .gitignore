@@ -45,3 +45,6 @@ next-env.d.ts
 
 # tutorial drafts (blog markdown source, not committed)
 /tutor-md
+
+# html design mockups (local only)
+/design-preview

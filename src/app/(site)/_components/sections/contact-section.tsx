@@ -5,84 +5,61 @@ export default async function ContactSection() {
   const contactLinks = await getContactLinks();
 
   return (
-    <section
-      id="contact"
-      className="px-4 sm:px-8 py-16 sm:py-20"
-      style={{ borderTop: "1px solid var(--c-divider)" }}
-    >
-      <h2 className="section-label">06 / Contact</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-        <Reveal>
-          <h3
-            className="font-sans font-extrabold leading-[1.05] tracking-[-0.01em] text-[clamp(2rem,5vw,3rem)] mb-7"
-            style={{ color: "var(--c-text)" }}
+    <section id="contact" className="px-4 sm:px-8 py-16 sm:py-24">
+      <Reveal>
+        <div
+          className="relative overflow-hidden rounded-[24px] px-6 py-12 sm:px-14 sm:py-[72px]"
+          style={{ background: "var(--c-panel)", color: "var(--c-on-panel)" }}
+        >
+          <svg
+            viewBox="0 0 340 340"
+            aria-hidden="true"
+            className="absolute -right-10 -bottom-10 w-[200px] h-[200px] opacity-35 sm:w-[340px] sm:h-[340px] sm:opacity-90"
+            strokeLinecap="round"
+            strokeWidth={44}
           >
-            Let&apos;s work
-            <br />
-            together.
-          </h3>
+            <line x1="90" y1="90" x2="290" y2="90" stroke="#F5F0E6" strokeOpacity={0.12} />
+            <line x1="90" y1="270" x2="290" y2="270" stroke="#F5F0E6" strokeOpacity={0.12} />
+            <line x1="90" y1="270" x2="290" y2="90" stroke="#E8B94A" />
+          </svg>
 
-          <div
-            className="flex items-center gap-2.5 text-meta-xs tracking-widest mb-6"
-            style={{ color: "var(--c-muted2)" }}
-          >
-            <span className="w-2 h-2 bg-green-500 rounded-full animate-blink" />
-            AVAILABLE FOR FREELANCE &amp; FULL-TIME
+          <div className="relative">
+            <h2 className="font-semibold text-[clamp(2.25rem,5vw,4rem)] leading-[1.05] tracking-[-0.03em] max-w-[14ch]">
+              Ada yang mau dibangun?
+            </h2>
+            <p className="mt-4 text-[1.1rem] leading-[1.6] max-w-[44ch]" style={{ color: "var(--c-on-panel-muted)" }}>
+              Terbuka untuk freelance dan full-time, remote atau on-site. Gue balas dalam 24 jam.
+            </p>
+
+            <div className="flex items-center gap-x-8 gap-y-5 flex-wrap mt-10">
+              <a
+                href="mailto:hello@namalo.dev"
+                className="btn-primary btn-tactile !bg-[var(--c-mark)] !text-[#13201a]"
+              >
+                Hubungi gue
+              </a>
+              <div className="flex gap-x-6 gap-y-2 flex-wrap">
+                {contactLinks.map((link) => {
+                  const external = link.href.startsWith("http");
+                  return (
+                    <a
+                      key={link.label}
+                      href={link.href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="no-underline transition-colors hover:text-[var(--c-on-panel)]"
+                      style={{ color: "var(--c-on-panel-muted)" }}
+                    >
+                      {link.label}
+                      {external && <span className="sr-only"> (buka di tab baru)</span>}
+                    </a>
+                  );
+                })}
+              </div>
+            </div>
           </div>
-
-          <p
-            className="text-meta-lg leading-[1.6] max-w-[420px] mb-8"
-            style={{ color: "var(--c-muted2)" }}
-          >
-            Based in Indonesia. Siap kerja remote atau on-site. Respon dalam
-            24 jam.
-          </p>
-
-          <a href="mailto:hello@namalo.dev" className="btn-primary btn-tactile inline-block text-center">
-            Kirim Pesan
-          </a>
-
-          <div
-            className="mt-8 rounded-[10px] p-5 font-mono text-meta-sm leading-[2]"
-            style={{ background: "var(--c-cardbg)", border: "1px solid var(--c-cardborder)" }}
-          >
-            <div>
-              <span style={{ color: "var(--color-accent)" }}>→ </span>
-              whoami
-            </div>
-            <div style={{ color: "var(--c-muted2)" }}>
-              {"// Web Dev + IT Support"}
-            </div>
-            <div>
-              <span style={{ color: "var(--color-accent)" }}>→ </span>
-              status
-            </div>
-            <div className="text-green-500">● ONLINE &amp; READY TO BUILD</div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1} className="flex flex-col">
-          {contactLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target={link.href.startsWith("http") ? "_blank" : undefined}
-              rel="noopener noreferrer"
-              className="contact-link flex justify-between items-center py-5 no-underline text-meta-lg font-semibold"
-              style={{ borderTop: "1px solid var(--c-divider)" }}
-            >
-              {link.label}
-              {link.href.startsWith("http") && (
-                <span className="sr-only"> (buka di tab baru)</span>
-              )}
-              <span className="contact-link-arrow" style={{ color: "var(--c-muted2)" }} aria-hidden="true">
-                ↗
-              </span>
-            </a>
-          ))}
-        </Reveal>
-      </div>
+        </div>
+      </Reveal>
     </section>
   );
 }

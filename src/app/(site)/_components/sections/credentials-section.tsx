@@ -9,7 +9,7 @@ const card = {
 function Heading({ children }: { children: React.ReactNode }) {
   return (
     <h3
-      className="font-mono text-meta-xs tracking-[3px] uppercase mb-5"
+      className="text-[0.95rem] font-medium mb-4"
       style={{ color: "var(--c-muted2)" }}
     >
       {children}
@@ -66,10 +66,9 @@ export default async function CredentialsSection() {
   return (
     <section
       id="credentials"
-      className="px-4 sm:px-8 py-16 sm:py-20"
-      style={{ borderTop: "1px solid var(--c-divider)" }}
+      className="px-4 sm:px-8 py-16 sm:py-24"
     >
-      <h2 className="section-label">04 / Credentials</h2>
+      <h2 className="section-label">Credentials</h2>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-14">
         <div className="flex flex-col gap-10">
@@ -79,7 +78,7 @@ export default async function CredentialsSection() {
               <div className="flex flex-col gap-4">
                 {education.map((edu, i) => (
                   <Reveal key={edu.id} delay={i * 0.06}>
-                    <div className="rounded-[14px] p-6" style={card}>
+                    <div className="rounded-[24px] p-6" style={card}>
                       <div
                         className="font-mono text-meta-sm mb-2"
                         style={{ color: "var(--color-accent)" }}
@@ -110,7 +109,7 @@ export default async function CredentialsSection() {
                 <Reveal key={pub.id}>
                   <MaybeLink
                     url={pub.url}
-                    className={`block rounded-[14px] p-6 ${pub.url ? "card-hoverable" : ""}`}
+                    className={`block rounded-[24px] p-6 ${pub.url ? "card-hoverable" : ""}`}
                     style={card}
                   >
                     <p

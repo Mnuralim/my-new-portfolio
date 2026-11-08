@@ -3,8 +3,9 @@
 import { useState } from "react";
 import type { CvFile } from "@/lib/data";
 import Modal from "./modal";
-import ModalButton from "./modal-button";
 import ModalFooter from "./modal-footer";
+import Chip from "./chip";
+import { Download } from "lucide-react";
 
 interface CvModalProps {
   cvs: CvFile[];
@@ -24,23 +25,15 @@ export default function CvModal({ cvs, isOpen, onClose }: CvModalProps) {
     <ModalFooter
       info={
         <>
-          Last updated: <span style={{ color: "var(--color-accent)" }}>{CV_UPDATED}</span>
+          Diperbarui {CV_UPDATED}
         </>
       }
     >
-      <ModalButton onClick={onClose}>TUTUP</ModalButton>
       {cv && (
-        <ModalButton variant="primary">
-          <a
-            href={CV_PATH}
-            download
-            target="_blank"
-            rel="noopener noreferrer"
-            className="no-underline text-inherit"
-          >
-            DOWNLOAD PDF ↓
-          </a>
-        </ModalButton>
+        <a href={CV_PATH} download target="_blank" rel="noopener noreferrer" className="btn-primary btn-tactile !h-11">
+          <Download size={17} aria-hidden="true" />
+          Download PDF
+        </a>
       )}
     </ModalFooter>
   );
@@ -49,47 +42,23 @@ export default function CvModal({ cvs, isOpen, onClose }: CvModalProps) {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="MUHAMAD NUR ALIM"
-      eyebrow="// CURRICULUM VITAE"
+      title="Curriculum vitae"
+      eyebrow="Muhamad Nur Fatahil Alim"
       size="lg"
       footer={footer}
     >
       {cvs.length > 1 && (
-        <div
-          role="tablist"
-          aria-label="Pilih versi CV"
-          className="flex gap-2 flex-wrap px-6 py-4"
-          style={{ borderBottom: "1px solid var(--c-cardborder)" }}
-        >
+        <div role="tablist" aria-label="Pilih versi CV" className="flex gap-2 flex-wrap px-6 sm:px-8 pb-5">
           {cvs.map((c, i) => (
-            <button
-              key={c.fileUrl}
-              role="tab"
-              aria-selected={i === active}
-              onClick={() => setActive(i)}
-              className="font-mono text-meta-xs tracking-widest px-4 py-2 rounded-full cursor-pointer transition-colors"
-              style={
-                i === active
-                  ? {
-                      background: "var(--color-accent)",
-                      color: "#0b0b0c",
-                      border: "1px solid var(--color-accent)",
-                    }
-                  : {
-                      color: "var(--c-muted2)",
-                      border: "1px solid var(--c-border)",
-                      background: "transparent",
-                    }
-              }
-            >
-              {c.title.toUpperCase()}
-            </button>
+            <Chip key={c.fileUrl} role="tab" active={i === active} onClick={() => setActive(i)}>
+              {c.title}
+            </Chip>
           ))}
         </div>
       )}
 
       {!cv ? (
-        <p className="p-6 text-meta-md" style={{ color: "var(--c-muted)" }}>
+        <p className="px-6 sm:px-8 pb-8" style={{ color: "var(--c-muted)" }}>
           CV belum tersedia.
         </p>
       ) : (
@@ -100,12 +69,8 @@ export default function CvModal({ cvs, isOpen, onClose }: CvModalProps) {
           </p>
           {/* PDF embed via iframe */}
           <div
-            className="w-full"
-            style={{
-              height: "70vh",
-              background: "var(--c-cardbg)",
-              borderBottom: "1px solid var(--c-cardborder)",
-            }}
+            className="mx-6 sm:mx-8 mb-6 rounded-[16px] overflow-hidden"
+            style={{ height: "68vh", background: "var(--c-divider)" }}
           >
             <iframe
               src={`${CV_PATH}#toolbar=0&navpanes=0&scrollbar=1`}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
+import { Moon, Sun } from "lucide-react";
 
 const THEME_EVENT = "themechange";
 
@@ -32,8 +33,8 @@ export default function ThemeToggle() {
   if (!theme) {
     return (
       <div
-        className="w-11 h-6 rounded-full flex-shrink-0"
-        style={{ border: "1px solid var(--c-border)", background: "var(--c-cardbg)" }}
+        className="w-11 h-11 rounded-full flex-shrink-0"
+        style={{ border: "1px solid var(--c-border)" }}
         aria-hidden
       />
     );
@@ -44,13 +45,10 @@ export default function ThemeToggle() {
       type="button"
       onClick={toggle}
       aria-label={theme === "dark" ? "Aktifkan tema terang" : "Aktifkan tema gelap"}
-      className="relative w-11 h-6 rounded-full flex-shrink-0 cursor-pointer p-0"
-      style={{ border: "1px solid var(--c-border)", background: "var(--c-cardbg)" }}
+      className="w-11 h-11 rounded-full flex-shrink-0 cursor-pointer grid place-items-center bg-transparent transition-colors hover:border-[var(--c-text)]"
+      style={{ border: "1px solid var(--c-border)", color: "var(--c-text)" }}
     >
-      <span
-        className="absolute top-0.5 w-[18px] h-[18px] rounded-full bg-accent transition-[left] duration-200"
-        style={{ left: theme === "dark" ? "2px" : "22px" }}
-      />
+      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
     </button>
   );
 }

@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import type { Project } from "../../../../../types";
-import ModalFooter from "./modal-footer";
-import ModalButton from "./modal-button";
 import Modal from "./modal";
+import Chip from "./chip";
 import { CoverMedia, linkTarget } from "../sections/project-section-client";
 
 interface ProjectsModalProps {
@@ -13,36 +13,63 @@ interface ProjectsModalProps {
   allProjects: (Project & { filter: string })[];
 }
 
-const FILTERS = ["SEMUA", "WEB DEV", "IT SUPPORT", "BLOCKCHAIN"];
+// value = what's stored in the DB `filter` column, label = what's shown
+const FILTERS = [
+  { value: "SEMUA", label: "Semua" },
+  { value: "WEB DEV", label: "Web dev" },
+  { value: "IT SUPPORT", label: "IT support" },
+  { value: "BLOCKCHAIN", label: "Blockchain" },
+];
 
-function tagClass(color?: Project["tagColor"]) {
-  if (color === "it") return "tag-it";
-  if (color === "net") return "tag-net";
-  if (color === "purple") return "tag-purple";
-  return "tag-accent";
-}
-
-function CardLink({
-  href,
-  className,
-  style,
-  children,
-}: {
-  href?: string | null;
-  className: string;
-  style: React.CSSProperties;
-  children: React.ReactNode;
-}) {
-  if (!href)
-    return (
-      <div className={className} style={style}>
-        {children}
+function ProjectCard({ project }: { project: Project }) {
+  const { href } = project;
+  const body = (
+    <>
+      <div
+        className="aspect-[16/10] overflow-hidden rounded-[16px] mb-4 grid place-items-center"
+        style={{ background: "var(--c-divider)" }}
+      >
+        {project.coverImage ? (
+          <div className="w-full h-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]">
+            <CoverMedia src={project.coverImage} alt="" />
+          </div>
+        ) : (
+          <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted)" }}>
+            {project.tag}
+          </span>
+        )}
       </div>
-    );
-  return (
-    <a href={href} {...linkTarget(href)} className={className} style={style}>
-      {children}
+      <h3 className="font-semibold text-[1.15rem] leading-[1.3] tracking-[-0.01em]" style={{ color: "var(--c-text)" }}>
+        {project.title}
+        {href && !href.startsWith("/") && <span className="sr-only"> (buka di tab baru)</span>}
+      </h3>
+      <p className="mt-1.5 leading-[1.6] line-clamp-3" style={{ color: "var(--c-muted)" }}>
+        {project.description}
+      </p>
+      <div className="mt-3 font-mono text-meta-sm" style={{ color: "var(--c-muted3)" }}>
+        {project.stack.join(", ")}
+      </div>
+      <div className="mt-3">
+        {href ? (
+          <span className="inline-flex items-center gap-1.5 font-semibold" style={{ color: "var(--c-text)" }}>
+            View project
+            <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        ) : (
+          <span className="font-mono text-meta-sm" style={{ color: "var(--c-muted2)" }}>
+            Private / internal
+          </span>
+        )}
+      </div>
+    </>
+  );
+
+  return href ? (
+    <a href={href} {...linkTarget(href)} className="group flex flex-col no-underline">
+      {body}
     </a>
+  ) : (
+    <div className="group flex flex-col">{body}</div>
   );
 }
 
@@ -52,149 +79,32 @@ export default function ProjectsModal({ isOpen, onClose, allProjects }: Projects
   const filtered =
     activeFilter === "SEMUA" ? allProjects : allProjects.filter((p) => p.filter === activeFilter);
 
-  const filterTabs = (
-    <div className="flex gap-2 overflow-x-auto px-6 py-4">
-      {FILTERS.map((f) => (
-        <button
-          key={f}
-          onClick={() => setActiveFilter(f)}
-          aria-pressed={activeFilter === f}
-          style={{
-            color: activeFilter === f ? "#0b0b0c" : "var(--c-muted2)",
-            background: activeFilter === f ? "var(--color-accent)" : "transparent",
-            border:
-              activeFilter === f ? "1px solid var(--color-accent)" : "1px solid var(--c-border)",
-          }}
-          className="font-mono text-meta-2xs tracking-widest px-4 py-2 rounded-full cursor-pointer whitespace-nowrap transition-all duration-200"
-        >
-          {f}
-        </button>
-      ))}
+  const filterBar = (
+    <div className="flex items-center justify-between gap-4 px-6 sm:px-8 pb-5">
+      <div className="flex gap-2 overflow-x-auto -mx-1 px-1 [scrollbar-width:none]">
+        {FILTERS.map((f) => (
+          <Chip key={f.value} active={activeFilter === f.value} onClick={() => setActiveFilter(f.value)}>
+            {f.label}
+          </Chip>
+        ))}
+      </div>
+      <span aria-live="polite" className="hidden sm:block text-[0.9rem] whitespace-nowrap" style={{ color: "var(--c-muted)" }}>
+        {filtered.length} dari {allProjects.length} proyek
+      </span>
     </div>
   );
 
-  const footer = (
-    <ModalFooter
-      info={
-        <>
-          MENAMPILKAN <span style={{ color: "var(--color-accent)" }}>{filtered.length}</span> DARI{" "}
-          <span style={{ color: "var(--color-accent)" }}>{allProjects.length}</span> PROYEK
-        </>
-      }
-    >
-      <ModalButton onClick={onClose}>TUTUP</ModalButton>
-    </ModalFooter>
-  );
-
-  const liveCount = (
-    <p aria-live="polite" className="sr-only">
-      Menampilkan {filtered.length} dari {allProjects.length} proyek.
-    </p>
-  );
-
   return (
-    <Modal
-      isOpen={isOpen}
-      onClose={onClose}
-      title="ALL PROJECTS"
-      eyebrow="// 03 / PROJECTS"
-      size="lg"
-      subheader={filterTabs}
-      footer={footer}
-    >
-      <div className="p-6">
-        {liveCount}
+    <Modal isOpen={isOpen} onClose={onClose} title="All projects" size="xl" subheader={filterBar}>
+      <div className="px-6 sm:px-8 pt-2 pb-8">
         {filtered.length === 0 ? (
-          <div
-            className="py-16 text-center text-meta-sm tracking-widest"
-            style={{ color: "var(--c-muted2)" }}
-          >
-            TIDAK ADA PROYEK DI KATEGORI INI
-          </div>
+          <p className="py-16 text-center" style={{ color: "var(--c-muted)" }}>
+            Belum ada proyek di kategori ini.
+          </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
             {filtered.map((project) => (
-              <CardLink
-                key={project.num}
-                href={project.href}
-                className="card-hoverable block p-6 rounded-[12px] no-underline relative overflow-hidden"
-                style={{ border: "1px solid var(--c-cardborder)", background: "var(--c-cardbg)" }}
-              >
-                {project.coverImage ? (
-                  <div
-                    className="-mx-6 -mt-6 mb-5 aspect-video overflow-hidden"
-                    style={{ borderBottom: "1px solid var(--c-cardborder)" }}
-                  >
-                    <CoverMedia src={project.coverImage} alt="" />
-                  </div>
-                ) : (
-                  <div
-                    className="absolute -top-2 -right-1 font-sans font-extrabold text-[3.2rem] leading-none pointer-events-none select-none"
-                    style={{ color: "var(--c-divider)" }}
-                  >
-                    {project.num}
-                  </div>
-                )}
-
-                <div className="relative">
-                  <span className={`${tagClass(project.tagColor)} mb-3 block w-fit text-meta-2xs`}>
-                    {project.tag}
-                  </span>
-
-                  <h3
-                    className="font-sans font-bold text-meta-lg leading-[1.25] tracking-tight mb-2 pr-8"
-                    style={{ color: "var(--c-text)" }}
-                  >
-                    {project.title}
-                    {project.href && !project.href.startsWith("/") && (
-                      <span className="sr-only"> (buka di tab baru)</span>
-                    )}
-                  </h3>
-
-                  <p
-                    className="text-meta-xs leading-[1.8] mb-4"
-                    style={{ color: "var(--c-muted)" }}
-                  >
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5">
-                    {project.stack.map((s) => (
-                      <span
-                        key={s}
-                        className="text-meta-2xs px-2 py-0.5 rounded-full tracking-[1px]"
-                        style={{ color: "var(--c-muted3)", border: "1px solid var(--c-border)" }}
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {project.href ? (
-                  <span
-                    className={`absolute top-5 right-5 text-base ${
-                      project.coverImage
-                        ? "w-8 h-8 rounded-full flex items-center justify-center"
-                        : ""
-                    }`}
-                    style={
-                      project.coverImage
-                        ? { color: "#f2f2f0", background: "rgba(11,11,12,0.6)" }
-                        : { color: "var(--c-muted2)" }
-                    }
-                  >
-                    ↗
-                  </span>
-                ) : (
-                  <span
-                    className="inline-block mt-4 font-mono text-meta-2xs tracking-widest px-2 py-0.5 rounded-full"
-                    style={{ color: "var(--c-muted2)", border: "1px solid var(--c-border)" }}
-                  >
-                    PRIVATE / INTERNAL
-                  </span>
-                )}
-              </CardLink>
+              <ProjectCard key={project.title} project={project} />
             ))}
           </div>
         )}

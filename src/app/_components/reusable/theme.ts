@@ -85,7 +85,7 @@ export const theme: ThemeTokens = {
   infoText: "text-muted",
   infoTextBold: "text-fg",
   divider: "bg-line",
-  pageActive: "bg-accent text-[#0b0b0c] border-accent",
+  pageActive: "bg-accent text-[var(--c-on-accent)] border-accent",
   pageInactive:
     "border-line bg-transparent text-muted hover:border-accent hover:text-accent active:scale-[0.96]",
   ellipsis: "text-muted",
@@ -110,13 +110,13 @@ export const theme: ThemeTokens = {
   filterSortDivider: "bg-line",
   filterDivider: "bg-line",
   filterActionPrimary: "bg-accent",
-  filterActionPrimaryText: "text-[#0b0b0c]",
+  filterActionPrimaryText: "text-[var(--c-on-accent)]",
   filterActionOutlineBorder: "border-line",
   filterActionOutlineText: "text-muted",
 
   pageSubtitle: "text-muted",
   pageTitle: "text-fg",
-  pageAddBtn: "bg-accent border-accent text-[#0b0b0c] hover:opacity-90",
+  pageAddBtn: "bg-accent border-accent text-[var(--c-on-accent)] hover:opacity-90",
   pageAddBtnText: "font-semibold",
 
   overlaySpinner: "text-accent",
