@@ -30,7 +30,7 @@ if (!file || missing.length) {
 
 const content = readFileSync(file, "utf8").trim();
 const data = {
-  ...(fields as Record<string, string>),
+  ...(fields as Record<keyof typeof fields, string>), // checked non-empty above
   tagColor: null,
   content,
   coverImage: null,
