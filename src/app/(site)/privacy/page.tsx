@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <article className="max-w-3xl mx-auto px-4 sm:px-8 pt-12 pb-24 sm:pt-16">
-      <PageHeader title="Kebijakan Privasi" intro="Terakhir diperbarui 8 November 2026." />
+      <PageHeader title="Kebijakan Privasi" intro="Terakhir diperbarui 12 November 2026." />
 
       <div className="prose-blog text-[1.05rem] leading-[1.8]" style={{ color: "var(--c-b5)" }}>
         <p>
@@ -88,6 +88,111 @@ export default function PrivacyPage() {
           meminta perbaikan, atau meminta akun beserta seluruh komentarmu dihapus. Hubungi lewat salah satu
           kontak di <Link href="/#contact">halaman kontak</Link>, dan permintaan akan diproses paling lambat 14
           hari.
+        </p>
+
+        <h2>izzy office</h2>
+        <p>
+          izzy office adalah alat pribadi untuk satu pengguna, yaitu pemilik situs ini, yang berjalan di{" "}
+          <code>office.izzy.my.id</code> dan dilindungi login. Alat ini dipakai untuk mengunggah video edukasi
+          milik saya sendiri ke akun TikTok, YouTube, dan Instagram saya sendiri, setelah saya setujui. izzy
+          office tidak dipakai oleh orang lain dan tidak mengakses akun orang lain.
+        </p>
+
+        <h3>Data yang diakses</h3>
+        <ul>
+          <li>
+            <strong>TikTok</strong> (Login Kit dan Content Posting API; scope <code>user.info.basic</code>,{" "}
+            <code>video.upload</code>, <code>video.publish</code>): open ID dan nama tampilan akun saya, info
+            kreator (opsi privasi) yang dibutuhkan untuk memposting, serta mengunggah video dan caption saya.
+          </li>
+          <li>
+            <strong>YouTube Data API</strong> (scope <code>youtube.upload</code> dan <code>youtube.readonly</code>):
+            ID dan nama channel saya, serta mengunggah video beserta judul dan deskripsinya.
+          </li>
+          <li>
+            <strong>Instagram/Meta</strong> (<code>instagram_basic</code>, <code>instagram_content_publish</code>,{" "}
+            <code>instagram_manage_comments</code>): ID dan username akun Instagram saya, serta memposting Reels
+            dan caption.
+          </li>
+        </ul>
+
+        <h3>Untuk apa data dipakai</h3>
+        <p>
+          Hanya untuk memposting konten saya sendiri. Data ini tidak dipakai untuk iklan, analitik pihak ketiga,
+          atau profiling, dan tidak dijual atau dibagikan ke siapa pun.
+        </p>
+
+        <h3>Penyimpanan dan keamanan</h3>
+        <p>
+          Token akses disimpan hanya di server pribadi saya dengan akses terbatas. File video sementara dihapus
+          setelah diposting. Tidak ada data pengguna lain yang disimpan.
+        </p>
+
+        <h3>Retensi dan penghapusan</h3>
+        <p>
+          Token berlaku sampai saya cabut. Akses bisa dicabut kapan saja lewat pengaturan TikTok (Keamanan →
+          Kelola izin aplikasi), Google (
+          <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">
+            myaccount.google.com/permissions
+          </a>
+          ), dan Meta (Pengaturan Bisnis / Integrasi Bisnis). Setelah dicabut, data terkait di server akan
+          dihapus.
+        </p>
+
+        <h3>Kontak</h3>
+        <p>
+          Pertanyaan soal izzy office bisa disampaikan lewat salah satu kontak di{" "}
+          <Link href="/#contact">halaman kontak</Link>.
+        </p>
+
+        <h3>izzy office — English</h3>
+        <p>
+          izzy office is a private, single-user tool used only by the owner of this website. It runs at{" "}
+          <code>office.izzy.my.id</code> behind a login and is used to upload my own educational videos to my
+          own TikTok, YouTube, and Instagram accounts after I approve them. It is not used by anyone else and
+          does not access anyone else&apos;s accounts.
+        </p>
+        <p>
+          <strong>Data accessed:</strong>
+        </p>
+        <ul>
+          <li>
+            <strong>TikTok</strong> (Login Kit and Content Posting API; scopes <code>user.info.basic</code>,{" "}
+            <code>video.upload</code>, <code>video.publish</code>): my account&apos;s open ID and display name,
+            creator info (privacy options) required for posting, and uploading my videos and captions.
+          </li>
+          <li>
+            <strong>YouTube Data API</strong> (scopes <code>youtube.upload</code> and{" "}
+            <code>youtube.readonly</code>): my channel ID and name, and uploading videos with their titles and
+            descriptions.
+          </li>
+          <li>
+            <strong>Instagram/Meta</strong> (<code>instagram_basic</code>, <code>instagram_content_publish</code>,{" "}
+            <code>instagram_manage_comments</code>): my Instagram account ID and username, and publishing Reels
+            and captions.
+          </li>
+        </ul>
+        <p>
+          <strong>Purpose:</strong> only to publish my own content. The data is not used for advertising,
+          third-party analytics, or profiling, and is never sold or shared with anyone.
+        </p>
+        <p>
+          <strong>Storage and security:</strong> access tokens are stored only on my private server with
+          restricted access. Temporary video files are deleted after posting. No data from other users is
+          stored.
+        </p>
+        <p>
+          <strong>Retention and deletion:</strong> tokens remain valid until I revoke them. Access can be revoked
+          at any time via TikTok settings (Security → Manage app permissions), Google (
+          <a href="https://myaccount.google.com/permissions" target="_blank" rel="noopener noreferrer">
+            myaccount.google.com/permissions
+          </a>
+          ), and Meta (Business Settings / Business Integrations). Once revoked, the related data on the server
+          is deleted.
+        </p>
+        <p>
+          <strong>Contact:</strong> questions about izzy office can be sent through any of the contacts on the{" "}
+          <Link href="/#contact">contact page</Link>.
         </p>
 
         <h2>Perubahan kebijakan</h2>
