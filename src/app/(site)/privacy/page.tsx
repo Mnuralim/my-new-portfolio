@@ -139,6 +139,45 @@ export default function PrivacyPage() {
           dihapus.
         </p>
 
+        <h3>YouTube API Services</h3>
+        <ul>
+          <li>izzy office menggunakan YouTube API Services.</li>
+          <li>
+            Dengan memakai izzy office, pengguna terikat pada{" "}
+            <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">
+              Persyaratan Layanan YouTube
+            </a>
+            .
+          </li>
+          <li>
+            Data yang diakses lewat YouTube API Services juga tunduk pada{" "}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+              Kebijakan Privasi Google
+            </a>
+            .
+          </li>
+          <li>
+            Data YouTube yang diakses: ID dan nama channel saya, serta mengunggah video beserta judul, deskripsi,
+            dan tag. Data ini hanya dipakai untuk mengunggah video saya sendiri ke channel saya sendiri dan tidak
+            dibagikan ke pihak lain.
+          </li>
+          <li>
+            Akses bisa dicabut kapan saja lewat{" "}
+            <a
+              href="https://security.google.com/settings/security/permissions"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              halaman izin keamanan Google
+            </a>
+            .
+          </li>
+          <li>
+            Token dan data terkait dihapus dari server paling lambat 7 hari setelah akses dicabut, atau atas
+            permintaan lewat salah satu kontak di <Link href="/#contact">halaman kontak</Link>.
+          </li>
+        </ul>
+
         <h3>Kontak</h3>
         <p>
           Pertanyaan soal izzy office bisa disampaikan lewat salah satu kontak di{" "}
@@ -190,6 +229,46 @@ export default function PrivacyPage() {
           ), and Meta (Business Settings / Business Integrations). Once revoked, the related data on the server
           is deleted.
         </p>
+        <p>
+          <strong>YouTube API Services:</strong>
+        </p>
+        <ul>
+          <li>izzy office uses YouTube API Services.</li>
+          <li>
+            By using izzy office, users agree to be bound by the{" "}
+            <a href="https://www.youtube.com/t/terms" target="_blank" rel="noopener noreferrer">
+              YouTube Terms of Service
+            </a>
+            .
+          </li>
+          <li>
+            Data accessed through YouTube API Services is also subject to the{" "}
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+              Google Privacy Policy
+            </a>
+            .
+          </li>
+          <li>
+            YouTube data accessed: my channel ID and name, and uploading videos with their titles, descriptions,
+            and tags. This data is used only to upload my own videos to my own channel and is not shared with
+            any third party.
+          </li>
+          <li>
+            Access can be revoked at any time via the{" "}
+            <a
+              href="https://security.google.com/settings/security/permissions"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Google security permissions page
+            </a>
+            .
+          </li>
+          <li>
+            Tokens and related data are deleted from the server within 7 days after access is revoked, or upon
+            request through any of the contacts on the <Link href="/#contact">contact page</Link>.
+          </li>
+        </ul>
         <p>
           <strong>Contact:</strong> questions about izzy office can be sent through any of the contacts on the{" "}
           <Link href="/#contact">contact page</Link>.
